@@ -20,4 +20,9 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\MotoBest.Services\MotoBest.Services.csproj" />
+    <ProjectReference Include="..\MotoBest.WebApi\MotoBest.WebApi.csproj" />
+  </ItemGroup>
+
 </Project>

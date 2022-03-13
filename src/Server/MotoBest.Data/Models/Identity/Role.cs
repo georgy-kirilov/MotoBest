@@ -1,4 +1,4 @@
-﻿namespace MotoBest.Data.Models;
+﻿namespace MotoBest.Data.Models.Identity;
 
 public class Role : IdentityRole
 {

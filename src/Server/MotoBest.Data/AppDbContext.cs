@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using MotoBest.Data.Models.Identity;
 
 namespace MotoBest.Data;
 
@@ -10,19 +11,56 @@ public class AppDbContext : IdentityDbContext<User, Role, string>
     {
     }
 
+    public DbSet<Advert> Adverts { get; init; } = default!;
+
+    public DbSet<BodyStyle> BodyStyles { get; init; } = default!;
+
+    public DbSet<Brand> Brands { get; init; } = default!;
+
+    public DbSet<Color> Colors { get; init; } = default!;
+
+    public DbSet<Condition> Conditions { get; init; } = default!;
+
+    public DbSet<Engine> Engines { get; init; } = default!;
+
+    public DbSet<EuroStandard> EuroStandards { get; init; } = default!;
+
+    public DbSet<Image> Images { get; init; } = default!;
+
+    public DbSet<Model> Models { get; init; } = default!;
+
+    public DbSet<Region> Regions { get; init; } = default!;
+
+    public DbSet<Site> Sites { get; init; } = default!;
+
+    public DbSet<Town> Towns { get; init; } = default!;
+
+    public DbSet<Transmission> Transmissions { get; init; } = default!;
+
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
         ChangeDefaultIdentityColumnNames(builder);
+
+        builder.AddUniqueConstraintTo("Name",
+            typeof(BodyStyle),
+            typeof(Brand),
+            typeof(Color),
+            typeof(Condition),
+            typeof(Engine),
+            typeof(EuroStandard),
+            typeof(Region),
+            typeof(Site),
+            typeof(Transmission));
     }
 
     private static void ChangeDefaultIdentityColumnNames(ModelBuilder builder)
         => builder
-            .Entity<User>(entity => entity.ToTable("Users"))
-            .Entity<Role>(entity => entity.ToTable("Roles"))
-            .Entity<IdentityUserRole<string>>(entity => entity.ToTable("UserRoles"))
-            .Entity<IdentityUserClaim<string>>(entity => entity.ToTable("UserClaims"))
-            .Entity<IdentityUserLogin<string>>(entity => entity.ToTable("UserLogins"))
-            .Entity<IdentityRoleClaim<string>>(entity => entity.ToTable("RoleClaims"))
-            .Entity<IdentityUserToken<string>>(entity => entity.ToTable("UserTokens"));
+            .Entity<User>(e => e.ToTable("Users"))
+            .Entity<Role>(e => e.ToTable("Roles"))
+            .Entity<IdentityUserRole<string>>(e => e.ToTable("UserRoles"))
+            .Entity<IdentityUserClaim<string>>(e => e.ToTable("UserClaims"))
+            .Entity<IdentityUserLogin<string>>(e => e.ToTable("UserLogins"))
+            .Entity<IdentityRoleClaim<string>>(e => e.ToTable("RoleClaims"))
+            .Entity<IdentityUserToken<string>>(e => e.ToTable("UserTokens"));
 }

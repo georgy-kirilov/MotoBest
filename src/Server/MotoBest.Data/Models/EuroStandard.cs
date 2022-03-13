@@ -1,5 +1,5 @@
 ﻿namespace MotoBest.Data.Models;
 
-public class User : IdentityUser
+public class EuroStandard : Feature
 {
 }

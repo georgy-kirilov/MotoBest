@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 
 using MotoBest.Data;
-using MotoBest.Data.Models;
+using MotoBest.Data.Models.Identity;
 
 namespace MotoBest.WebApi;
 

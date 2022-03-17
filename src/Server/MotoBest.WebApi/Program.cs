@@ -13,7 +13,7 @@ builder.Services
     .AddAppIdentity(identityOptions);
 
 builder.Services.AddTransient<IScraper, AutoBgScraper>();
-builder.Services.AddHostedService<ScrapeHostedService>();
+builder.Services.AddHostedService<ScrapingHostedService>();
 
 builder.Services.AddControllers();
 

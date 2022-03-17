@@ -3,12 +3,12 @@ using Microsoft.Extensions.Hosting;
 
 namespace MotoBest.Services.Scraping;
 
-public class ScrapeHostedService : IHostedService, IDisposable
+public class ScrapingHostedService : IHostedService, IDisposable
 {
     private readonly IScraper scraper;
     private Timer timer = default!;
 
-    public ScrapeHostedService(IScraper scraper)
+    public ScrapingHostedService(IScraper scraper)
     {
         this.scraper = scraper;
     }

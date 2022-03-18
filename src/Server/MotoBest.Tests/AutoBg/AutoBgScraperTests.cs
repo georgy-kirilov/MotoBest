@@ -28,16 +28,14 @@ public class AutoBgScraperTests
             var document = await context.OpenAsync(res => res.Content(html));
             var actualScrapeModel = scraper.ScrapeAdvert(document);
 
-            var assertions = new Assertion<string, string>[]
-            {
-                new(expectedScrapeModel.RemoteId, actualScrapeModel.RemoteId),
-                new(expectedScrapeModel.Title, actualScrapeModel.Title),
-                new(expectedScrapeModel.Description, actualScrapeModel.Description),
-            };
+            var properties = typeof(AdvertScrapeModel).GetProperties();
 
-            foreach (var assertion in assertions)
+            foreach (var property in properties)
             {
-                Assert.Equal(assertion.Expected, assertion.Actual);
+                var expected = property.GetValue(expectedScrapeModel);
+                var actual = property.GetValue(actualScrapeModel);
+
+                Assert.Equal(expected, actual);
             }
         }
     }

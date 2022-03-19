@@ -12,8 +12,13 @@ namespace MotoBest.Tests.AutoBg;
 public class AutoBgScraperTests
 {
     [Theory]
-    [InlineData("19495548")]
     [InlineData("17067064")]
+    [InlineData("19495548")]
+    [InlineData("26525379")]
+    [InlineData("31490804")]
+    [InlineData("32842469")]
+    [InlineData("62031689")]
+    [InlineData("68156462")]
     [InlineData("78524242")]
     [InlineData("82790797")]
     [InlineData("94058504")]

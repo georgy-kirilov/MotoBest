@@ -1,0 +1,25 @@
+﻿{
+  "RemoteId": "62031689",
+  "Title": "Lada Niva  - Цена по договаряне",
+  "Description": null,
+  "Price": 0,
+  "Currency": null,
+  "BodyStyle": "Джип",
+  "Engine": "benzinov",
+  "Transmission": "Ръчна",
+  "Kilometrage": 180000,
+  "Condition": "Употребяван",
+  "ManufacturedOn": "1996-01-01",
+  "HorsePowers": 75,
+  "Color": "Зелен",
+  "Town": "гр. Смолян",
+  "Brand": "lada",
+  "Model": "niva",
+  "Region": null,
+  "ImageUrls": [
+    "//cdn2.focus.bg/mobile/photosorg/850/2/med/21647695485012850_Cw.jpg",
+    "//cdn2.focus.bg/mobile/photosorg/850/2/med/21647695485012850_1g.jpg",
+    "//cdn2.focus.bg/mobile/photosorg/850/2/med/21647695485012850_S0.jpg",
+    "//cdn2.focus.bg/mobile/photosorg/850/2/big/21647695485012850_xQ.jpg"
+  ]
+}

@@ -62,15 +62,33 @@ public class AutoBgScraper : IScraper
 
         ["цена"] = (dataCell, advert) =>
         {
+            string lowercaseText = dataCell.TextContent.ToLower();
+
+            if (lowercaseText == "цена по договаряне")
+            {
+                advert.Price = 0;
+                return;
+            }
+
             const string bgn = "лв.";
-            string currencyAsText = dataCell.TextContent.Split(" ")[^1];
+            const string eur = "eur";
+
+            string currencyAsText = lowercaseText.Split(" ")[^1];
 
             if (currencyAsText == bgn)
             {
                 advert.Currency = Currency.Bgn;
             }
 
-            string sanitizedValue = dataCell.TextContent.Replace(" ", string.Empty).Replace(bgn, string.Empty);
+            if (currencyAsText == eur)
+            {
+                advert.Currency = Currency.Eur;
+            }
+
+            string sanitizedValue = lowercaseText
+                .Replace(" ", string.Empty)
+                .Replace(bgn, string.Empty)
+                .Replace(eur, string.Empty);
 
             if (decimal.TryParse(sanitizedValue, out decimal price))
             {
@@ -102,8 +120,20 @@ public class AutoBgScraper : IScraper
             scrapeModel.RemoteId = urlArgs[^3];
         }
 
-        scrapeModel.Title = document.QuerySelector("div.titleBig > h1")?.TextContent;
-        scrapeModel.Description = document.QuerySelector("div.moreInfo")?.TextContent;
+        var description = document.QuerySelector("div.moreInfo")?.TextContent;
+
+        if (description != null && description.Trim() != string.Empty)
+        {
+            scrapeModel.Description = description;
+        }
+
+        var title = document.QuerySelector("div.titleBig > h1")?.TextContent;
+
+        if (title != null && title.Trim() != string.Empty)
+        {
+            scrapeModel.Title = title;
+        }
+
         scrapeModel.Region = region;
         scrapeModel.Town = town;
 

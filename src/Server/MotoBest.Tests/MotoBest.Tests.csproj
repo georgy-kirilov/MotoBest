@@ -29,7 +29,13 @@
     <None Update="AutoBg\SampleAdverts\19495548.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="AutoBg\ScrapeModels\auto-bg-scrape-models.json">
+    <None Update="AutoBg\SampleAdverts\94058504.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="AutoBg\ScrapeModels\19495548.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="AutoBg\ScrapeModels\94058504.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

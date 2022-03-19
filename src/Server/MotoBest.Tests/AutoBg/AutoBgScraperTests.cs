@@ -9,47 +9,32 @@ namespace MotoBest.Tests.AutoBg;
 
 public class AutoBgScraperTests
 {
-    [Fact]
-    public async Task ScrapeAdvert_ShouldReturn_CorrectResult()
+    [Theory]
+    [InlineData("19495548")]
+    [InlineData("94058504")]
+    public async Task ScrapeAdvert_ShouldReturn_CorrectResult(string smapleAdvertRemoteId)
     {
-        using FileStream openStream = File.OpenRead("./AutoBg/ScrapeModels/auto-bg-scrape-models.json");
-        var expectedScrapeModels = await JsonSerializer.DeserializeAsync<AdvertScrapeModel[]>(openStream);
+        using FileStream openStream = File.OpenRead($"./AutoBg/ScrapeModels/{smapleAdvertRemoteId}.json");
+        var expectedScrapeModel = await JsonSerializer.DeserializeAsync<AdvertScrapeModel>(openStream);
 
         var config = Configuration.Default.WithDefaultLoader();
         var context = BrowsingContext.New(config);
 
         var scraper = new AutoBgScraper();
 
-        foreach (var expectedScrapeModel in expectedScrapeModels!)
+        string html = await File.ReadAllTextAsync($"./AutoBg/SampleAdverts/{smapleAdvertRemoteId}.html");
+
+        var document = await context.OpenAsync(res => res.Content(html));
+        var actualScrapeModel = scraper.ScrapeAdvert(document);
+
+        var properties = typeof(AdvertScrapeModel).GetProperties();
+
+        foreach (var property in properties)
         {
-            string path = $"./AutoBg/SampleAdverts/{expectedScrapeModel.RemoteId}.html";
-            string html = await File.ReadAllTextAsync(path);
+            var expected = property.GetValue(expectedScrapeModel);
+            var actual = property.GetValue(actualScrapeModel);
 
-            var document = await context.OpenAsync(res => res.Content(html));
-            var actualScrapeModel = scraper.ScrapeAdvert(document);
-
-            var properties = typeof(AdvertScrapeModel).GetProperties();
-
-            foreach (var property in properties)
-            {
-                var expected = property.GetValue(expectedScrapeModel);
-                var actual = property.GetValue(actualScrapeModel);
-
-                Assert.Equal(expected, actual);
-            }
+            Assert.Equal(expected, actual);
         }
     }
-}
-
-public class Assertion<TExpected, TActual>
-{
-    public Assertion(TExpected? expected, TActual? actual)
-    {
-        Expected = expected;
-        Actual = actual;
-    }
-
-    public TExpected? Expected { get; init; }
-
-    public TActual? Actual { get; init; }
 }

@@ -35,4 +35,6 @@ public class AdvertScrapeModel
     public string? Model { get; set; }
 
     public string? Town { get; set; }
+
+    public string? Region { get; set; }
 }

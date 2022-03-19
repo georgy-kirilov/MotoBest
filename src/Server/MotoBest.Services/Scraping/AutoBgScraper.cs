@@ -81,7 +81,7 @@ public class AutoBgScraper : IScraper
             {
                 advert.Model = modelArgs[^1];
                 advert.Brand = modelArgs[^2];
-            }   
+            }
         }
     };
 
@@ -92,8 +92,27 @@ public class AutoBgScraper : IScraper
             RemoteId = document.QuerySelector("title")?.TextContent.Split(" ")[^3],
             Title = document.QuerySelector("div.titleBig > h1")?.TextContent,
             Description = document.QuerySelector("div.moreInfo")?.TextContent,
-            Town = document.QuerySelector("div.main > div.name")?.TextContent
         };
+
+        var locationArgs = document
+            .QuerySelectorAll("#leftColumn > #callDealerInside > div.main > div.name")[1]?
+            .TextContent
+            .Split(",")
+            .Select(arg => arg.Trim())
+            .ToList();
+
+        if (locationArgs != null)
+        {
+            if (locationArgs.Count >= 1)
+            {
+                scrapeModel.Town = locationArgs[0];
+            }
+
+            if (locationArgs.Count >= 2)
+            {
+                scrapeModel.Region = locationArgs[1];
+            }
+        }
 
         var tableRows = document.QuerySelectorAll("div.carData > table.dowble > tbody > tr");
 
@@ -104,7 +123,8 @@ public class AutoBgScraper : IScraper
             .ToList();
 
         var tableDataCells = tableRows
-            .SelectMany(row => row.QuerySelectorAll("td")).ToList();
+            .SelectMany(row => row.QuerySelectorAll("td"))
+            .ToList();
 
         for (int i = 0; i < headers.Count; i++)
         {

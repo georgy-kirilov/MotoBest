@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+
 using MotoBest.Services.Scraping;
 using MotoBest.WebApi;
 
@@ -22,6 +23,8 @@ builder.Services
     .AddSwaggerGen();
 
 var app = builder.Build();
+
+app.ApplyMigrations();
 
 if (app.Environment.IsDevelopment())
 {

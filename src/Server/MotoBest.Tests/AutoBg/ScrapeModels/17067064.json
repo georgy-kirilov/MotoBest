@@ -15,5 +15,16 @@
   "Town": "гр. Димитровград",
   "Brand": "opel",
   "Model": "mokka",
-  "Region": "регион Хасково"
+  "Region": "регион Хасково",
+  "ImageUrls": [
+    "//cdn2.focus.bg/mobile/photosorg/570/2/med/21647687287424570_JI.jpg",
+    "//cdn2.focus.bg/mobile/photosorg/570/2/med/21647687287424570_gd.jpg",
+    "//cdn2.focus.bg/mobile/photosorg/570/2/med/21647687287424570_N4.jpg",
+    "//cdn2.focus.bg/mobile/photosorg/570/2/med/21647687287424570_16.jpg",
+    "//cdn2.focus.bg/mobile/photosorg/570/2/med/21647687287424570_Uj.jpg",
+    "//cdn2.focus.bg/mobile/photosorg/570/2/med/21647687287424570_CD.jpg",
+    "//cdn2.focus.bg/mobile/photosorg/570/2/med/21647687287424570_iV.jpg",
+    "//cdn2.focus.bg/mobile/photosorg/570/2/med/21647687287424570_LQ.jpg",
+    "//cdn2.focus.bg/mobile/photosorg/570/2/med/21647687287424570_rU.jpg"
+  ]
 }

@@ -37,4 +37,6 @@ public class AdvertScrapeModel
     public string? Town { get; set; }
 
     public string? Region { get; set; }
+
+    public IEnumerable<string> ImageUrls { get; set; } = new List<string>();
 }

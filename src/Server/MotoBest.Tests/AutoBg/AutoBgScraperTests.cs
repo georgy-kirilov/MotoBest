@@ -13,10 +13,10 @@ public class AutoBgScraperTests
 {
     [Theory]
     [InlineData("19495548")]
-    [InlineData("94058504")]
     [InlineData("17067064")]
     [InlineData("78524242")]
     [InlineData("82790797")]
+    [InlineData("94058504")]
     public async Task ScrapeAdvert_ShouldReturn_CorrectResult(string smapleAdvertRemoteId)
     {
         using FileStream openStream = File.OpenRead($"./AutoBg/ScrapeModels/{smapleAdvertRemoteId}.json");

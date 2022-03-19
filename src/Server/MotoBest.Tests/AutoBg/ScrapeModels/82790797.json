@@ -15,5 +15,17 @@
   "Town": "с. Кладница",
   "Brand": "lexus",
   "Model": "nx",
-  "Region": "регион Перник"
+  "Region": "регион Перник",
+  "ImageUrls": [
+    "//mobistatic1.focus.bg/mobile/photosorg/976/2/med/21647438561242976_Z2.jpg",
+    "//mobistatic1.focus.bg/mobile/photosorg/976/2/med/21647438561242976_cG.jpg",
+    "//mobistatic1.focus.bg/mobile/photosorg/976/2/med/21647438561242976_ua.jpg",
+    "//mobistatic1.focus.bg/mobile/photosorg/976/2/med/21647438561242976_rO.jpg",
+    "//mobistatic1.focus.bg/mobile/photosorg/976/2/med/21647438561242976_v0.jpg",
+    "//mobistatic1.focus.bg/mobile/photosorg/976/2/med/21647438561242976_DI.jpg",
+    "//mobistatic1.focus.bg/mobile/photosorg/976/2/med/21647438561242976_JC.jpg",
+    "//mobistatic1.focus.bg/mobile/photosorg/976/2/med/21647438561242976_8M.jpg",
+    "//mobistatic1.focus.bg/mobile/photosorg/976/2/med/21647438561242976_rC.jpg",
+    "//mobistatic1.focus.bg/mobile/photosorg/976/2/big/21647438561242976_vB.jpg"
+  ]
 }

@@ -15,5 +15,17 @@
   "Town": "гр. Девня",
   "Brand": "renault",
   "Model": "scenic",
-  "Region": "регион Варна"
+  "Region": "регион Варна",
+  "ImageUrls": [
+    "//mobistatic2.focus.bg/mobile/photosorg/282/1/med/11647188804139282_fc.jpg",
+    "//mobistatic2.focus.bg/mobile/photosorg/282/1/med/11647188804139282_Wu.jpg",
+    "//mobistatic2.focus.bg/mobile/photosorg/282/1/med/11647188804139282_Oa.jpg",
+    "//mobistatic2.focus.bg/mobile/photosorg/282/1/med/11647188804139282_3T.jpg",
+    "//mobistatic2.focus.bg/mobile/photosorg/282/1/med/11647188804139282_Lg.jpg",
+    "//mobistatic2.focus.bg/mobile/photosorg/282/1/med/11647188804139282_HV.jpg",
+    "//mobistatic2.focus.bg/mobile/photosorg/282/1/med/11647188804139282_PY.jpg",
+    "//mobistatic2.focus.bg/mobile/photosorg/282/1/med/11647188804139282_4y.jpg",
+    "//mobistatic2.focus.bg/mobile/photosorg/282/1/med/11647188804139282_Gn.jpg",
+    "//mobistatic2.focus.bg/mobile/photosorg/282/1/big/11647188804139282_TL.jpg"
+  ]
 }

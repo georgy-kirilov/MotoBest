@@ -15,5 +15,17 @@
   "Town": "гр. Шумен",
   "Brand": "mercedes-benz",
   "Model": "e-350",
-  "Region": null
+  "Region": null,
+  "ImageUrls": [
+    "//mobistatic2.focus.bg/mobile/photosorg/036/1/med/11606854971240036_R4.png",
+    "//mobistatic2.focus.bg/mobile/photosorg/036/1/med/11606854971240036_ny.jpg",
+    "//mobistatic2.focus.bg/mobile/photosorg/036/1/med/11606854971240036_P6.jpg",
+    "//mobistatic2.focus.bg/mobile/photosorg/036/1/med/11606854971240036_R8.jpg",
+    "//mobistatic2.focus.bg/mobile/photosorg/036/1/med/11606854971240036_iA.jpg",
+    "//mobistatic2.focus.bg/mobile/photosorg/036/1/med/11606854971240036_PT.jpg",
+    "//mobistatic2.focus.bg/mobile/photosorg/036/1/med/11606854971240036_Wx.jpg",
+    "//mobistatic2.focus.bg/mobile/photosorg/036/1/med/11606854971240036_Si.jpg",
+    "//mobistatic2.focus.bg/mobile/photosorg/036/1/med/11606854971240036_5M.jpg",
+    "//mobistatic2.focus.bg/mobile/photosorg/036/1/big/11606854971240036_qP.jpg"
+  ]
 }

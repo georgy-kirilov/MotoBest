@@ -168,9 +168,15 @@ public class AutoBgScraper : IScraper
     }
 
     private static IEnumerable<string> ScapeImageUrls(IDocument document)
-        => document
+    {
+        var imageUrls = document
             .QuerySelectorAll("#carGallery > .smallPhotos > ul > li")
             .Select(li => li.QuerySelector("img")?.GetAttribute("src"))
-            .Where(src => src != null)
-            .Distinct()!;
+            .ToList();
+
+        var bigImageUrl = document.QuerySelector("#carGallery > .bigPhoto > span > img")?.GetAttribute("src");
+        imageUrls.Add(bigImageUrl);
+
+        return imageUrls.Where(imageUrl => imageUrl != null).Distinct().ToList()!;
+    }
 }

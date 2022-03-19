@@ -26,13 +26,31 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="AutoBg\SampleAdverts\17067064.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="AutoBg\SampleAdverts\19495548.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="AutoBg\SampleAdverts\78524242.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="AutoBg\SampleAdverts\82790797.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="AutoBg\SampleAdverts\94058504.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="AutoBg\ScrapeModels\17067064.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="AutoBg\ScrapeModels\19495548.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="AutoBg\ScrapeModels\78524242.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="AutoBg\ScrapeModels\82790797.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="AutoBg\ScrapeModels\94058504.json">

@@ -1,8 +1,10 @@
 ﻿using AngleSharp;
 using MotoBest.Services.Scraping;
+
 using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
+
 using Xunit;
 
 namespace MotoBest.Tests.AutoBg;
@@ -12,6 +14,9 @@ public class AutoBgScraperTests
     [Theory]
     [InlineData("19495548")]
     [InlineData("94058504")]
+    [InlineData("17067064")]
+    [InlineData("78524242")]
+    [InlineData("82790797")]
     public async Task ScrapeAdvert_ShouldReturn_CorrectResult(string smapleAdvertRemoteId)
     {
         using FileStream openStream = File.OpenRead($"./AutoBg/ScrapeModels/{smapleAdvertRemoteId}.json");

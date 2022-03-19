@@ -6,113 +6,114 @@ namespace MotoBest.Services.Scraping;
 
 public class AutoBgScraper : IScraper
 {
-    private static readonly Dictionary<string, Action<IElement, AdvertScrapeModel>> mainDataParsingTable = new()
-    {
-        ["тип"] = (dataCell, advert) => advert.BodyStyle = dataCell.TextContent,
-
-        ["скоростна кутия"] = (dataCell, advert) => advert.Transmission = dataCell.TextContent,
-
-        ["тип двигател"] = (dataCell, advert) =>
+    private static readonly Dictionary<string,
+        Action<IElement, AdvertScrapeModel>> mainDataParsingTable = new()
         {
-            advert.Engine = dataCell.QuerySelector("a")?.GetAttribute("href")?.Split("/")[^1];
-        },
+            ["тип"] = (dataCell, advert) => advert.BodyStyle = dataCell.TextContent,
 
-        ["състояние"] = (dataCell, advert) => advert.Condition = dataCell.TextContent,
+            ["скоростна кутия"] = (dataCell, advert) => advert.Transmission = dataCell.TextContent,
 
-        ["пробег"] = (dataCell, advert) =>
-        {
-            string sanitizedValue = dataCell.TextContent.ToLower().Replace("км", string.Empty).Trim();
-
-            if (int.TryParse(sanitizedValue, out int kilometrage))
+            ["тип двигател"] = (dataCell, advert) =>
             {
-                advert.Kilometrage = kilometrage;
-            }
-        },
+                var arguments = dataCell.QuerySelector("a")?.GetAttribute("href")?.Split("/");
 
-        ["мощност[к.с.]"] = (dataCell, advert) =>
-        {
-            string sanitizedValue = dataCell.TextContent.ToLower().Replace("к.с", string.Empty).Trim();
+                if (arguments?.Length > 0)
+                {
+                    advert.Engine = arguments[^1];
+                }
+            },
 
-            if (int.TryParse(sanitizedValue, out int horsePowers))
+            ["състояние"] = (dataCell, advert) => advert.Condition = dataCell.TextContent,
+
+            ["пробег"] = (dataCell, advert) =>
             {
-                advert.HorsePowers = horsePowers;
-            }
-        },
+                string sanitizedValue = dataCell.TextContent.ToLower().Replace("км", string.Empty).Trim();
 
-        ["цвят"] = (dataCell, advert) => advert.Color = dataCell.TextContent,
+                if (int.TryParse(sanitizedValue, out int kilometrage))
+                {
+                    advert.Kilometrage = kilometrage;
+                }
+            },
 
-        ["произведено"] = (dataCell, advert) =>
-        {
-            string sanitizedValue = dataCell.TextContent.ToLower().Replace("г.", string.Empty).Trim();
-            var cultureInfo = new CultureInfo("bg-BG");
-
-            bool isDateValid = DateTime.TryParse(
-                sanitizedValue, cultureInfo, DateTimeStyles.None, out DateTime manufacturedOn);
-
-            if (isDateValid)
+            ["мощност[к.с.]"] = (dataCell, advert) =>
             {
-                advert.ManufacturedOn = manufacturedOn;
-            }
-        },
+                string sanitizedValue = dataCell.TextContent.ToLower().Replace("к.с", string.Empty).Trim();
 
-        ["цена"] = (dataCell, advert) =>
-        {
-            string currencyAsText = dataCell.TextContent.Split(" ")[^1];
+                if (int.TryParse(sanitizedValue, out int horsePowers))
+                {
+                    advert.HorsePowers = horsePowers;
+                }
+            },
 
-            if (currencyAsText == "лв.")
+            ["цвят"] = (dataCell, advert) => advert.Color = dataCell.TextContent,
+
+            ["произведено"] = (dataCell, advert) =>
             {
-                advert.Currency = Currency.Bgn;
-            }
+                string sanitizedValue = dataCell.TextContent.ToLower().Replace("г.", string.Empty).Trim();
+                var cultureInfo = new CultureInfo("bg-BG");
 
-            string sanitizedValue = dataCell.TextContent
-                .Replace(" ", string.Empty).Replace("лв.", string.Empty);
+                bool isDateValid = DateTime.TryParse(
+                    sanitizedValue, cultureInfo, DateTimeStyles.None, out DateTime manufacturedOn);
 
-            if (decimal.TryParse(sanitizedValue, out decimal price))
+                if (isDateValid)
+                {
+                    advert.ManufacturedOn = manufacturedOn;
+                }
+            },
+
+            ["цена"] = (dataCell, advert) =>
             {
-                advert.Price = price;
-            }
-        },
+                const string bgn = "лв.";
+                string currencyAsText = dataCell.TextContent.Split(" ")[^1];
 
-        ["модел"] = (dataCell, advert) =>
-        {
-            var modelArgs = dataCell.QuerySelector("a")?.GetAttribute("href")?.Split("/");
+                if (currencyAsText == bgn)
+                {
+                    advert.Currency = Currency.Bgn;
+                }
 
-            if (modelArgs != null)
+                string sanitizedValue = dataCell.TextContent.Replace(" ", string.Empty).Replace(bgn, string.Empty);
+
+                if (decimal.TryParse(sanitizedValue, out decimal price))
+                {
+                    advert.Price = price;
+                }
+            },
+
+            ["модел"] = (dataCell, advert) =>
             {
-                advert.Model = modelArgs[^1];
-                advert.Brand = modelArgs[^2];
+                var modelArgs = dataCell.QuerySelector("a")?.GetAttribute("href")?.Split("/");
+
+                if (modelArgs != null && modelArgs.Length >= 2)
+                {
+                    advert.Model = modelArgs[^1];
+                    advert.Brand = modelArgs[^2];
+                }
             }
-        }
-    };
+        };
 
     public AdvertScrapeModel ScrapeAdvert(IDocument document)
     {
-        var scrapeModel = new AdvertScrapeModel()
+        ScrapeMainData(document, out AdvertScrapeModel scrapeModel);
+        ScrapeLocation(document, out string? region, out string? town);
+
+        var urlArgs = document.QuerySelector("title")?.TextContent.Split(" ");
+
+        if (urlArgs != null && urlArgs.Length >= 3)
         {
-            RemoteId = document.QuerySelector("title")?.TextContent.Split(" ")[^3],
-            Title = document.QuerySelector("div.titleBig > h1")?.TextContent,
-            Description = document.QuerySelector("div.moreInfo")?.TextContent,
-        };
-
-        var locationArgs = document
-            .QuerySelectorAll("#leftColumn > #callDealerInside > div.main > div.name")[1]?
-            .TextContent
-            .Split(",")
-            .Select(arg => arg.Trim())
-            .ToList();
-
-        if (locationArgs != null)
-        {
-            if (locationArgs.Count >= 1)
-            {
-                scrapeModel.Town = locationArgs[0];
-            }
-
-            if (locationArgs.Count >= 2)
-            {
-                scrapeModel.Region = locationArgs[1];
-            }
+            scrapeModel.RemoteId = urlArgs[^3];
         }
+
+        scrapeModel.Title = document.QuerySelector("div.titleBig > h1")?.TextContent;
+        scrapeModel.Description = document.QuerySelector("div.moreInfo")?.TextContent;
+        scrapeModel.Region = region;
+        scrapeModel.Town = town;
+
+        return scrapeModel;
+    }
+
+    private static void ScrapeMainData(IDocument document, out AdvertScrapeModel scrapeModel)
+    {
+        scrapeModel = new AdvertScrapeModel();
 
         var tableRows = document.QuerySelectorAll("div.carData > table.dowble > tbody > tr");
 
@@ -130,14 +131,38 @@ public class AutoBgScraper : IScraper
         {
             string header = headers[i];
 
-            if (!mainDataParsingTable.ContainsKey(header))
+            if (mainDataParsingTable.ContainsKey(header))
             {
-                continue;
+                mainDataParsingTable[header].Invoke(tableDataCells[i], scrapeModel);
             }
+        }
+    }
 
-            mainDataParsingTable[header].Invoke(tableDataCells[i], scrapeModel);
+    private static void ScrapeLocation(IDocument document, out string? region, out string? town)
+    {
+        region = null;
+        town = null;
+
+        var locationArgs = document
+            .QuerySelectorAll("#leftColumn > #callDealerInside > div.main > div.name")[1]?
+            .TextContent
+            .Split(",")
+            .Select(arg => arg.Trim())
+            .ToList();
+
+        if (locationArgs == null)
+        {
+            return;
         }
 
-        return scrapeModel;
+        if (locationArgs.Count >= 1)
+        {
+            town = locationArgs[0];
+        }
+
+        if (locationArgs.Count >= 2)
+        {
+            region = locationArgs[1];
+        }
     }
 }

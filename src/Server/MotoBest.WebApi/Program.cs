@@ -14,7 +14,7 @@ builder.Services
     .AddAppIdentity(identityOptions);
 
 builder.Services.AddTransient<IScraper, AutoBgScraper>();
-builder.Services.AddHostedService<ScrapingHostedService>();
+builder.Services.AddHostedService<ScrapingBackgroundService>();
 
 builder.Services.AddControllers();
 

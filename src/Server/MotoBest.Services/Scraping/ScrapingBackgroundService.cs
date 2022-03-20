@@ -4,11 +4,11 @@ using System.Text;
 
 namespace MotoBest.Services.Scraping;
 
-public class ScrapingHostedService : BackgroundService
+public class ScrapingBackgroundService : BackgroundService
 {
     private readonly IScraper scraper;
 
-    public ScrapingHostedService(IScraper scraper)
+    public ScrapingBackgroundService(IScraper scraper)
     {
         this.scraper = scraper;
     }

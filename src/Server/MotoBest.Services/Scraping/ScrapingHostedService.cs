@@ -1,42 +1,46 @@
 ﻿using AngleSharp;
 using Microsoft.Extensions.Hosting;
+using System.Text;
 
 namespace MotoBest.Services.Scraping;
 
-public class ScrapingHostedService : IHostedService, IDisposable
+public class ScrapingHostedService : BackgroundService
 {
     private readonly IScraper scraper;
-    private Timer timer = default!;
 
     public ScrapingHostedService(IScraper scraper)
     {
         this.scraper = scraper;
     }
 
-    public Task StartAsync(CancellationToken cancellationToken)
+    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        timer = new Timer(DoWork, null, TimeSpan.Zero, TimeSpan.FromSeconds(5));
-        return Task.CompletedTask;
-    }
+        Console.OutputEncoding = Encoding.Unicode;
+        int delayMilliseconds = 1_000 * 5;
 
-    public Task StopAsync(CancellationToken cancellationToken)
-    {
-        timer?.Change(Timeout.Infinite, 0);
-        return Task.CompletedTask;
-    }
-
-    public void Dispose()
-    {
-        timer?.Dispose();
-        GC.SuppressFinalize(this);
-    }
-
-    private async void DoWork(object? state)
-    {
         var config = Configuration.Default.WithDefaultLoader();
         var context = BrowsingContext.New(config);
-        var document = await context.OpenAsync("https://www.auto.bg/obiava/63182274/audi-a6-3-0tfsi-matrix-3xs-line-keyless-head-up?page=1&searchres=qhs3qeo1");
-        var advert = scraper.ScrapeAdvert(document);
-        Console.WriteLine(advert.Title);
+
+        while (!stoppingToken.IsCancellationRequested)
+        {
+            await Task.Delay(delayMilliseconds, stoppingToken);
+
+            var document = await context.OpenAsync("https://www.auto.bg/obiavi/avtomobili-dzhipove");
+            var urls = scraper.ScrapeAdvertsUrlsFromPage(document);
+
+            var tasks = new List<Task>();
+
+            foreach (string url in urls)
+            {
+                var task = Task.Run(async () =>
+                {
+                    var scrapeModel = scraper.ScrapeAdvert(await context.OpenAsync(url));
+                });
+
+                tasks.Add(task);
+            }
+
+            Task.WaitAll(tasks.ToArray());
+        }
     }
 }

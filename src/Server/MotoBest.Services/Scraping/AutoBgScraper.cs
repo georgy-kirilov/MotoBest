@@ -142,6 +142,12 @@ public class AutoBgScraper : IScraper
         return scrapeModel;
     }
 
+    public IEnumerable<string> ScrapeAdvertsUrlsFromPage(IDocument document)
+        => document
+            .QuerySelectorAll("#resultsPage > ul > #rightColumn > .results > .resultItem")
+            .Select(item => item.QuerySelector(".text > .head > .link > a")?.GetAttribute("href"))
+            .Where(item => item != null)!;
+
     private static void ScrapeMainData(IDocument document, out AdvertScrapeModel scrapeModel)
     {
         scrapeModel = new AdvertScrapeModel();

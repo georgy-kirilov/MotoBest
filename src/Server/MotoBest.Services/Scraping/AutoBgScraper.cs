@@ -142,11 +142,10 @@ public class AutoBgScraper : IScraper
         return scrapeModel;
     }
 
-    public IEnumerable<string> ScrapeAdvertsUrlsFromPage(IDocument document)
+    public IEnumerable<AdvertResult?> ScrapeAdvertResultsFromPage(IDocument document)
         => document
             .QuerySelectorAll("#resultsPage > ul > #rightColumn > .results > .resultItem")
-            .Select(item => item.QuerySelector(".text > .head > .link > a")?.GetAttribute("href"))
-            .Where(item => item != null)!;
+            .Select(ScrapeAdvertResult);
 
     private static void ScrapeMainData(IDocument document, out AdvertScrapeModel scrapeModel)
     {
@@ -214,5 +213,52 @@ public class AutoBgScraper : IScraper
         imageUrls.Add(bigImageUrl);
 
         return imageUrls.Where(imageUrl => imageUrl != null).Distinct().ToList()!;
+    }
+
+    private static AdvertResult? ScrapeAdvertResult(IElement resultItem)
+    {
+        string urlQuery = ".text > .head > .link > a";
+        string modifiedOnQuery = ".text > .info > .date";
+
+        string? url = resultItem.QuerySelector(urlQuery)?.GetAttribute("href");
+        string? modifiedOnAsText = resultItem.QuerySelector(modifiedOnQuery)?.TextContent;
+
+        if (modifiedOnAsText == null || url == null)
+        {
+            return null;
+        }
+
+        var modifiedOnArgs = modifiedOnAsText.Split(" ");
+        var modifiedOnTimeArgs = modifiedOnArgs[0].Split(":");
+
+        bool hourValid = int.TryParse(modifiedOnTimeArgs[0], out int hour);
+        bool minuteValid = int.TryParse(modifiedOnTimeArgs[1], out int minute);
+
+        string modifiedOnDateAsText = modifiedOnArgs[3].ToLower().Trim();
+
+        var today = DateTime.Today;
+        int day = today.Day;
+        int month = today.Month;
+        int year = today.Year;
+
+        if (modifiedOnDateAsText != "днес")
+        {
+            var modifiedOnDateArgs = modifiedOnDateAsText.Split(".");
+
+            bool dayValid = int.TryParse(modifiedOnDateArgs[0], out day);
+            bool monthValid = int.TryParse(modifiedOnDateArgs[1], out month);
+            bool yearValid = int.TryParse(modifiedOnDateArgs[2], out year);
+
+            if (!hourValid || !minuteValid || !dayValid || !monthValid || !yearValid)
+            {
+                return null;
+            }
+        }
+
+        return new AdvertResult
+        {
+            Url = url,
+            ModifiedOn = new DateTime(year, month, day, hour, minute, 0)
+        };
     }
 }

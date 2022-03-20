@@ -6,5 +6,5 @@ public interface IScraper
 {
     AdvertScrapeModel ScrapeAdvert(IDocument document);
 
-    IEnumerable<string> ScrapeAdvertsUrlsFromPage(IDocument document);
+    IEnumerable<AdvertResult?> ScrapeAdvertResultsFromPage(IDocument document);
 }

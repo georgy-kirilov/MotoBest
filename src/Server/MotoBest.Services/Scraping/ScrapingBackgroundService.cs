@@ -1,5 +1,6 @@
 ﻿using AngleSharp;
 using Microsoft.Extensions.Hosting;
+using MotoBest.Common;
 using System.Text;
 
 namespace MotoBest.Services.Scraping;
@@ -16,7 +17,7 @@ public class ScrapingBackgroundService : BackgroundService
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
         Console.OutputEncoding = Encoding.Unicode;
-        int delayMilliseconds = 1_000 * 5;
+        int delayMilliseconds = 1_000 * 10;
 
         var config = Configuration.Default.WithDefaultLoader();
         var context = BrowsingContext.New(config);
@@ -25,22 +26,44 @@ public class ScrapingBackgroundService : BackgroundService
         {
             await Task.Delay(delayMilliseconds, stoppingToken);
 
-            var document = await context.OpenAsync("https://www.auto.bg/obiavi/avtomobili-dzhipove");
-            var urls = scraper.ScrapeAdvertsUrlsFromPage(document);
+            var latestModifiedOnDate = new DateTime(2022, 3, 20, 12, 0, 0);
 
-            var tasks = new List<Task>();
+            int resultsPageIndex = 1;
 
-            foreach (string url in urls)
+            while (true)
             {
-                var task = Task.Run(async () =>
-                {
-                    var scrapeModel = scraper.ScrapeAdvert(await context.OpenAsync(url));
-                });
+                var tasks = new List<Task>();
 
-                tasks.Add(task);
+                var document = await context.OpenAsync(
+                    $"https://www.auto.bg/obiavi/avtomobili-dzhipove/page/{resultsPageIndex}?nup=013&searchres=7ssg2pp1&sort=1");
+
+                var advertResults = scraper
+                    .ScrapeAdvertResultsFromPage(document)
+                    .Where(res => res != null && res.ModifiedOn > latestModifiedOnDate);
+
+                if (!advertResults.Any())
+                {
+                    break;
+                }
+
+                foreach (var advertResult in advertResults)
+                {
+                    var task = Task.Run(async () =>
+                    {
+                        var scrapeModel = scraper.ScrapeAdvert(
+                            await context.OpenAsync(advertResult!.Url));
+
+                        Console.WriteLine(scrapeModel.ToJson());
+                    });
+
+                    tasks.Add(task);
+                }
+
+                Task.WaitAll(tasks.ToArray());
+                Console.WriteLine($"{resultsPageIndex} -> {advertResults.Count()}");
+                resultsPageIndex++;
             }
 
-            Task.WaitAll(tasks.ToArray());
         }
     }
 }

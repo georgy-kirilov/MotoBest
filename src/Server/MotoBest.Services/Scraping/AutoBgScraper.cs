@@ -1,12 +1,14 @@
 ﻿using AngleSharp.Dom;
+
 using MotoBest.Common;
+
 using System.Globalization;
 
 namespace MotoBest.Services.Scraping;
 
 public class AutoBgScraper : IScraper
 {
-    private static readonly Dictionary<string, Action<IElement, AdvertScrapeModel>> mainDataParsingTable = new()
+    private static readonly Dictionary<string, Action<IElement, ScrapedAdvert>> mainDataParsingTable = new()
     {
         ["тип"] = (dataCell, advert) => advert.BodyStyle = dataCell.TextContent,
 
@@ -108,38 +110,38 @@ public class AutoBgScraper : IScraper
         }
     };
 
-    public AdvertScrapeModel ScrapeAdvert(IDocument document)
+    public ScrapedAdvert ScrapeAdvert(IDocument document)
     {
-        ScrapeMainData(document, out AdvertScrapeModel scrapeModel);
+        ScrapeMainData(document, out ScrapedAdvert scrapedAdvert);
         ScrapeLocation(document, out string? region, out string? town);
 
         var urlArgs = document.QuerySelector("title")?.TextContent.Split(" ");
 
         if (urlArgs != null && urlArgs.Length >= 3)
         {
-            scrapeModel.RemoteId = urlArgs[^3];
+            scrapedAdvert.RemoteId = urlArgs[^3];
         }
 
         var description = document.QuerySelector("div.moreInfo")?.TextContent;
 
         if (description != null && description.Trim() != string.Empty)
         {
-            scrapeModel.Description = description;
+            scrapedAdvert.Description = description;
         }
 
         var title = document.QuerySelector("div.titleBig > h1")?.TextContent;
 
         if (title != null && title.Trim() != string.Empty)
         {
-            scrapeModel.Title = title;
+            scrapedAdvert.Title = title;
         }
 
-        scrapeModel.Region = region;
-        scrapeModel.Town = town;
+        scrapedAdvert.Region = region;
+        scrapedAdvert.Town = town;
 
-        scrapeModel.ImageUrls = ScapeImageUrls(document);
+        scrapedAdvert.ImageUrls = ScapeImageUrls(document);
 
-        return scrapeModel;
+        return scrapedAdvert;
     }
 
     public IEnumerable<AdvertResult?> ScrapeAdvertResultsFromPage(IDocument document)
@@ -147,9 +149,9 @@ public class AutoBgScraper : IScraper
             .QuerySelectorAll("#resultsPage > ul > #rightColumn > .results > .resultItem")
             .Select(ScrapeAdvertResult);
 
-    private static void ScrapeMainData(IDocument document, out AdvertScrapeModel scrapeModel)
+    private static void ScrapeMainData(IDocument document, out ScrapedAdvert scrapedAdvert)
     {
-        scrapeModel = new AdvertScrapeModel();
+        scrapedAdvert = new ScrapedAdvert();
 
         var tableRows = document.QuerySelectorAll("div.carData > table.dowble > tbody > tr");
 
@@ -169,7 +171,7 @@ public class AutoBgScraper : IScraper
 
             if (mainDataParsingTable.ContainsKey(header))
             {
-                mainDataParsingTable[header].Invoke(tableDataCells[i], scrapeModel);
+                mainDataParsingTable[header].Invoke(tableDataCells[i], scrapedAdvert);
             }
         }
     }

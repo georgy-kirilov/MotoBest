@@ -4,7 +4,7 @@ namespace MotoBest.Services.Scraping;
 
 public interface IScraper
 {
-    AdvertScrapeModel ScrapeAdvert(IDocument document);
+    ScrapedAdvert ScrapeAdvert(IDocument document);
 
     IEnumerable<AdvertResult?> ScrapeAdvertResultsFromPage(IDocument document);
 }

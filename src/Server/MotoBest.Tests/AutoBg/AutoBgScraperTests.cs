@@ -1,4 +1,5 @@
 ﻿using AngleSharp;
+
 using MotoBest.Services.Scraping;
 
 using System.IO;
@@ -12,39 +13,39 @@ namespace MotoBest.Tests.AutoBg;
 public class AutoBgScraperTests
 {
     [Theory]
-    [InlineData("17067064")]
-    [InlineData("19495548")]
-    [InlineData("26525379")]
-    [InlineData("31490804")]
-    [InlineData("32842469")]
-    [InlineData("62031689")]
-    [InlineData("68156462")]
-    [InlineData("78524242")]
-    [InlineData("82790797")]
-    [InlineData("94058504")]
-    public async Task ScrapeAdvert_ShouldReturn_CorrectResult(string smapleAdvertRemoteId)
+    [InlineData("Test-1")]
+    [InlineData("Test-2")]
+    [InlineData("Test-3")]
+    [InlineData("Test-4")]
+    [InlineData("Test-5")]
+    [InlineData("Test-6")]
+    [InlineData("Test-7")]
+    [InlineData("Test-8")]
+    [InlineData("Test-9")]
+    [InlineData("Test-10")]
+    public async Task ScrapeAdvert_ShouldReturn_CorrectResult(string sampleAdvertFileName)
     {
-        using FileStream openStream = File.OpenRead($"./AutoBg/ScrapeModels/{smapleAdvertRemoteId}.json");
-        var expectedScrapeModel = await JsonSerializer.DeserializeAsync<AdvertScrapeModel>(openStream);
+        using FileStream openStream = File.OpenRead($"./AutoBg/ScrapedAdverts/{sampleAdvertFileName}.json");
+        var expectedScrapedAdvert = await JsonSerializer.DeserializeAsync<ScrapedAdvert>(openStream);
 
         var config = Configuration.Default.WithDefaultLoader();
         var context = BrowsingContext.New(config);
 
         var scraper = new AutoBgScraper();
 
-        string html = await File.ReadAllTextAsync($"./AutoBg/SampleAdverts/{smapleAdvertRemoteId}.html");
+        string html = await File.ReadAllTextAsync($"./AutoBg/SampleAdverts/{sampleAdvertFileName}.html");
 
         var document = await context.OpenAsync(res => res.Content(html));
-        var actualScrapeModel = scraper.ScrapeAdvert(document);
+        var actualScrapedAdvert = scraper.ScrapeAdvert(document);
 
-        var properties = typeof(AdvertScrapeModel).GetProperties();
+        var properties = typeof(ScrapedAdvert).GetProperties();
 
         foreach (var property in properties)
         {
-            var expected = property.GetValue(expectedScrapeModel);
-            var actual = property.GetValue(actualScrapeModel);
+            var expectedValue = property.GetValue(expectedScrapedAdvert);
+            var actualValue = property.GetValue(actualScrapedAdvert);
 
-            Assert.Equal(expected, actual);
+            Assert.Equal(expectedValue, actualValue);
         }
     }
 }

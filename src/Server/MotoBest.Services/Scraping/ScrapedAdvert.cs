@@ -2,7 +2,7 @@
 
 namespace MotoBest.Services.Scraping;
 
-public class AdvertScrapeModel
+public class ScrapedAdvert
 {
     public string? RemoteId { get; set; }
 

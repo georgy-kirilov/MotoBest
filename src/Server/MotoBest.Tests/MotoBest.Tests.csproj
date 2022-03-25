@@ -26,64 +26,64 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="AutoBg\SampleAdverts\17067064.html">
+    <None Update="AutoBg\SampleAdverts\Test-1.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="AutoBg\SampleAdverts\19495548.html">
+    <None Update="AutoBg\SampleAdverts\Test-2.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="AutoBg\SampleAdverts\26525379.html">
+    <None Update="AutoBg\SampleAdverts\Test-3.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="AutoBg\SampleAdverts\31490804.html">
+    <None Update="AutoBg\SampleAdverts\Test-4.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="AutoBg\SampleAdverts\32842469.html">
+    <None Update="AutoBg\SampleAdverts\Test-5.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="AutoBg\SampleAdverts\62031689.html">
+    <None Update="AutoBg\SampleAdverts\Test-6.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="AutoBg\SampleAdverts\68156462.html">
+    <None Update="AutoBg\SampleAdverts\Test-7.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="AutoBg\SampleAdverts\78524242.html">
+    <None Update="AutoBg\SampleAdverts\Test-8.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="AutoBg\SampleAdverts\82790797.html">
+    <None Update="AutoBg\SampleAdverts\Test-9.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="AutoBg\SampleAdverts\94058504.html">
+    <None Update="AutoBg\SampleAdverts\Test-10.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="AutoBg\ScrapeModels\17067064.json">
+    <None Update="AutoBg\ScrapedAdverts\Test-1.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="AutoBg\ScrapeModels\19495548.json">
+    <None Update="AutoBg\ScrapedAdverts\Test-2.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="AutoBg\ScrapeModels\26525379.json">
+    <None Update="AutoBg\ScrapedAdverts\Test-3.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="AutoBg\ScrapeModels\31490804.json">
+    <None Update="AutoBg\ScrapedAdverts\Test-4.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="AutoBg\ScrapeModels\32842469.json">
+    <None Update="AutoBg\ScrapedAdverts\Test-5.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="AutoBg\ScrapeModels\62031689.json">
+    <None Update="AutoBg\ScrapedAdverts\Test-6.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="AutoBg\ScrapeModels\68156462.json">
+    <None Update="AutoBg\ScrapedAdverts\Test-7.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="AutoBg\ScrapeModels\78524242.json">
+    <None Update="AutoBg\ScrapedAdverts\Test-8.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="AutoBg\ScrapeModels\82790797.json">
+    <None Update="AutoBg\ScrapedAdverts\Test-9.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="AutoBg\ScrapeModels\94058504.json">
+    <None Update="AutoBg\ScrapedAdverts\Test-10.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

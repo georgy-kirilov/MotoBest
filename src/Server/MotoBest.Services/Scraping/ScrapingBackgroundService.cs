@@ -50,10 +50,10 @@ public class ScrapingBackgroundService : BackgroundService
                 {
                     var task = Task.Run(async () =>
                     {
-                        var scrapeModel = scraper.ScrapeAdvert(
+                        var scrapedAdvert = scraper.ScrapeAdvert(
                             await context.OpenAsync(advertResult!.Url));
 
-                        Console.WriteLine(scrapeModel.ToJson());
+                        Console.WriteLine(scrapedAdvert.ToJson());
                     });
 
                     tasks.Add(task);

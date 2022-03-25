@@ -40,5 +40,7 @@ public class ScrapedAdvert
 
     public string? Region { get; set; }
 
+    public DateTime? ModifiedOn { get; set; }
+
     public IEnumerable<string> ImageUrls { get; set; } = new List<string>();
 }

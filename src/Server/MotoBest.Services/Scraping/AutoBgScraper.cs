@@ -147,7 +147,6 @@ public class AutoBgScraper : IScraper
         scrapedAdvert.Town = town;
 
         scrapedAdvert.ImageUrls = ScapeImageUrls(document);
-
         return scrapedAdvert;
     }
 

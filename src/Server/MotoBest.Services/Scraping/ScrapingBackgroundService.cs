@@ -1,6 +1,9 @@
 ﻿using AngleSharp;
+
 using Microsoft.Extensions.Hosting;
+
 using MotoBest.Common;
+
 using System.Text;
 
 namespace MotoBest.Services.Scraping;
@@ -17,7 +20,7 @@ public class ScrapingBackgroundService : BackgroundService
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
         Console.OutputEncoding = Encoding.Unicode;
-        int delayMilliseconds = 1_000 * 10;
+        int delayMilliseconds = 1_000 * 3;
 
         var config = Configuration.Default.WithDefaultLoader();
         var context = BrowsingContext.New(config);
@@ -25,6 +28,7 @@ public class ScrapingBackgroundService : BackgroundService
         while (!stoppingToken.IsCancellationRequested)
         {
             await Task.Delay(delayMilliseconds, stoppingToken);
+            Console.WriteLine("in");
 
             var latestModifiedOnDate = new DateTime(2022, 3, 20, 12, 0, 0);
 

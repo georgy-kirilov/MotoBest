@@ -29,7 +29,19 @@
     <None Update="AutoBg\AdvertResults\Test-001.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="AutoBg\AdvertResults\Test-002.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="AutoBg\AdvertResults\Test-003.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="AutoBg\SampleAdvertResultPages\Test-001.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="AutoBg\SampleAdvertResultPages\Test-002.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="AutoBg\SampleAdvertResultPages\Test-003.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="AutoBg\SampleAdverts\Test-001.html">

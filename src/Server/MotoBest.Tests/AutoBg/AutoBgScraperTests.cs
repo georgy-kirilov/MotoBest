@@ -1,4 +1,5 @@
 ﻿using AngleSharp;
+
 using MotoBest.Services;
 using MotoBest.Services.Scraping;
 
@@ -64,6 +65,8 @@ public class AutoBgScraperTests
 
     [Theory]
     [InlineData("Test-001")]
+    [InlineData("Test-002")]
+    [InlineData("Test-003")]
     public async Task ScrapeAdvertResultsFromPage_ShouldReturn_CorrectResult(string sampleAdvertResultPageFileName)
     {
         using FileStream openStream = File.OpenRead(
@@ -78,9 +81,9 @@ public class AutoBgScraperTests
 
         var document = await browsingContext.OpenAsync(res => res.Content(html));
 
-        var actualAdvertResults = scraper.ScrapeAdvertResultsFromPage(document).Select(advert => advert?.Url).ToArray();
+        var actualAdvertResults = scraper.ScrapeAdvertResultsFromPage(document).ToArray();
 
-        Assert.Equal(expectedAdvertResults!.Length, actualAdvertResults.Length);
+        Assert.Equal(expectedAdvertResults, actualAdvertResults);
     }
 }
 

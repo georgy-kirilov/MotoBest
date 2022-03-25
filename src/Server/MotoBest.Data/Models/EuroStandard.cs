@@ -1,5 +1,5 @@
 ﻿namespace MotoBest.Data.Models;
 
-public class EuroStandard : Feature
+public class EuroStandard : AdvertFeature
 {
 }

@@ -1,5 +1,5 @@
 ﻿namespace MotoBest.Data.Models;
 
-public class Transmission : Feature
+public class Transmission : AdvertFeature
 {
 }

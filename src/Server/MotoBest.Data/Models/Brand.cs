@@ -1,6 +1,6 @@
 ﻿namespace MotoBest.Data.Models;
 
-public class Brand : Feature
+public class Brand : AdvertFeature
 {
     public Brand()
     {

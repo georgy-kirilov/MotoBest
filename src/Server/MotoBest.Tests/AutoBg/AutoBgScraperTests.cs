@@ -13,16 +13,16 @@ namespace MotoBest.Tests.AutoBg;
 public class AutoBgScraperTests
 {
     [Theory]
-    [InlineData("Test-1")]
-    [InlineData("Test-2")]
-    [InlineData("Test-3")]
-    [InlineData("Test-4")]
-    [InlineData("Test-5")]
-    [InlineData("Test-6")]
-    [InlineData("Test-7")]
-    [InlineData("Test-8")]
-    [InlineData("Test-9")]
-    [InlineData("Test-10")]
+    [InlineData("Test-001")]
+    [InlineData("Test-002")]
+    [InlineData("Test-003")]
+    [InlineData("Test-004")]
+    [InlineData("Test-005")]
+    [InlineData("Test-006")]
+    [InlineData("Test-007")]
+    [InlineData("Test-008")]
+    [InlineData("Test-009")]
+    [InlineData("Test-010")]
     public async Task ScrapeAdvert_ShouldReturn_CorrectResult(string sampleAdvertFileName)
     {
         using FileStream openStream = File.OpenRead($"./AutoBg/ScrapedAdverts/{sampleAdvertFileName}.json");

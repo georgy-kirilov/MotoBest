@@ -1,6 +1,6 @@
 ﻿namespace MotoBest.Data.Models;
 
-public class Region : Feature
+public class Region : AdvertFeature
 {
     public Region()
     {

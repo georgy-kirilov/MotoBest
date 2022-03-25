@@ -38,6 +38,8 @@ public class Advert : BaseModel<string>
 
     public int? HorsePowers { get; set; }
 
+    public bool IsEuroStandardApproximate { get; set; }
+
     public int? BrandId { get; set; }
 
     public virtual Brand? Brand { get; set; }
@@ -73,6 +75,10 @@ public class Advert : BaseModel<string>
     public int? TownId { get; set; }
 
     public virtual Town? Town { get; set; }
+
+    public int? EuroStandardId { get; set; }
+
+    public virtual EuroStandard? EuroStandard { get; set; }
 
     public virtual ICollection<Image> Images { get; set; }
 }

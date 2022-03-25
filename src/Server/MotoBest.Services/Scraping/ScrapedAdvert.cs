@@ -36,6 +36,8 @@ public class ScrapedAdvert
 
     public string? Town { get; set; }
 
+    public string? EuroStandard { get; set; }
+
     public string? Region { get; set; }
 
     public IEnumerable<string> ImageUrls { get; set; } = new List<string>();

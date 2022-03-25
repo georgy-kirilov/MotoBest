@@ -1,8 +1,10 @@
 ﻿using AngleSharp;
-
+using MotoBest.Services;
 using MotoBest.Services.Scraping;
 
+using System;
 using System.IO;
+using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
 
@@ -12,6 +14,17 @@ namespace MotoBest.Tests.AutoBg;
 
 public class AutoBgScraperTests
 {
+    private readonly IBrowsingContext browsingContext;
+    private readonly IDateTimeManager fakeDateTimeManager;
+
+    public AutoBgScraperTests()
+    {
+        browsingContext = BrowsingContext.New(
+            Configuration.Default.WithDefaultLoader());
+
+        fakeDateTimeManager = new FakeDateTimeManager();
+    }
+
     [Theory]
     [InlineData("Test-001")]
     [InlineData("Test-002")]
@@ -25,17 +38,17 @@ public class AutoBgScraperTests
     [InlineData("Test-010")]
     public async Task ScrapeAdvert_ShouldReturn_CorrectResult(string sampleAdvertFileName)
     {
-        using FileStream openStream = File.OpenRead($"./AutoBg/ScrapedAdverts/{sampleAdvertFileName}.json");
+        using FileStream openStream = File.OpenRead(
+            $"./AutoBg/ScrapedAdverts/{sampleAdvertFileName}.json");
+
         var expectedScrapedAdvert = await JsonSerializer.DeserializeAsync<ScrapedAdvert>(openStream);
 
-        var config = Configuration.Default.WithDefaultLoader();
-        var context = BrowsingContext.New(config);
+        var scraper = new AutoBgScraper(fakeDateTimeManager);
 
-        var scraper = new AutoBgScraper();
+        string html = await File.ReadAllTextAsync(
+            $"./AutoBg/SampleAdverts/{sampleAdvertFileName}.html");
 
-        string html = await File.ReadAllTextAsync($"./AutoBg/SampleAdverts/{sampleAdvertFileName}.html");
-
-        var document = await context.OpenAsync(res => res.Content(html));
+        var document = await browsingContext.OpenAsync(res => res.Content(html));
         var actualScrapedAdvert = scraper.ScrapeAdvert(document);
 
         var properties = typeof(ScrapedAdvert).GetProperties();
@@ -47,5 +60,36 @@ public class AutoBgScraperTests
 
             Assert.Equal(expectedValue, actualValue);
         }
+    }
+
+    [Theory]
+    [InlineData("Test-001")]
+    public async Task ScrapeAdvertResultsFromPage_ShouldReturn_CorrectResult(string sampleAdvertResultPageFileName)
+    {
+        using FileStream openStream = File.OpenRead(
+            $"./AutoBg/AdvertResults/{sampleAdvertResultPageFileName}.json");
+
+        var expectedAdvertResults = await JsonSerializer.DeserializeAsync<AdvertResult[]>(openStream);
+
+        var scraper = new AutoBgScraper(fakeDateTimeManager);
+
+        string html = await File.ReadAllTextAsync(
+            $"./AutoBg/SampleAdvertResultPages/{sampleAdvertResultPageFileName}.html");
+
+        var document = await browsingContext.OpenAsync(res => res.Content(html));
+
+        var actualAdvertResults = scraper.ScrapeAdvertResultsFromPage(document).Select(advert => advert?.Url).ToArray();
+
+        Assert.Equal(expectedAdvertResults!.Length, actualAdvertResults.Length);
+    }
+}
+
+internal class FakeDateTimeManager : IDateTimeManager
+{
+    public const string FakeTodayDateAsText = "2022-03-25";
+
+    public DateTime Today()
+    {
+        return DateTime.Parse(FakeTodayDateAsText);
     }
 }

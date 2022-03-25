@@ -110,6 +110,13 @@ public class AutoBgScraper : IScraper
         }
     };
 
+    private readonly IDateTimeManager dateTimeManager;
+
+    public AutoBgScraper(IDateTimeManager dateTimeManager)
+    {
+        this.dateTimeManager = dateTimeManager;
+    }
+
     public ScrapedAdvert ScrapeAdvert(IDocument document)
     {
         ScrapeMainData(document, out ScrapedAdvert scrapedAdvert);
@@ -217,7 +224,7 @@ public class AutoBgScraper : IScraper
         return imageUrls.Where(imageUrl => imageUrl != null).Distinct().ToList()!;
     }
 
-    private static AdvertResult? ScrapeAdvertResult(IElement resultItem)
+    private AdvertResult? ScrapeAdvertResult(IElement resultItem)
     {
         string urlQuery = ".text > .head > .link > a";
         string modifiedOnQuery = ".text > .info > .date";
@@ -238,7 +245,7 @@ public class AutoBgScraper : IScraper
 
         string modifiedOnDateAsText = modifiedOnArgs[3].ToLower().Trim();
 
-        var today = DateTime.Today;
+        var today = dateTimeManager.Today();
         int day = today.Day;
         int month = today.Month;
         int year = today.Year;

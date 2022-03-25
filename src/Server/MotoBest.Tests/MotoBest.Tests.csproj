@@ -26,6 +26,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="AutoBg\AdvertResults\Test-001.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="AutoBg\SampleAdvertResultPages\Test-001.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="AutoBg\SampleAdverts\Test-001.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

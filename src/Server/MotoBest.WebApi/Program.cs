@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
+using MotoBest.Services;
 using MotoBest.Services.Scraping;
 using MotoBest.WebApi;
 
@@ -13,7 +14,10 @@ builder.Services
     .AddAppDbContext(connectionString)
     .AddAppIdentity(identityOptions);
 
-builder.Services.AddTransient<IScraper, AutoBgScraper>();
+builder.Services
+    .AddTransient<IScraper, AutoBgScraper>()
+    .AddSingleton<IDateTimeManager, DateTimeManager>();
+
 builder.Services.AddHostedService<ScrapingBackgroundService>();
 
 builder.Services.AddControllers();

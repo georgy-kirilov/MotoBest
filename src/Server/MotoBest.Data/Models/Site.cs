@@ -1,6 +1,6 @@
 ﻿namespace MotoBest.Data.Models;
 
-public class Site : Feature
+public class Site : AdvertFeature
 {
     public string FullAdvertPagePathFormat { get; set; } = "";
 }

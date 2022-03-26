@@ -1,6 +1,6 @@
 ﻿namespace MotoBest.Data.Models;
 
-public class Town : Feature
+public class Town : AdvertFeature
 {
     public int RegionId { get; set; }
 

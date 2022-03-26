@@ -7,6 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AngleSharp" Version="0.16.1" />
+    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="6.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\MotoBest.Data\MotoBest.Data.csproj" />
   </ItemGroup>
 

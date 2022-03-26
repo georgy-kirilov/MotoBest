@@ -20,7 +20,7 @@ public class ScrapingBackgroundService : BackgroundService
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
         Console.OutputEncoding = Encoding.Unicode;
-        int delayMilliseconds = 1_000 * 3;
+        int delayMilliseconds = 1_000 * 12;
 
         var config = Configuration.Default.WithDefaultLoader();
         var context = BrowsingContext.New(config);
@@ -28,22 +28,19 @@ public class ScrapingBackgroundService : BackgroundService
         while (!stoppingToken.IsCancellationRequested)
         {
             await Task.Delay(delayMilliseconds, stoppingToken);
-            Console.WriteLine("in");
 
-            var latestModifiedOnDate = new DateTime(2022, 3, 20, 12, 0, 0);
-
+            var latestModifiedOnDate = DateTime.Now.Subtract(TimeSpan.FromHours(1));
             int resultsPageIndex = 1;
 
             while (true)
             {
                 var tasks = new List<Task>();
-
-                var document = await context.OpenAsync(
-                    $"https://www.auto.bg/obiavi/avtomobili-dzhipove/page/{resultsPageIndex}?nup=013&searchres=7ssg2pp1&sort=1");
+                string advertResultsUrl = $"https://www.auto.bg/obiavi/avtomobili-dzhipove/page/{resultsPageIndex}?nup=013&searchres=7ssg2pp1&sort=1";
+                var advertResultsPageDocument = await context.OpenAsync(advertResultsUrl, stoppingToken);
 
                 var advertResults = scraper
-                    .ScrapeAdvertResultsFromPage(document)
-                    .Where(res => res != null && res.ModifiedOn > latestModifiedOnDate);
+                    .ScrapeAdvertResultsFromPage(advertResultsPageDocument)
+                    .Where(res => res != null && res.ModifiedOn >= latestModifiedOnDate);
 
                 if (!advertResults.Any())
                 {
@@ -52,22 +49,21 @@ public class ScrapingBackgroundService : BackgroundService
 
                 foreach (var advertResult in advertResults)
                 {
-                    var task = Task.Run(async () =>
+                    async Task method()
                     {
-                        var scrapedAdvert = scraper.ScrapeAdvert(
-                            await context.OpenAsync(advertResult!.Url));
-
+                        var fullAdvertDocument = await context.OpenAsync(advertResult!.Url, stoppingToken);
+                        var scrapedAdvert = scraper.ScrapeAdvert(fullAdvertDocument);
+                        scrapedAdvert.ModifiedOn = advertResult.ModifiedOn;
                         Console.WriteLine(scrapedAdvert.ToJson());
-                    });
+                    }
 
+                    var task = Task.Run(method, stoppingToken);
                     tasks.Add(task);
                 }
 
-                Task.WaitAll(tasks.ToArray());
-                Console.WriteLine($"{resultsPageIndex} -> {advertResults.Count()}");
+                Task.WaitAll(tasks.ToArray(), stoppingToken);
                 resultsPageIndex++;
             }
-
         }
     }
 }

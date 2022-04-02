@@ -1,6 +1,6 @@
-﻿namespace MotoBest.Data.Seeding;
+﻿namespace MotoBest.Data.Seeding.Common;
 
-internal interface ISeeder
+public interface ISeeder
 {
     Task SeedAsync(AppDbContext dbContext, IServiceProvider serviceProvider);
 }

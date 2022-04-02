@@ -18,7 +18,7 @@ builder.Services
     .AddTransient<IScraper, AutoBgScraper>()
     .AddSingleton<IDateTimeManager, DateTimeManager>();
 
-builder.Services.AddHostedService<ScrapingBackgroundService>();
+//builder.Services.AddHostedService<ScrapingBackgroundService>();
 
 builder.Services.AddControllers();
 
@@ -28,7 +28,7 @@ builder.Services
 
 var app = builder.Build();
 
-app.ApplyMigrations();
+app.ApplyMigrations().SeedData();
 
 if (app.Environment.IsDevelopment())
 {

@@ -23,11 +23,19 @@ public static class ServiceCollectionExtensions
             })
             .AddEntityFrameworkStores<AppDbContext>();
 
-    public static void ApplyMigrations(this WebApplication app)
+    public static WebApplication ApplyMigrations(this WebApplication app)
     {
         using var serviceScope = app.Services.CreateScope();
         var dbContext = serviceScope.ServiceProvider.GetRequiredService<AppDbContext>();
         dbContext.Database.Migrate();
+        return app;
+    }
+
+    public static WebApplication SeedData(this WebApplication app)
+    {
+        using var serviceScope = app.Services.CreateScope();
+        var dbContext = serviceScope.ServiceProvider.GetRequiredService<AppDbContext>();
         new AppSeeder().SeedAsync(dbContext, serviceScope.ServiceProvider).GetAwaiter().GetResult();
+        return app;
     }
 }

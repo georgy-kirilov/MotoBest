@@ -1,4 +1,7 @@
-﻿namespace MotoBest.Data.Seeding;
+﻿using MotoBest.Data.Seeding.Common;
+using MotoBest.Data.Seeding.Constants;
+
+namespace MotoBest.Data.Seeding;
 
 public class AppSeeder : ISeeder
 {
@@ -6,7 +9,16 @@ public class AppSeeder : ISeeder
     {
         var seeders = new List<ISeeder>
         {
-            new RolesSeeder()
+            new ConstantAdvertFeaturesSeeder<Transmission, TransmissionNames>(),
+            new ConstantAdvertFeaturesSeeder<Engine, EngineNames>(),
+            new ConstantAdvertFeaturesSeeder<BodyStyle, BodyStyleNames>(),
+            new ConstantAdvertFeaturesSeeder<Condition, ConditionNames>(),
+            new ConstantAdvertFeaturesSeeder<Brand, BrandNames>(),
+            new ConstantAdvertFeaturesSeeder<Region, RegionNames>(),
+            new ConstantAdvertFeaturesSeeder<Color, ColorNames>(),
+            new RolesSeeder(),
+            new TownsSeeder(),
+            new EuroStandardsSeeder(),
         };
 
         foreach (var seeder in seeders)

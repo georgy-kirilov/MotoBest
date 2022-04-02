@@ -1,9 +1,10 @@
 ﻿using AngleSharp;
 
+using MotoBest.Common;
 using MotoBest.Services;
 using MotoBest.Services.Scraping;
+using MotoBest.Tests.Mocks;
 
-using System;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
@@ -40,27 +41,19 @@ public class AutoBgScraperTests
     public async Task ScrapeAdvert_ShouldReturn_CorrectResult(string sampleAdvertFileName)
     {
         using FileStream openStream = File.OpenRead(
-            $"./AutoBg/ScrapedAdverts/{sampleAdvertFileName}.json");
+            $"./Scraping/AutoBg/ScrapedAdverts/{sampleAdvertFileName}.json");
 
         var expectedScrapedAdvert = await JsonSerializer.DeserializeAsync<ScrapedAdvert>(openStream);
 
         var scraper = new AutoBgScraper(fakeDateTimeManager);
 
         string html = await File.ReadAllTextAsync(
-            $"./AutoBg/SampleAdverts/{sampleAdvertFileName}.html");
+            $"./Scraping/AutoBg/SampleAdverts/{sampleAdvertFileName}.html");
 
         var document = await browsingContext.OpenAsync(res => res.Content(html));
         var actualScrapedAdvert = scraper.ScrapeAdvert(document);
 
-        var properties = typeof(ScrapedAdvert).GetProperties();
-
-        foreach (var property in properties)
-        {
-            var expectedValue = property.GetValue(expectedScrapedAdvert);
-            var actualValue = property.GetValue(actualScrapedAdvert);
-
-            Assert.Equal(expectedValue, actualValue);
-        }
+        expectedScrapedAdvert.AssertProperties(actualScrapedAdvert);
     }
 
     [Theory]
@@ -70,29 +63,19 @@ public class AutoBgScraperTests
     public async Task ScrapeAdvertResultsFromPage_ShouldReturn_CorrectResult(string sampleAdvertResultPageFileName)
     {
         using FileStream openStream = File.OpenRead(
-            $"./AutoBg/AdvertResults/{sampleAdvertResultPageFileName}.json");
+            $"./Scraping/AutoBg/AdvertResults/{sampleAdvertResultPageFileName}.json");
 
         var expectedAdvertResults = await JsonSerializer.DeserializeAsync<AdvertResult[]>(openStream);
 
         var scraper = new AutoBgScraper(fakeDateTimeManager);
 
         string html = await File.ReadAllTextAsync(
-            $"./AutoBg/SampleAdvertResultPages/{sampleAdvertResultPageFileName}.html");
+            $"./Scraping/AutoBg/SampleAdvertResultPages/{sampleAdvertResultPageFileName}.html");
 
         var document = await browsingContext.OpenAsync(res => res.Content(html));
 
         var actualAdvertResults = scraper.ScrapeAdvertResultsFromPage(document).ToArray();
 
         Assert.Equal(expectedAdvertResults, actualAdvertResults);
-    }
-}
-
-internal class FakeDateTimeManager : IDateTimeManager
-{
-    public const string FakeTodayDateAsText = "2022-03-25";
-
-    public DateTime Today()
-    {
-        return DateTime.Parse(FakeTodayDateAsText);
     }
 }

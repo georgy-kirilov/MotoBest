@@ -26,82 +26,112 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="AutoBg\AdvertResults\Test-001.json">
+    <None Update="Normalizing\NormalizedAdverts\AutoBg\Test-001.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="AutoBg\AdvertResults\Test-002.json">
+    <None Update="Normalizing\NormalizedAdverts\AutoBg\Test-002.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="AutoBg\AdvertResults\Test-003.json">
+    <None Update="Normalizing\NormalizedAdverts\AutoBg\Test-003.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="AutoBg\SampleAdvertResultPages\Test-001.html">
+    <None Update="Normalizing\NormalizedAdverts\AutoBg\Test-004.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="AutoBg\SampleAdvertResultPages\Test-002.html">
+    <None Update="Normalizing\NormalizedAdverts\AutoBg\Test-005.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="AutoBg\SampleAdvertResultPages\Test-003.html">
+    <None Update="Normalizing\NormalizedAdverts\AutoBg\Test-006.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="AutoBg\SampleAdverts\Test-001.html">
+    <None Update="Normalizing\NormalizedAdverts\AutoBg\Test-007.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="AutoBg\SampleAdverts\Test-002.html">
+    <None Update="Normalizing\NormalizedAdverts\AutoBg\Test-008.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="AutoBg\SampleAdverts\Test-003.html">
+    <None Update="Normalizing\NormalizedAdverts\AutoBg\Test-009.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="AutoBg\SampleAdverts\Test-004.html">
+    <None Update="Normalizing\NormalizedAdverts\AutoBg\Test-010.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="AutoBg\SampleAdverts\Test-005.html">
+    <None Update="Scraping\AutoBg\AdvertResults\Test-001.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="AutoBg\SampleAdverts\Test-006.html">
+    <None Update="Scraping\AutoBg\AdvertResults\Test-002.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="AutoBg\SampleAdverts\Test-007.html">
+    <None Update="Scraping\AutoBg\AdvertResults\Test-003.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="AutoBg\SampleAdverts\Test-008.html">
+    <None Update="Scraping\AutoBg\SampleAdvertResultPages\Test-001.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="AutoBg\SampleAdverts\Test-009.html">
+    <None Update="Scraping\AutoBg\SampleAdvertResultPages\Test-002.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="AutoBg\SampleAdverts\Test-010.html">
+    <None Update="Scraping\AutoBg\SampleAdvertResultPages\Test-003.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="AutoBg\ScrapedAdverts\Test-001.json">
+    <None Update="Scraping\AutoBg\SampleAdverts\Test-001.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="AutoBg\ScrapedAdverts\Test-002.json">
+    <None Update="Scraping\AutoBg\SampleAdverts\Test-002.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="AutoBg\ScrapedAdverts\Test-003.json">
+    <None Update="Scraping\AutoBg\SampleAdverts\Test-003.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="AutoBg\ScrapedAdverts\Test-004.json">
+    <None Update="Scraping\AutoBg\SampleAdverts\Test-004.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="AutoBg\ScrapedAdverts\Test-005.json">
+    <None Update="Scraping\AutoBg\SampleAdverts\Test-005.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="AutoBg\ScrapedAdverts\Test-006.json">
+    <None Update="Scraping\AutoBg\SampleAdverts\Test-006.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="AutoBg\ScrapedAdverts\Test-007.json">
+    <None Update="Scraping\AutoBg\SampleAdverts\Test-007.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="AutoBg\ScrapedAdverts\Test-008.json">
+    <None Update="Scraping\AutoBg\SampleAdverts\Test-008.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="AutoBg\ScrapedAdverts\Test-009.json">
+    <None Update="Scraping\AutoBg\SampleAdverts\Test-009.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="AutoBg\ScrapedAdverts\Test-010.json">
+    <None Update="Scraping\AutoBg\SampleAdverts\Test-010.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Scraping\AutoBg\ScrapedAdverts\Test-001.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Scraping\AutoBg\ScrapedAdverts\Test-002.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Scraping\AutoBg\ScrapedAdverts\Test-003.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Scraping\AutoBg\ScrapedAdverts\Test-004.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Scraping\AutoBg\ScrapedAdverts\Test-005.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Scraping\AutoBg\ScrapedAdverts\Test-006.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Scraping\AutoBg\ScrapedAdverts\Test-007.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Scraping\AutoBg\ScrapedAdverts\Test-008.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Scraping\AutoBg\ScrapedAdverts\Test-009.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Scraping\AutoBg\ScrapedAdverts\Test-010.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

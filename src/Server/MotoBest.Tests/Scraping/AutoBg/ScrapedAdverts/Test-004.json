@@ -1,0 +1,32 @@
+﻿{
+  "RemoteId": "31490804",
+  "Title": "Opel Corsa 1.0I - 4 200 лв.",
+  "Description": null,
+  "Price": 4200,
+  "Currency": 1,
+  "BodyStyle": "Хечбек",
+  "Engine": "benzinov",
+  "Transmission": "Ръчна",
+  "Kilometrage": 135000,
+  "Condition": "Употребяван",
+  "ManufacturedOn": "2007-08-01",
+  "HorsePowers": 60,
+  "Color": "Черен",
+  "Town": "с. Драгичево",
+  "Brand": "Opel",
+  "Model": "Corsa",
+  "Region": "регион Перник",
+  "EuroStandard": null,
+  "ImageUrls": [
+    "//mobistatic1.focus.bg/mobile/photosorg/937/1/med/11647691017352937_4s.jpg",
+    "//mobistatic1.focus.bg/mobile/photosorg/937/1/med/11647691017352937_uj.jpg",
+    "//mobistatic1.focus.bg/mobile/photosorg/937/1/med/11647691017352937_PL.jpg",
+    "//mobistatic1.focus.bg/mobile/photosorg/937/1/med/11647691017352937_3O.jpg",
+    "//mobistatic1.focus.bg/mobile/photosorg/937/1/med/11647691017352937_DX.jpg",
+    "//mobistatic1.focus.bg/mobile/photosorg/937/1/med/11647691017352937_PE.jpg",
+    "//mobistatic1.focus.bg/mobile/photosorg/937/1/med/11647691017352937_Wl.jpg",
+    "//mobistatic1.focus.bg/mobile/photosorg/937/1/med/11647691017352937_Oe.jpg",
+    "//mobistatic1.focus.bg/mobile/photosorg/937/1/med/11647691017352937_96.jpg",
+    "//mobistatic1.focus.bg/mobile/photosorg/937/1/big/11647691017352937_kE.jpg"
+  ]
+}

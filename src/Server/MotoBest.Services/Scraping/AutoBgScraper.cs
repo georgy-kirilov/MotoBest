@@ -2,7 +2,9 @@
 
 using MotoBest.Common;
 
+using System.Text;
 using System.Globalization;
+using MotoBest.Data.Seeding.Constants;
 
 namespace MotoBest.Services.Scraping;
 
@@ -87,10 +89,7 @@ public class AutoBgScraper : IScraper
                 advert.Currency = Currency.Eur;
             }
 
-            string sanitizedValue = lowercaseText
-                .Replace(" ", string.Empty)
-                .Replace(bgn, string.Empty)
-                .Replace(eur, string.Empty);
+            string sanitizedValue = lowercaseText.Sanitize(" ", bgn, eur);
 
             if (decimal.TryParse(sanitizedValue, out decimal price))
             {
@@ -100,13 +99,39 @@ public class AutoBgScraper : IScraper
 
         ["модел"] = (dataCell, advert) =>
         {
-            var modelArgs = dataCell.QuerySelector("a")?.GetAttribute("href")?.Split("/");
+            var anchor = dataCell.QuerySelector("a");
 
-            if (modelArgs != null && modelArgs.Length >= 2)
+            var modelArgs = anchor?.GetAttribute("href")?.Split("/");
+            string? content = anchor?.TextContent;
+
+            if (modelArgs == null || modelArgs.Length < 2 || content == null)
             {
-                advert.Model = modelArgs[^1];
-                advert.Brand = modelArgs[^2];
+                return;
             }
+
+            var brandArgs = modelArgs[^2].Split("-");
+            var brandBuilder = new StringBuilder();
+
+            foreach (string brandArg in brandArgs)
+            {
+                string firstLetter = brandArg.First().ToString().ToUpper();
+
+                brandBuilder.Append(firstLetter);
+
+                for (int i = 1; i < brandArg.Length; i++)
+                {
+                    brandBuilder.Append(brandArg[i]);
+                }
+
+                brandBuilder.Append(' ');
+            }
+
+            advert.Brand = brandBuilder.ToString().Trim();
+
+            advert.Model = content
+                .Sanitize(advert.Brand.Replace(' ', '-'))
+                .Sanitize(BrandNames.Bmw, BrandNames.Vw)
+                .Trim();
         }
     };
 

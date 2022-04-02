@@ -3,7 +3,7 @@
 using Microsoft.Extensions.Hosting;
 
 using MotoBest.Common;
-
+using MotoBest.Services.Normalizing;
 using System.Text;
 
 namespace MotoBest.Services.Scraping;
@@ -11,10 +11,12 @@ namespace MotoBest.Services.Scraping;
 public class ScrapingBackgroundService : BackgroundService
 {
     private readonly IScraper scraper;
+    private readonly INormalizer normalizer;
 
-    public ScrapingBackgroundService(IScraper scraper)
+    public ScrapingBackgroundService(IScraper scraper, INormalizer normalizer)
     {
         this.scraper = scraper;
+        this.normalizer = normalizer;
     }
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -54,7 +56,8 @@ public class ScrapingBackgroundService : BackgroundService
                         var fullAdvertDocument = await context.OpenAsync(advertResult!.Url, stoppingToken);
                         var scrapedAdvert = scraper.ScrapeAdvert(fullAdvertDocument);
                         scrapedAdvert.ModifiedOn = advertResult.ModifiedOn;
-                        Console.WriteLine(scrapedAdvert.ToJson());
+                        var normalizedAdvert = normalizer.Normalize(scrapedAdvert);
+                        Console.WriteLine(normalizedAdvert.ToJson());
                     }
 
                     var task = Task.Run(method, stoppingToken);

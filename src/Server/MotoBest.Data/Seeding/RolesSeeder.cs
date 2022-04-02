@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+
 using MotoBest.Data.Models.Identity;
 using MotoBest.Data.Seeding.Common;
 

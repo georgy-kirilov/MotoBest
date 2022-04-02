@@ -1,11 +1,11 @@
 ﻿namespace MotoBest.Data.Seeding.Common;
 
-public abstract class AdvertFeaturesSeeder<TFeature> : ISeeder
+public abstract class BaseAdvertFeaturesSeeder<TFeature> : ISeeder
     where TFeature : AdvertFeature, new()
 {
     private readonly IEnumerable<TFeature> models;
 
-    protected AdvertFeaturesSeeder(IEnumerable<TFeature> models)
+    protected BaseAdvertFeaturesSeeder(IEnumerable<TFeature> models)
     {
         this.models = models;
     }

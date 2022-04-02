@@ -12,6 +12,12 @@ public class AppSeeder : ISeeder
             new TransmissionsSeeder(),
             new EnginesSeeder(),
             new EuroStandardsSeeder(),
+            new BodyStylesSeeder(),
+            new ConditionsSeeder(),
+            new BrandsSeeder(),
+            new RegionsSeeder(),
+            new ColorsSeeder(),
+            new TownsSeeder(),
         };
 
         foreach (var seeder in seeders)

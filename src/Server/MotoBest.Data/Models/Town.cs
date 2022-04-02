@@ -5,4 +5,6 @@ public class Town : AdvertFeature
     public int RegionId { get; set; }
 
     public virtual Region Region { get; set; } = default!;
+
+    public bool IsVillage { get; set; }
 }

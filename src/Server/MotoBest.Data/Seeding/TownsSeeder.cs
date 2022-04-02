@@ -30,7 +30,8 @@ public class TownsSeeder : ISeeder
 
             if (region == null)
             {
-                continue;
+                region = new Region { Name = regionDto.Name };
+                await dbContext.Regions.AddAsync(region);
             }
 
             foreach (var townDto in regionDto.Towns)

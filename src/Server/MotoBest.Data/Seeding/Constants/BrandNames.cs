@@ -1,8 +1,6 @@
-﻿using MotoBest.Data.Seeding.Common;
+﻿namespace MotoBest.Data.Seeding.Constants;
 
-namespace MotoBest.Data.Seeding;
-
-public class BrandsSeeder : ConstantAdvertFeaturesSeeder<Brand, BrandsSeeder>
+public class BrandNames
 {
     #region Brands with A
     public const string Abarth = "Abarth";
@@ -224,5 +222,13 @@ public class BrandsSeeder : ConstantAdvertFeaturesSeeder<Brand, BrandsSeeder>
     #region Brands with Z
     public const string Zastava = "Zastava";
     public const string Zaz = "Zaz";
+    #endregion
+
+    #region Non-Latin Brands
+    public const string Vaz = "ВАЗ";
+    public const string Warsaw = "Варшава";
+    public const string Victory = "Победа";
+    public const string Sofia = "София";
+    public const string Seagull = "Чайка";
     #endregion
 }

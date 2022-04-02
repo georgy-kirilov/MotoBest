@@ -16,7 +16,7 @@ public abstract class BaseAdvertFeaturesSeeder<TFeature> : ISeeder
 
         foreach (var model in models)
         {
-            if (dbSet.Any(m => m.Id == model.Id || m.Name == model.Name))
+            if (dbSet.Any(m => m.Name == model.Name))
             {
                 continue;
             }

@@ -1,9 +1,13 @@
 ﻿namespace MotoBest.Data.Seeding.Common;
 
-public abstract class ConstantAdvertFeaturesSeeder<TFeature, TConstantsSource> : BaseAdvertFeaturesSeeder<TFeature>
+public class ConstantAdvertFeaturesSeeder<TFeature, TConstantsSource> : BaseAdvertFeaturesSeeder<TFeature>
     where TFeature : AdvertFeature, new()
 {
-    protected static IEnumerable<TFeature> CreateModelsFromSeederConstants()
+    public ConstantAdvertFeaturesSeeder()
+        : base(CreateModelsFromNameConstants())
+    { }
+
+    private static IEnumerable<TFeature> CreateModelsFromNameConstants()
     {
         var models = new List<TFeature>();
 
@@ -13,9 +17,5 @@ public abstract class ConstantAdvertFeaturesSeeder<TFeature, TConstantsSource> :
         }
 
         return models;
-    }
-
-    protected ConstantAdvertFeaturesSeeder() : base(CreateModelsFromSeederConstants())
-    {
     }
 }

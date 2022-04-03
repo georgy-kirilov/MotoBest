@@ -36,6 +36,11 @@ public class TownsSeeder : ISeeder
 
             foreach (var townDto in regionDto.Towns)
             {
+                if (dbContext.Towns.Any(t => t.Name == townDto.Name))
+                {
+                    continue;
+                }
+
                 await dbContext.AddAsync(new Town
                 {
                     IsVillage = townDto.IsVillage,

@@ -1,8 +1,8 @@
 ﻿using MotoBest.Common;
 
-using MotoBest.Services;
 using MotoBest.Services.Normalizing;
 using MotoBest.Services.Scraping;
+using MotoBest.Tests.Mocks;
 
 using System.IO;
 using System.Text.Json;
@@ -32,7 +32,7 @@ public class NormalizerTests
         var scrapedAdvert = JsonSerializer.Deserialize<ScrapedAdvert>(scrapedAdvertJson);
         var expectedNormalizedAdvert = JsonSerializer.Deserialize<NormalizedAdvert>(normalizedAdvertJson);
 
-        var normalizer = new Normalizer(new StaticCurrencyCourseProvider());
+        var normalizer = new Normalizer(new FakeCurrencyCourseProvider());
         var actualNormalizedAdvert = normalizer.Normalize(scrapedAdvert!);
 
         expectedNormalizedAdvert.AssertProperties(actualNormalizedAdvert);

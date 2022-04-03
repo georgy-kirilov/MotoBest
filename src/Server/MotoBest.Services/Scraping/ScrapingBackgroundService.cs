@@ -1,8 +1,9 @@
 ﻿using AngleSharp;
-
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
 using MotoBest.Common;
+using MotoBest.Services.Data;
 using MotoBest.Services.Normalizing;
 using System.Text;
 
@@ -12,17 +13,22 @@ public class ScrapingBackgroundService : BackgroundService
 {
     private readonly IScraper scraper;
     private readonly INormalizer normalizer;
+    private readonly IServiceScopeFactory serviceScopeFactory;
 
-    public ScrapingBackgroundService(IScraper scraper, INormalizer normalizer)
+    public ScrapingBackgroundService(
+        IScraper scraper,
+        INormalizer normalizer,
+        IServiceScopeFactory serviceScopeFactory)
     {
         this.scraper = scraper;
         this.normalizer = normalizer;
+        this.serviceScopeFactory = serviceScopeFactory;
     }
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
         Console.OutputEncoding = Encoding.Unicode;
-        int delayMilliseconds = 1_000 * 12;
+        int delayMilliseconds = 1_000 * 5;
 
         var config = Configuration.Default.WithDefaultLoader();
         var context = BrowsingContext.New(config);
@@ -53,11 +59,13 @@ public class ScrapingBackgroundService : BackgroundService
                 {
                     async Task method()
                     {
+                        using var scope = serviceScopeFactory.CreateScope();
+                        var advertsService = scope.ServiceProvider.GetRequiredService<IAdvertsService>();
                         var fullAdvertDocument = await context.OpenAsync(advertResult!.Url, stoppingToken);
                         var scrapedAdvert = scraper.ScrapeAdvert(fullAdvertDocument);
                         scrapedAdvert.ModifiedOn = advertResult.ModifiedOn;
                         var normalizedAdvert = normalizer.Normalize(scrapedAdvert);
-                        Console.WriteLine(normalizedAdvert.ToJson());
+                        await advertsService.AddAsync(normalizedAdvert);
                     }
 
                     var task = Task.Run(method, stoppingToken);

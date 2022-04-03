@@ -11,7 +11,10 @@ public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddAppDbContext(
         this IServiceCollection serviceCollection, string connectionString)
-        => serviceCollection.AddDbContext<AppDbContext>(options => options.UseSqlServer(connectionString));
+        => serviceCollection
+            .AddDbContext<AppDbContext>(
+                options => options.UseLazyLoadingProxies().UseSqlServer(connectionString),
+                ServiceLifetime.Transient);
 
     public static IdentityBuilder AddAppIdentity(
         this IServiceCollection serviceCollection, IdentityOptions identityOptions)

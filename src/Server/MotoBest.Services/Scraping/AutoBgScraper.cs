@@ -109,7 +109,7 @@ public class AutoBgScraper : IScraper
                 return;
             }
 
-            var brandArgs = modelArgs[^2].Split("-");
+            var brandArgs = modelArgs[^2].Split('-');
             var brandBuilder = new StringBuilder();
 
             foreach (string brandArg in brandArgs)
@@ -128,9 +128,10 @@ public class AutoBgScraper : IScraper
 
             advert.Brand = brandBuilder.ToString().Trim();
 
+            string brandSeparatedWithDash = advert.Brand.Replace(' ', '-');
+
             advert.Model = content
-                .Sanitize(advert.Brand.Replace(' ', '-'))
-                .Sanitize(BrandNames.Bmw, BrandNames.Vw)
+                .Sanitize(brandSeparatedWithDash, brandSeparatedWithDash.ToUpper())
                 .Trim();
         }
     };

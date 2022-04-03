@@ -1,9 +1,13 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+
 using MotoBest.Data.Repositories;
+
 using MotoBest.Services;
+using MotoBest.Services.Data;
 using MotoBest.Services.Normalizing;
 using MotoBest.Services.Scraping;
+
 using MotoBest.WebApi;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -20,7 +24,8 @@ builder.Services
     .AddSingleton<IDateTimeManager, DateTimeManager>()
     .AddScoped(typeof(IRepository<>), typeof(Repository<>))
     .AddSingleton<ICurrencyCourseProvider, StaticCurrencyCourseProvider>()
-    .AddTransient<INormalizer, Normalizer>();
+    .AddTransient<INormalizer, Normalizer>()
+    .AddTransient<IAdvertsService, AdvertsService>();
 
 builder.Services.AddHostedService<ScrapingBackgroundService>();
 

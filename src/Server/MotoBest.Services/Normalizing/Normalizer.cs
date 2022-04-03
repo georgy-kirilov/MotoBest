@@ -4,8 +4,6 @@ using MotoBest.Data.Seeding.Constants;
 
 using MotoBest.Services.Scraping;
 
-using System.Text;
-
 namespace MotoBest.Services.Normalizing;
 
 public class Normalizer : INormalizer
@@ -18,6 +16,11 @@ public class Normalizer : INormalizer
         ["benzinov"] = EngineNames.Gasoline,
         ["elektricheski"] = EngineNames.Electric,
         ["hibriden"] = EngineNames.Hybrid,
+    };
+
+    private static readonly Dictionary<string, string> brandVariations = new()
+    {
+        ["Mercedes Benz"] = BrandNames.MercedesBenz
     };
 
     public Normalizer(ICurrencyCourseProvider currencyCourseProvider)
@@ -40,7 +43,7 @@ public class Normalizer : INormalizer
             Town = NormalizeTown(scrapedAdvert.Town),
             Region = NormalizeRegion(scrapedAdvert.Region),
             Transmission = scrapedAdvert.Transmission?.Trim().ToLower(),
-            Brand = scrapedAdvert.Brand?.Trim(),
+            Brand = NormalizeBrand(scrapedAdvert.Brand),
             ModifiedOn = scrapedAdvert.ModifiedOn,
             PriceBgn = NormalizePrice(scrapedAdvert.Price, scrapedAdvert.Currency),
             ImageUrls = scrapedAdvert.ImageUrls,
@@ -69,6 +72,23 @@ public class Normalizer : INormalizer
         return region?.Sanitize("регион").Trim();
     }
 
+    private static string? NormalizeBrand(string? brand)
+    {
+        if (brand == null)
+        {
+            return null;
+        }
+
+        brand = brand.Trim();
+
+        if (!brandVariations.ContainsKey(brand))
+        {
+            return brand;
+        }
+
+        return brandVariations[brand];
+    }
+
     private static string? NormalizeTown(string? town)
     {
         return town?.Sanitize("с.", "гр.").Trim();
@@ -85,7 +105,7 @@ public class Normalizer : INormalizer
 
         if (!engineVariations.ContainsKey(engine))
         {
-            return null;
+            return engine;
         }
 
         return engineVariations[engine];

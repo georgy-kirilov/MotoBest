@@ -27,7 +27,7 @@ builder.Services
     .AddTransient<INormalizer, Normalizer>()
     .AddTransient<IAdvertsService, AdvertsService>();
 
-builder.Services.AddHostedService<ScrapingBackgroundService>();
+//builder.Services.AddHostedService<ScrapingBackgroundService>();
 
 builder.Services.AddControllers();
 

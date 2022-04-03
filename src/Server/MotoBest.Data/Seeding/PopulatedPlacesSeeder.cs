@@ -1,4 +1,5 @@
 ﻿using MotoBest.Data.Seeding.Common;
+using MotoBest.Data.Seeding.Dtos;
 
 using System.Text.Encodings.Web;
 using System.Text.Json;
@@ -6,7 +7,7 @@ using System.Text.Unicode;
 
 namespace MotoBest.Data.Seeding;
 
-public class TownsSeeder : ISeeder
+public class PopulatedPlacesSeeder : ISeeder
 {
     public async Task SeedAsync(AppDbContext dbContext, IServiceProvider serviceProvider)
     {
@@ -21,7 +22,9 @@ public class TownsSeeder : ISeeder
             WriteIndented = true
         };
 
-        string json = File.ReadAllText("../../Server/MotoBest.Data/Seeding/Resources/towns-by-regions.json");
+        string path = "../../Server/MotoBest.Data/Seeding/Resources/populated-places-by-region.json";
+        string json = await File.ReadAllTextAsync(path);
+
         var regionDtos = JsonSerializer.Deserialize<RegionDto[]>(json, options)!;
 
         foreach (var regionDto in regionDtos)
@@ -34,26 +37,26 @@ public class TownsSeeder : ISeeder
                 await dbContext.Regions.AddAsync(region);
             }
 
-            foreach (var townDto in regionDto.Towns)
-            {
-                if (dbContext.Towns.Any(t => t.Name == townDto.Name))
-                {
-                    continue;
-                }
-
-                await dbContext.AddAsync(new Town
-                {
-                    IsVillage = townDto.IsVillage,
-                    Name = townDto.Name,
-                    RegionId = region.Id,
-                });
-            }
-
+            await SeedPopulatedPlacesAsync(regionDto.PopulatedPlaces, dbContext, region.Id);
             await dbContext.SaveChangesAsync();
         }
     }
 
-    private record class TownDto(string Name, bool IsVillage);
+    private static async Task SeedPopulatedPlacesAsync(IEnumerable<PopulatedPlaceDto> populatedPlaceDtos, AppDbContext dbContext, int regionId)
+    {
+        foreach (var populatedPlaceDto in populatedPlaceDtos)
+        {
+            if (dbContext.PopulatedPlaces.Any(pp => pp.Name == populatedPlaceDto.Name))
+            {
+                continue;
+            }
 
-    private record class RegionDto(string Name, IEnumerable<TownDto> Towns);
+            await dbContext.AddAsync(new PopulatedPlace
+            {
+                Type = populatedPlaceDto.Type,
+                Name = populatedPlaceDto.Name,
+                RegionId = regionId,
+            });
+        }
+    }
 }

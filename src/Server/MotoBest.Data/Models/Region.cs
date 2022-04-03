@@ -4,8 +4,8 @@ public class Region : AdvertFeature
 {
     public Region()
     {
-        Towns = new HashSet<Town>();
+        PopulatedPlaces = new HashSet<PopulatedPlace>();
     }
 
-    public virtual ICollection<Town> Towns { get; set; }
+    public virtual ICollection<PopulatedPlace> PopulatedPlaces { get; set; }
 }

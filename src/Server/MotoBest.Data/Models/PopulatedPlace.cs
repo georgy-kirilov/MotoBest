@@ -1,10 +1,10 @@
 ﻿namespace MotoBest.Data.Models;
 
-public class Town : AdvertFeature
+public class PopulatedPlace : AdvertFeature
 {
     public int RegionId { get; set; }
 
     public virtual Region Region { get; set; } = default!;
 
-    public bool IsVillage { get; set; }
+    public PopulatedPlaceType Type { get; set; }
 }

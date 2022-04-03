@@ -33,7 +33,7 @@ public class AppDbContext : IdentityDbContext<User, Role, string>
 
     public DbSet<Site> Sites { get; init; } = default!;
 
-    public DbSet<Town> Towns { get; init; } = default!;
+    public DbSet<PopulatedPlace> PopulatedPlaces { get; init; } = default!;
 
     public DbSet<Transmission> Transmissions { get; init; } = default!;
 

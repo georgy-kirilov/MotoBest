@@ -16,7 +16,7 @@ public class AdvertsService : IAdvertsService
     private readonly IRepository<Color> colorsRepository;
     private readonly IRepository<Region> regionsRepository;
     private readonly IRepository<EuroStandard> euroStandardsRepository;
-    private readonly IRepository<Town> townsRepository;
+    private readonly IRepository<PopulatedPlace> townsRepository;
     private readonly IRepository<Brand> brandsRepository;
 
     public AdvertsService(
@@ -28,7 +28,7 @@ public class AdvertsService : IAdvertsService
         IRepository<Color> colorsRepository,
         IRepository<Region> regionsRepository,
         IRepository<EuroStandard> euroStandardsRepository,
-        IRepository<Town> townsRepository,
+        IRepository<PopulatedPlace> townsRepository,
         IRepository<Brand> brandsRepository)
     {
         this.advertsRepository = advertsRepository;
@@ -78,7 +78,7 @@ public class AdvertsService : IAdvertsService
         Region? region = await regionsRepository.All()
             .FirstOrDefaultAsync(r => r.Name == normalizedAdvert.Region);
 
-        Town? town = await townsRepository.All()
+        PopulatedPlace? town = await townsRepository.All()
             .FirstOrDefaultAsync(t => t.Name == normalizedAdvert.Town);
 
         Brand? brand = await brandsRepository.All()
@@ -102,7 +102,7 @@ public class AdvertsService : IAdvertsService
             RegionId = region?.Id ?? town?.RegionId,
             IsEuroStandardApproximate = isEuroStandardApproximate,
             EuroStandardId = euroStandard?.Id,
-            TownId = town?.Id,
+            PopulatedPlaceId = town?.Id,
             BrandId = brand?.Id,
             ModelId = model?.Id,
             RemoteId = normalizedAdvert.RemoteId,

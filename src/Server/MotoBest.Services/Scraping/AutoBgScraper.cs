@@ -1,139 +1,23 @@
 ﻿using AngleSharp.Dom;
 
-using MotoBest.Common;
-
-using System.Text;
-using System.Globalization;
-using MotoBest.Data.Seeding.Constants;
+using static MotoBest.Services.Scraping.AutoBgPropertyScrapers;
 
 namespace MotoBest.Services.Scraping;
 
 public class AutoBgScraper : IScraper
 {
-    private static readonly Dictionary<string, Action<IElement, ScrapedAdvert>> mainDataParsingTable = new()
+    private static readonly Dictionary<string, Action<IElement, ScrapedAdvert>> mainAdvertDataScrapingTable = new()
     {
-        ["тип"] = (dataCell, advert) => advert.BodyStyle = dataCell.TextContent,
-
-        ["скоростна кутия"] = (dataCell, advert) => advert.Transmission = dataCell.TextContent,
-
-        ["тип двигател"] = (dataCell, advert) =>
-        {
-            var arguments = dataCell.QuerySelector("a")?.GetAttribute("href")?.Split("/");
-
-            if (arguments?.Length > 0)
-            {
-                advert.Engine = arguments[^1];
-            }
-        },
-
-        ["състояние"] = (dataCell, advert) => advert.Condition = dataCell.TextContent,
-
-        ["пробег"] = (dataCell, advert) =>
-        {
-            string sanitizedValue = dataCell.TextContent.ToLower().Replace("км", string.Empty).Trim();
-
-            if (int.TryParse(sanitizedValue, out int kilometrage))
-            {
-                advert.Kilometrage = kilometrage;
-            }
-        },
-
-        ["мощност[к.с.]"] = (dataCell, advert) =>
-        {
-            string sanitizedValue = dataCell.TextContent.ToLower().Replace("к.с", string.Empty).Trim();
-
-            if (int.TryParse(sanitizedValue, out int horsePowers))
-            {
-                advert.HorsePowers = horsePowers;
-            }
-        },
-
-        ["цвят"] = (dataCell, advert) => advert.Color = dataCell.TextContent,
-
-        ["произведено"] = (dataCell, advert) =>
-        {
-            string sanitizedValue = dataCell.TextContent.ToLower().Replace("г.", string.Empty).Trim();
-            var cultureInfo = new CultureInfo("bg-BG");
-
-            bool isDateValid = DateTime.TryParse(
-                sanitizedValue, cultureInfo, DateTimeStyles.None, out DateTime manufacturedOn);
-
-            if (isDateValid)
-            {
-                advert.ManufacturedOn = manufacturedOn;
-            }
-        },
-
-        ["цена"] = (dataCell, advert) =>
-        {
-            string lowercaseText = dataCell.TextContent.ToLower();
-
-            if (lowercaseText == "цена по договаряне")
-            {
-                advert.Price = 0;
-                return;
-            }
-
-            const string bgn = "лв.";
-            const string eur = "eur";
-
-            string currencyAsText = lowercaseText.Split(" ")[^1];
-
-            if (currencyAsText == bgn)
-            {
-                advert.Currency = Currency.Bgn;
-            }
-
-            if (currencyAsText == eur)
-            {
-                advert.Currency = Currency.Eur;
-            }
-
-            string sanitizedValue = lowercaseText.Sanitize(" ", bgn, eur);
-
-            if (decimal.TryParse(sanitizedValue, out decimal price))
-            {
-                advert.Price = price;
-            }
-        },
-
-        ["модел"] = (dataCell, advert) =>
-        {
-            var anchor = dataCell.QuerySelector("a");
-
-            var modelArgs = anchor?.GetAttribute("href")?.Split("/");
-            string? content = anchor?.TextContent;
-
-            if (modelArgs == null || modelArgs.Length < 2 || content == null)
-            {
-                return;
-            }
-
-            var brandArgs = modelArgs[^2].Split('-');
-            var brandBuilder = new StringBuilder();
-
-            foreach (string brandArg in brandArgs)
-            {
-                string firstLetter = brandArg.First().ToString().ToUpper();
-
-                brandBuilder.Append(firstLetter);
-
-                for (int i = 1; i < brandArg.Length; i++)
-                {
-                    brandBuilder.Append(brandArg[i]);
-                }
-
-                brandBuilder.Append(' ');
-            }
-
-            advert.Brand = brandBuilder.ToString().Trim();
-
-            string brandSeparatedWithDash = advert.Brand.Replace(' ', '-');
-
-            advert.Model = content
-                .Sanitize(brandSeparatedWithDash, brandSeparatedWithDash.ToUpper())
-                .Trim();
-        }
+        ["тип"] = (domElement, advert) => advert.BodyStyle = domElement.TextContent,
+        ["скоростна кутия"] = (domElement, advert) => advert.Transmission = domElement.TextContent,
+        ["тип двигател"] = ScrapeEngine,
+        ["състояние"] = (domElement, advert) => advert.Condition = domElement.TextContent,
+        ["пробег"] = ScrapeKilometrage,
+        ["мощност[к.с.]"] = ScrapeHorsePowers,
+        ["цвят"] = (domElement, advert) => advert.Color = domElement.TextContent,
+        ["произведено"] = ScrapeManufacturedOnDate,
+        ["цена"] = ScrapePriceAndCurrency,
+        ["модел"] = ScrapeBrandAndModel,
     };
 
     private readonly IDateTimeManager dateTimeManager;
@@ -145,46 +29,29 @@ public class AutoBgScraper : IScraper
 
     public ScrapedAdvert ScrapeAdvert(IDocument document)
     {
-        ScrapeMainData(document, out ScrapedAdvert scrapedAdvert);
-        ScrapeLocation(document, out string? region, out string? town);
+        var (region, populatedPlace) = ScrapeLocation(document);
 
-        var urlArgs = document.QuerySelector("title")?.TextContent.Split(" ");
-
-        if (urlArgs != null && urlArgs.Length >= 3)
+        var scrapedAdvert = new ScrapedAdvert
         {
-            scrapedAdvert.RemoteId = urlArgs[^3];
-        }
+            Region = region,
+            PopulatedPlace = populatedPlace,
+            RemoteId = ScrapeRemoteId(document),
+            Title = ScrapeTitle(document),
+            Description = ScrapeDescription(document),
+            ImageUrls = ScapeImageUrls(document),
+        };
 
-        var description = document.QuerySelector("div.moreInfo")?.TextContent;
-
-        if (description != null && description.Trim() != string.Empty)
-        {
-            scrapedAdvert.Description = description;
-        }
-
-        var title = document.QuerySelector("div.titleBig > h1")?.TextContent;
-
-        if (title != null && title.Trim() != string.Empty)
-        {
-            scrapedAdvert.Title = title;
-        }
-
-        scrapedAdvert.Region = region;
-        scrapedAdvert.Town = town;
-
-        scrapedAdvert.ImageUrls = ScapeImageUrls(document);
+        ScrapeMainAdvertData(document, scrapedAdvert);
         return scrapedAdvert;
     }
 
     public IEnumerable<AdvertResult?> ScrapeAdvertResultsFromPage(IDocument document)
         => document
             .QuerySelectorAll("#resultsPage > ul > #rightColumn > .results > .resultItem")
-            .Select(ScrapeAdvertResult);
+            .Select(item => ScrapeAdvertResult(item, dateTimeManager.Today()));
 
-    private static void ScrapeMainData(IDocument document, out ScrapedAdvert scrapedAdvert)
+    private static void ScrapeMainAdvertData(IDocument document, ScrapedAdvert scrapedAdvert)
     {
-        scrapedAdvert = new ScrapedAdvert();
-
         var tableRows = document.QuerySelectorAll("div.carData > table.dowble > tbody > tr");
 
         var headers = tableRows
@@ -201,98 +68,12 @@ public class AutoBgScraper : IScraper
         {
             string header = headers[i];
 
-            if (mainDataParsingTable.ContainsKey(header))
+            if (!mainAdvertDataScrapingTable.ContainsKey(header))
             {
-                mainDataParsingTable[header].Invoke(tableDataCells[i], scrapedAdvert);
+                continue;
             }
+
+            mainAdvertDataScrapingTable[header].Invoke(tableDataCells[i], scrapedAdvert);
         }
-    }
-
-    private static void ScrapeLocation(IDocument document, out string? region, out string? town)
-    {
-        region = null;
-        town = null;
-
-        var locationArgs = document
-            .QuerySelectorAll("#leftColumn > #callDealerInside > div.main > div.name")[1]?
-            .TextContent
-            .Split(",")
-            .Select(arg => arg.Trim())
-            .ToList();
-
-        if (locationArgs == null)
-        {
-            return;
-        }
-
-        if (locationArgs.Count >= 1)
-        {
-            town = locationArgs[0];
-        }
-
-        if (locationArgs.Count >= 2)
-        {
-            region = locationArgs[1];
-        }
-    }
-
-    private static IEnumerable<string> ScapeImageUrls(IDocument document)
-    {
-        var imageUrls = document
-            .QuerySelectorAll("#carGallery > .smallPhotos > ul > li")
-            .Select(li => li.QuerySelector("img")?.GetAttribute("src"))
-            .ToList();
-
-        var bigImageUrl = document.QuerySelector("#carGallery > .bigPhoto > span > img")?.GetAttribute("src");
-        imageUrls.Add(bigImageUrl);
-
-        return imageUrls.Where(imageUrl => imageUrl != null).Distinct().ToList()!;
-    }
-
-    private AdvertResult? ScrapeAdvertResult(IElement resultItem)
-    {
-        string urlQuery = ".text > .head > .link > a";
-        string modifiedOnQuery = ".text > .info > .date";
-
-        string? url = resultItem.QuerySelector(urlQuery)?.GetAttribute("href");
-        string? modifiedOnAsText = resultItem.QuerySelector(modifiedOnQuery)?.TextContent;
-
-        if (modifiedOnAsText == null || url == null)
-        {
-            return null;
-        }
-
-        var modifiedOnArgs = modifiedOnAsText.Split(" ");
-        var modifiedOnTimeArgs = modifiedOnArgs[0].Split(":");
-
-        bool hourValid = int.TryParse(modifiedOnTimeArgs[0], out int hour);
-        bool minuteValid = int.TryParse(modifiedOnTimeArgs[1], out int minute);
-
-        string modifiedOnDateAsText = modifiedOnArgs[3].ToLower().Trim();
-
-        var today = dateTimeManager.Today();
-        int day = today.Day;
-        int month = today.Month;
-        int year = today.Year;
-
-        if (modifiedOnDateAsText != "днес")
-        {
-            var modifiedOnDateArgs = modifiedOnDateAsText.Split(".");
-
-            bool dayValid = int.TryParse(modifiedOnDateArgs[0], out day);
-            bool monthValid = int.TryParse(modifiedOnDateArgs[1], out month);
-            bool yearValid = int.TryParse(modifiedOnDateArgs[2], out year);
-
-            if (!hourValid || !minuteValid || !dayValid || !monthValid || !yearValid)
-            {
-                return null;
-            }
-        }
-
-        return new AdvertResult
-        {
-            Url = url,
-            ModifiedOn = new DateTime(year, month, day, hour, minute, 0)
-        };
     }
 }

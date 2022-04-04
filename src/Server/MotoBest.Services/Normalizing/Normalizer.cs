@@ -40,7 +40,7 @@ public class Normalizer : INormalizer
             HorsePowers = scrapedAdvert.HorsePowers,
             Kilometrage = scrapedAdvert.Kilometrage,
             ManufacturedOn = scrapedAdvert.ManufacturedOn,
-            Town = NormalizeTown(scrapedAdvert.Town),
+            Town = NormalizeTown(scrapedAdvert.PopulatedPlace),
             Region = NormalizeRegion(scrapedAdvert.Region),
             Transmission = scrapedAdvert.Transmission?.Trim().ToLower(),
             Brand = NormalizeBrand(scrapedAdvert.Brand),
@@ -54,14 +54,9 @@ public class Normalizer : INormalizer
 
     private decimal? NormalizePrice(decimal? price, Currency? currency)
     {
-        if (currency == null)
+        if (currency == null || price == null)
         {
             return price;
-        }
-
-        if (price == null)
-        {
-            return null;
         }
 
         return price * currencyCourseProvider.GetCourseToBgn(currency.Value);
@@ -69,7 +64,7 @@ public class Normalizer : INormalizer
 
     private static string? NormalizeRegion(string? region)
     {
-        return region?.Sanitize("регион").Trim();
+        return region?.RemoveMany("регион").Trim();
     }
 
     private static string? NormalizeBrand(string? brand)
@@ -91,7 +86,7 @@ public class Normalizer : INormalizer
 
     private static string? NormalizeTown(string? town)
     {
-        return town?.Sanitize("с.", "гр.").Trim();
+        return town?.RemoveMany("с.", "гр.").Trim();
     }
 
     private static string? NormalizeEngine(string? engine)

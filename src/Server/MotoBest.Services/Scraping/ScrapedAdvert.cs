@@ -1,4 +1,5 @@
 ﻿using MotoBest.Common;
+using MotoBest.Data.Models;
 
 namespace MotoBest.Services.Scraping;
 
@@ -34,13 +35,15 @@ public class ScrapedAdvert
 
     public string? Model { get; set; }
 
-    public string? Town { get; set; }
+    public string? PopulatedPlace { get; set; }
 
     public string? EuroStandard { get; set; }
 
     public string? Region { get; set; }
 
     public DateTime? ModifiedOn { get; set; }
+
+    public PopulatedPlaceType? PopulatedPlaceType { get; set; }
 
     public IEnumerable<string> ImageUrls { get; set; } = new List<string>();
 }

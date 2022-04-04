@@ -17,7 +17,7 @@ public static class StringExtensions
         return descriptionBuilder.ToString().Trim();
     }
 
-    public static string Sanitize(this string text, params string[] stringsToSanitize)
+    public static string RemoveMany(this string text, params string[] stringsToSanitize)
         => text.ReplaceManyWith(newValue: string.Empty, stringsToSanitize);
 
     public static string ReplaceManyWith(this string text, string newValue, params string[] oldValues)

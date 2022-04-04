@@ -30,7 +30,7 @@ public class NormalizedAdvert
 
     public string? Model { get; set; }
 
-    public string? Town { get; set; }
+    public string? PopulatedPlace { get; set; }
 
     public string? EuroStandard { get; set; }
 

@@ -40,7 +40,7 @@ public class Normalizer : INormalizer
             HorsePowers = scrapedAdvert.HorsePowers,
             Kilometrage = scrapedAdvert.Kilometrage,
             ManufacturedOn = scrapedAdvert.ManufacturedOn,
-            Town = NormalizeTown(scrapedAdvert.PopulatedPlace),
+            PopulatedPlace = NormalizeTown(scrapedAdvert.PopulatedPlace),
             Region = NormalizeRegion(scrapedAdvert.Region),
             Transmission = scrapedAdvert.Transmission?.Trim().ToLower(),
             Brand = NormalizeBrand(scrapedAdvert.Brand),

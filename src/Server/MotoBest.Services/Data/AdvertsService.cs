@@ -79,7 +79,7 @@ public class AdvertsService : IAdvertsService
             .FirstOrDefaultAsync(r => r.Name == normalizedAdvert.Region);
 
         PopulatedPlace? town = await townsRepository.All()
-            .FirstOrDefaultAsync(t => t.Name == normalizedAdvert.Town);
+            .FirstOrDefaultAsync(t => t.Name == normalizedAdvert.PopulatedPlace);
 
         Brand? brand = await brandsRepository.All()
             .FirstOrDefaultAsync(b => b.Name == normalizedAdvert.Brand);

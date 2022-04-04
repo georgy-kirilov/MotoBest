@@ -1,5 +1,3 @@
-Town model should be renamed to PopulatedPlace because the Abroad region supports countries
-Add model/enum PopulatedPlaceType which has City, Village, Country values
 Add constraint which does not allow PopulatedPlaces with duplicate names in the same region
 Models which does not exist should be added to the database
 Scraped PopulatedPlace property should also contain information about the type of the populated place

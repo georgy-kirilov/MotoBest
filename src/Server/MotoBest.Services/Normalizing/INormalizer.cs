@@ -1,4 +1,4 @@
-﻿using MotoBest.Services.Scraping;
+﻿using MotoBest.Services.Scraping.Models;
 
 namespace MotoBest.Services.Normalizing;
 

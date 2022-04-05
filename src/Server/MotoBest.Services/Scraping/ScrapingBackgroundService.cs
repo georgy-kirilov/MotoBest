@@ -11,12 +11,12 @@ namespace MotoBest.Services.Scraping;
 
 public class ScrapingBackgroundService : BackgroundService
 {
-    private readonly IScraper scraper;
+    private readonly ISiteScraper scraper;
     private readonly INormalizer normalizer;
     private readonly IServiceScopeFactory serviceScopeFactory;
 
     public ScrapingBackgroundService(
-        IScraper scraper,
+        ISiteScraper scraper,
         INormalizer normalizer,
         IServiceScopeFactory serviceScopeFactory)
     {
@@ -47,7 +47,7 @@ public class ScrapingBackgroundService : BackgroundService
                 var advertResultsPageDocument = await context.OpenAsync(advertResultsUrl, stoppingToken);
 
                 var advertResults = scraper
-                    .ScrapeAdvertResultsFromPage(advertResultsPageDocument)
+                    .ScrapeSearchAdvertResults(advertResultsPageDocument)
                     .Where(res => res != null && res.ModifiedOn >= latestModifiedOnDate);
 
                 if (!advertResults.Any())

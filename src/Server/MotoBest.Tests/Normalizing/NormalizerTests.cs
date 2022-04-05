@@ -2,6 +2,7 @@
 
 using MotoBest.Services.Normalizing;
 using MotoBest.Services.Scraping;
+using MotoBest.Services.Scraping.Models;
 using MotoBest.Tests.Mocks;
 
 using System.IO;
@@ -35,6 +36,6 @@ public class NormalizerTests
         var normalizer = new Normalizer(new FakeCurrencyCourseProvider());
         var actualNormalizedAdvert = normalizer.Normalize(scrapedAdvert!);
 
-        expectedNormalizedAdvert.AssertProperties(actualNormalizedAdvert);
+        expectedNormalizedAdvert.AssertPropertyValues(actualNormalizedAdvert);
     }
 }

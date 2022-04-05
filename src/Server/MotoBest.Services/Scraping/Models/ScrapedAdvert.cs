@@ -1,7 +1,7 @@
 ﻿using MotoBest.Common;
 using MotoBest.Data.Models;
 
-namespace MotoBest.Services.Scraping;
+namespace MotoBest.Services.Scraping.Models;
 
 public class ScrapedAdvert
 {

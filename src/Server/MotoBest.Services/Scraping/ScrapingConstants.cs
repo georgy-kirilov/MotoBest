@@ -10,5 +10,8 @@ public static class ScrapingConstants
         public const string HorsePowersLabel = "к.с";
         public const string KilometersLabel = "км";
         public const string TodayTextLabel = "днес";
+
+        public const string BodyStyleLabel = "тип";
+        public const string ColorLabel = "цвят";
     }
 }

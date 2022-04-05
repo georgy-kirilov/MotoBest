@@ -1,20 +1,23 @@
 ﻿using AngleSharp.Dom;
 
+using MotoBest.Services.Scraping.Models;
+
 using static MotoBest.Services.Scraping.AutoBgPropertyScrapers;
+using static MotoBest.Services.Scraping.ScrapingConstants.AutoBg;
 
 namespace MotoBest.Services.Scraping;
 
-public class AutoBgScraper : IScraper
+public class AutoBgSiteScraper : ISiteScraper
 {
     private static readonly Dictionary<string, Action<IElement, ScrapedAdvert>> mainAdvertDataScrapingTable = new()
     {
-        ["тип"] = (domElement, advert) => advert.BodyStyle = domElement.TextContent,
-        ["скоростна кутия"] = (domElement, advert) => advert.Transmission = domElement.TextContent,
+        [ColorLabel] = ScrapeColor,
+        [BodyStyleLabel] = ScrapeBodyStyle,
+        ["скоростна кутия"] = ScrapeTransmission,
         ["тип двигател"] = ScrapeEngine,
-        ["състояние"] = (domElement, advert) => advert.Condition = domElement.TextContent,
+        ["състояние"] = ScrapeCondition,
         ["пробег"] = ScrapeKilometrage,
         ["мощност[к.с.]"] = ScrapeHorsePowers,
-        ["цвят"] = (domElement, advert) => advert.Color = domElement.TextContent,
         ["произведено"] = ScrapeManufacturedOnDate,
         ["цена"] = ScrapePriceAndCurrency,
         ["модел"] = ScrapeBrandAndModel,
@@ -22,7 +25,7 @@ public class AutoBgScraper : IScraper
 
     private readonly IDateTimeManager dateTimeManager;
 
-    public AutoBgScraper(IDateTimeManager dateTimeManager)
+    public AutoBgSiteScraper(IDateTimeManager dateTimeManager)
     {
         this.dateTimeManager = dateTimeManager;
     }
@@ -45,7 +48,7 @@ public class AutoBgScraper : IScraper
         return scrapedAdvert;
     }
 
-    public IEnumerable<AdvertResult?> ScrapeAdvertResultsFromPage(IDocument document)
+    public IEnumerable<SearchAdvertResult?> ScrapeSearchAdvertResults(IDocument document)
         => document
             .QuerySelectorAll("#resultsPage > ul > #rightColumn > .results > .resultItem")
             .Select(item => ScrapeAdvertResult(item, dateTimeManager.Today()));

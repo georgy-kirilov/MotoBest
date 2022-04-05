@@ -20,7 +20,7 @@ builder.Services
     .AddAppIdentity(identityOptions);
 
 builder.Services
-    .AddTransient<IScraper, AutoBgScraper>()
+    .AddTransient<ISiteScraper, AutoBgSiteScraper>()
     .AddSingleton<IDateTimeManager, DateTimeManager>()
     .AddScoped(typeof(IRepository<>), typeof(Repository<>))
     .AddSingleton<ICurrencyCourseProvider, StaticCurrencyCourseProvider>()

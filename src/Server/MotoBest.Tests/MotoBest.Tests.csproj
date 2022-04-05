@@ -74,13 +74,13 @@
     <None Update="Scraping\AutoBg\SampleAdvertResultPages\Test-003.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Scraping\AutoBg\SampleAdverts\Test-001.html">
+    <None Update="Scraping\AutoBg\SampleAdverts\Test_001.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Scraping\AutoBg\SampleAdverts\Test-002.html">
+    <None Update="Scraping\AutoBg\SampleAdverts\Test_002.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Scraping\AutoBg\SampleAdverts\Test-003.html">
+    <None Update="Scraping\AutoBg\SampleAdverts\Test_003.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Scraping\AutoBg\SampleAdverts\Test-004.html">

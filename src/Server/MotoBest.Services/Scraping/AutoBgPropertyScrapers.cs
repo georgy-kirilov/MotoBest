@@ -1,7 +1,7 @@
 ﻿using AngleSharp.Dom;
 
 using MotoBest.Common;
-
+using MotoBest.Services.Scraping.Models;
 using System.Globalization;
 using System.Text;
 
@@ -12,6 +12,18 @@ namespace MotoBest.Services.Scraping;
 
 internal static class AutoBgPropertyScrapers
 {
+    internal static void ScrapeBodyStyle(IElement bodyStyleDomElement, ScrapedAdvert advert)
+        => advert.BodyStyle = bodyStyleDomElement.TextContent.Trim();
+
+    internal static void ScrapeTransmission(IElement transmissionDomElement, ScrapedAdvert advert)
+        => advert.Transmission = transmissionDomElement.TextContent.Trim();
+    
+    internal static void ScrapeColor(IElement colorDomElement, ScrapedAdvert advert)
+        => advert.Color = colorDomElement.TextContent.Trim();
+
+    internal static void ScrapeCondition(IElement conditionDomElement, ScrapedAdvert advert)
+        => advert.Condition = conditionDomElement.TextContent.Trim();
+
     internal static void ScrapeBrandAndModel(IElement domElement, ScrapedAdvert advert)
     {
         var anchor = domElement.QuerySelector("a");
@@ -170,7 +182,7 @@ internal static class AutoBgPropertyScrapers
         advert.Currency = ParseCurrency(priceAsText);
     }
 
-    internal static AdvertResult? ScrapeAdvertResult(IElement resultItem, DateTime todayDate)
+    internal static SearchAdvertResult? ScrapeAdvertResult(IElement resultItem, DateTime todayDate)
     {
         string urlQuery = ".text > .head > .link > a";
         string modifiedOnQuery = ".text > .info > .date";
@@ -209,7 +221,7 @@ internal static class AutoBgPropertyScrapers
             }
         }
 
-        return new AdvertResult
+        return new SearchAdvertResult
         {
             Url = url,
             ModifiedOn = new DateTime(year, month, day, hour, minute, 0)

@@ -20,14 +20,14 @@ builder.Services
     .AddAppIdentity(identityOptions);
 
 builder.Services
-    .AddTransient<ISiteScraper, AutoBgSiteScraper>()
+    .AddTransient<ISiteScraper, DesktopAutoBgSiteScraper>()
     .AddSingleton<IDateTimeManager, DateTimeManager>()
     .AddScoped(typeof(IRepository<>), typeof(Repository<>))
     .AddSingleton<ICurrencyCourseProvider, StaticCurrencyCourseProvider>()
-    .AddTransient<INormalizer, Normalizer>()
-    .AddTransient<IAdvertsService, AdvertsService>();
+    .AddTransient<ISiteDataNormalizer, SiteDataNormalizer>()
+    .AddTransient<IAdvertService, AdvertService>();
 
-//builder.Services.AddHostedService<ScrapingBackgroundService>();
+builder.Services.AddHostedService<ScrapingBackgroundService>();
 
 builder.Services.AddControllers();
 

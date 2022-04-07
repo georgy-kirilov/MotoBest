@@ -2,7 +2,7 @@
 
 namespace MotoBest.Services.Data;
 
-public interface IAdvertsService
+public interface IAdvertService
 {
     Task AddAsync(NormalizedAdvert advert);
 }

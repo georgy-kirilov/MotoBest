@@ -12,12 +12,12 @@ namespace MotoBest.Services.Scraping;
 public class ScrapingBackgroundService : BackgroundService
 {
     private readonly ISiteScraper scraper;
-    private readonly INormalizer normalizer;
+    private readonly ISiteDataNormalizer normalizer;
     private readonly IServiceScopeFactory serviceScopeFactory;
 
     public ScrapingBackgroundService(
         ISiteScraper scraper,
-        INormalizer normalizer,
+        ISiteDataNormalizer normalizer,
         IServiceScopeFactory serviceScopeFactory)
     {
         this.scraper = scraper;
@@ -60,11 +60,11 @@ public class ScrapingBackgroundService : BackgroundService
                     async Task method()
                     {
                         using var scope = serviceScopeFactory.CreateScope();
-                        var advertsService = scope.ServiceProvider.GetRequiredService<IAdvertsService>();
+                        var advertsService = scope.ServiceProvider.GetRequiredService<IAdvertService>();
                         var fullAdvertDocument = await context.OpenAsync(advertResult!.Url, stoppingToken);
                         var scrapedAdvert = scraper.ScrapeAdvert(fullAdvertDocument);
                         scrapedAdvert.ModifiedOn = advertResult.ModifiedOn;
-                        var normalizedAdvert = normalizer.Normalize(scrapedAdvert);
+                        var normalizedAdvert = normalizer.NormalizeAdvert(scrapedAdvert);
                         await advertsService.AddAsync(normalizedAdvert);
                     }
 

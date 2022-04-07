@@ -6,7 +6,7 @@ using MotoBest.Services.Normalizing;
 
 namespace MotoBest.Services.Data;
 
-public class AdvertsService : IAdvertsService
+public class AdvertService : IAdvertService
 {
     private readonly IRepository<Advert> advertsRepository;
     private readonly IRepository<Transmission> transmissionsRepository;
@@ -19,7 +19,7 @@ public class AdvertsService : IAdvertsService
     private readonly IRepository<PopulatedPlace> townsRepository;
     private readonly IRepository<Brand> brandsRepository;
 
-    public AdvertsService(
+    public AdvertService(
         IRepository<Advert> advertsRepository,
         IRepository<Transmission> transmissionsRepository,
         IRepository<BodyStyle> bodyStylesRepository,

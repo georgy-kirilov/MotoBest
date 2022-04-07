@@ -4,7 +4,7 @@ using MotoBest.Services.Scraping.Models;
 
 namespace MotoBest.Tests.Scraping.AutoBg;
 
-public static class SampleSearchAdvertResults
+public static class DesktopAutoBgSearchAdvertResults
 {
     public static readonly SearchAdvertResult[] Test_001 = new SearchAdvertResult[]
     {

@@ -7,7 +7,7 @@ using MotoBest.Services.Scraping.Models;
 
 namespace MotoBest.Services.Normalizing;
 
-public class Normalizer : INormalizer
+public class SiteDataNormalizer : ISiteDataNormalizer
 {
     private readonly ICurrencyCourseProvider currencyCourseProvider;
 
@@ -24,12 +24,12 @@ public class Normalizer : INormalizer
         ["Mercedes Benz"] = BrandNames.MercedesBenz
     };
 
-    public Normalizer(ICurrencyCourseProvider currencyCourseProvider)
+    public SiteDataNormalizer(ICurrencyCourseProvider currencyCourseProvider)
     {
         this.currencyCourseProvider = currencyCourseProvider;
     }
 
-    public NormalizedAdvert Normalize(ScrapedAdvert scrapedAdvert)
+    public NormalizedAdvert NormalizeAdvert(ScrapedAdvert scrapedAdvert)
         => new()
         {
             Title = scrapedAdvert.Title?.RemoveRepeatingWhiteSpaces(),

@@ -6,11 +6,11 @@ using System.Globalization;
 using System.Text;
 
 using static MotoBest.Common.GlobalConstants;
-using static MotoBest.Services.Scraping.ScrapingConstants.AutoBg;
+using static MotoBest.Services.Scraping.ScrapingConstants.DesktopAutoBg;
 
 namespace MotoBest.Services.Scraping;
 
-internal static class AutoBgPropertyScrapers
+internal static class DesktopAutoBgPropertyScrapers
 {
     internal static void ScrapeBodyStyle(IElement bodyStyleDomElement, ScrapedAdvert advert)
         => advert.BodyStyle = bodyStyleDomElement.TextContent.Trim();

@@ -5,7 +5,7 @@ using MotoBest.Services.Scraping.Models;
 
 namespace MotoBest.Tests.Scraping.AutoBg;
 
-public static class SampleScrapedAdverts
+public static class DesktopAutoBgScrapedAdverts
 {
 
     public static readonly ScrapedAdvert Test_001 = new()

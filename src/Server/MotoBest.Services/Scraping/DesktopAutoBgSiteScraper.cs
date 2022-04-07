@@ -2,12 +2,12 @@
 
 using MotoBest.Services.Scraping.Models;
 
-using static MotoBest.Services.Scraping.AutoBgPropertyScrapers;
-using static MotoBest.Services.Scraping.ScrapingConstants.AutoBg;
+using static MotoBest.Services.Scraping.DesktopAutoBgPropertyScrapers;
+using static MotoBest.Services.Scraping.ScrapingConstants.DesktopAutoBg;
 
 namespace MotoBest.Services.Scraping;
 
-public class AutoBgSiteScraper : ISiteScraper
+public class DesktopAutoBgSiteScraper : ISiteScraper
 {
     private static readonly Dictionary<string, Action<IElement, ScrapedAdvert>> mainAdvertDataScrapingTable = new()
     {
@@ -25,7 +25,7 @@ public class AutoBgSiteScraper : ISiteScraper
 
     private readonly IDateTimeManager dateTimeManager;
 
-    public AutoBgSiteScraper(IDateTimeManager dateTimeManager)
+    public DesktopAutoBgSiteScraper(IDateTimeManager dateTimeManager)
     {
         this.dateTimeManager = dateTimeManager;
     }

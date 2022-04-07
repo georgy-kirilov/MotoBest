@@ -1,20 +1,19 @@
 ﻿using AngleSharp;
 
 using MotoBest.Common;
+
 using MotoBest.Services;
 using MotoBest.Services.Scraping;
 using MotoBest.Services.Scraping.Models;
+
 using MotoBest.Tests.Mocks;
-using MotoBest.Tests.Scraping;
+using MotoBest.Tests.Scraping.AutoBg;
+
 using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Text.Json;
 using System.Threading.Tasks;
 
 using Xunit;
-
-using static MotoBest.Tests.Scraping.SampleScrapedAdverts.AutoBg;
 
 namespace MotoBest.Tests.AutoBg;
 
@@ -30,25 +29,22 @@ public class AutoBgSiteScraperTests
     }
 
     [Theory]
-    //[InlineData("Test-001")]
-    //[InlineData("Test-002")]
-    //[InlineData("Test-003")]
-    //[InlineData("Test-004")]
-    //[InlineData("Test-005")]
-    //[InlineData("Test-006")]
-    //[InlineData("Test-007")]
-    //[InlineData("Test-008")]
-    //[InlineData("Test-009")]
-    //[InlineData("Test-010")]
-    [InlineData(nameof(Test_001))]
-    [InlineData(nameof(Test_002))]
-    [InlineData(nameof(Test_003))]
-    public async Task ScrapeAdvert_ShouldReturn_CorrectResult(string scrapedAdvertName)
+    [InlineData(nameof(SampleScrapedAdverts.Test_001))]
+    [InlineData(nameof(SampleScrapedAdverts.Test_002))]
+    [InlineData(nameof(SampleScrapedAdverts.Test_003))]
+    [InlineData(nameof(SampleScrapedAdverts.Test_004))]
+    [InlineData(nameof(SampleScrapedAdverts.Test_005))]
+    [InlineData(nameof(SampleScrapedAdverts.Test_006))]
+    [InlineData(nameof(SampleScrapedAdverts.Test_007))]
+    [InlineData(nameof(SampleScrapedAdverts.Test_008))]
+    [InlineData(nameof(SampleScrapedAdverts.Test_009))]
+    [InlineData(nameof(SampleScrapedAdverts.Test_010))]
+    public async Task ScrapeAdvert_ShouldReturn_CorrectResult(string scrapedAdvertTestName)
     {
-        var type = typeof(SampleScrapedAdverts.AutoBg);
-        var field = type.GetField(scrapedAdvertName);
+        var type = typeof(SampleScrapedAdverts);
+        var field = type.GetField(scrapedAdvertTestName);
 
-        string filePath = $"./Scraping/AutoBg/SampleAdverts/{scrapedAdvertName}.html";
+        string filePath = $"./Scraping/AutoBg/SampleScrapedAdvertPages/{scrapedAdvertTestName}.html";
         string html = await File.ReadAllTextAsync(filePath);
 
         var document = await browsingContext.OpenAsync(res => res.Content(html));
@@ -59,24 +55,21 @@ public class AutoBgSiteScraperTests
     }
 
     [Theory]
-    [InlineData("Test-001")]
-    [InlineData("Test-002")]
-    [InlineData("Test-003")]
-    public async Task ScrapeAdvertResultsFromPage_ShouldReturn_CorrectResult(string sampleAdvertResultPageFileName)
+    [InlineData(nameof(SampleSearchAdvertResults.Test_001))]
+    [InlineData(nameof(SampleSearchAdvertResults.Test_002))]
+    [InlineData(nameof(SampleSearchAdvertResults.Test_003))]
+    public async Task ScrapeSearchAdvertResults_ShouldReturn_CorrectResult(string advertResultTestName)
     {
-        using FileStream openStream = File.OpenRead(
-            $"./Scraping/AutoBg/AdvertResults/{sampleAdvertResultPageFileName}.json");
+        var type = typeof(SampleSearchAdvertResults);
+        var field = type.GetField(advertResultTestName);
 
-        var expectedAdvertResults = await JsonSerializer.DeserializeAsync<SearchAdvertResult[]>(openStream);
-
-        var scraper = new AutoBgSiteScraper(fakeDateTimeManager);
-
-        string html = await File.ReadAllTextAsync(
-            $"./Scraping/AutoBg/SampleAdvertResultPages/{sampleAdvertResultPageFileName}.html");
+        string filePath = $"./Scraping/AutoBg/SampleSearchAdvertResultPages/{advertResultTestName}.html";
+        string html = await File.ReadAllTextAsync(filePath);
 
         var document = await browsingContext.OpenAsync(res => res.Content(html));
 
-        var actualAdvertResults = scraper.ScrapeSearchAdvertResults(document).ToArray();
+        var expectedAdvertResults = field?.GetValue(null) as SearchAdvertResult[];
+        var actualAdvertResults = new AutoBgSiteScraper(fakeDateTimeManager).ScrapeSearchAdvertResults(document).ToArray();
 
         Assert.Equal(expectedAdvertResults, actualAdvertResults);
     }

@@ -15,9 +15,15 @@ public class Advert : BaseModel<string>
     /// </summary>
     public string? RemoteId { get; set; } = "";
 
-    public int SiteId { get; set; }
+    /// <summary>
+    /// Returns null if the advert belongs to MotoBest
+    /// </summary>
+    public int? SiteId { get; set; }
 
-    public virtual Site Site { get; set; } = default!;
+    /// <summary>
+    /// Returns null if the advert belongs to MotoBest
+    /// </summary>
+    public virtual Site? Site { get; set; } = default!;
 
     public string? Title { get; set; }
 

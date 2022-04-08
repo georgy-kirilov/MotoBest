@@ -1,7 +1,9 @@
 ﻿using System;
 
-using MotoBest.Services.Normalizing;
+using MotoBest.Data.Models;
 using MotoBest.Data.Seeding.Constants;
+
+using MotoBest.Services.Normalizing;
 
 namespace MotoBest.Tests.Normalizing;
 
@@ -28,6 +30,8 @@ public static class DesktopAutoBgNormalizedAdverts
         Model = "Mokka",
         Region = RegionNames.Haskovo,
         EuroStandard = null,
+        PopulatedPlaceType = PopulatedPlaceType.City,
+        Site = SiteNames.AutoBg,
         ImageUrls = new[]
         {
             "//cdn2.focus.bg/mobile/photosorg/570/2/med/21647687287424570_JI.jpg",
@@ -64,6 +68,8 @@ public static class DesktopAutoBgNormalizedAdverts
         Model = "E 320",
         Region = null,
         EuroStandard = null,
+        PopulatedPlaceType = PopulatedPlaceType.City,
+        Site = SiteNames.AutoBg,
         ImageUrls = new[]
         {
             "//mobistatic2.focus.bg/mobile/photosorg/877/1/med/11647548823966877_Hu.jpg",
@@ -110,6 +116,8 @@ public static class DesktopAutoBgNormalizedAdverts
         Model = "Rav4",
         Region = RegionNames.Shumen,
         EuroStandard = null,
+        PopulatedPlaceType = PopulatedPlaceType.City,
+        Site = SiteNames.AutoBg,
         ImageUrls = new[]
         {
             "//mobistatic4.focus.bg/mobile/photosorg/459/2/med/21643890746724459_oO.jpg",
@@ -144,6 +152,8 @@ public static class DesktopAutoBgNormalizedAdverts
         Model = "Corsa",
         Region = RegionNames.Pernik,
         EuroStandard = null,
+        PopulatedPlaceType = PopulatedPlaceType.Village,
+        Site = SiteNames.AutoBg,
         ImageUrls = new[]
         {
             "//mobistatic1.focus.bg/mobile/photosorg/937/1/med/11647691017352937_4s.jpg",
@@ -182,6 +192,8 @@ public static class DesktopAutoBgNormalizedAdverts
         Model = "I20",
         Region = null,
         EuroStandard = null,
+        PopulatedPlaceType = PopulatedPlaceType.City,
+        Site = SiteNames.AutoBg,
         ImageUrls = new[]
         {
             "//mobistatic1.focus.bg/mobile/photosorg/101/1/med/11647703904840101_hX.jpg",
@@ -216,6 +228,8 @@ public static class DesktopAutoBgNormalizedAdverts
         Model = "Niva",
         Region = null,
         EuroStandard = null,
+        PopulatedPlaceType = PopulatedPlaceType.City,
+        Site = SiteNames.AutoBg,
         ImageUrls = new[]
         {
             "//cdn2.focus.bg/mobile/photosorg/850/2/med/21647695485012850_Cw.jpg",
@@ -244,6 +258,8 @@ public static class DesktopAutoBgNormalizedAdverts
         Model = "Prius",
         Region = null,
         EuroStandard = null,
+        PopulatedPlaceType = PopulatedPlaceType.City,
+        Site = SiteNames.AutoBg,
         ImageUrls = new[]
         {
             "//mobistatic1.focus.bg/mobile/photosorg/077/1/med/11625296974013077_Yu.jpg",
@@ -285,6 +301,8 @@ public static class DesktopAutoBgNormalizedAdverts
         Model = "E 350",
         Region = null,
         EuroStandard = null,
+        PopulatedPlaceType = PopulatedPlaceType.City,
+        Site = SiteNames.AutoBg,
         ImageUrls = new[]
         {
             "//mobistatic2.focus.bg/mobile/photosorg/036/1/med/11606854971240036_R4.png",
@@ -326,6 +344,8 @@ public static class DesktopAutoBgNormalizedAdverts
         Model = "NX",
         Region = RegionNames.Pernik,
         EuroStandard = null,
+        PopulatedPlaceType = PopulatedPlaceType.Village,
+        Site = SiteNames.AutoBg,
         ImageUrls = new[]
         {
             "//mobistatic1.focus.bg/mobile/photosorg/976/2/med/21647438561242976_Z2.jpg",
@@ -362,6 +382,8 @@ public static class DesktopAutoBgNormalizedAdverts
         Model = "Scenic",
         Region = RegionNames.Varna,
         EuroStandard = null,
+        PopulatedPlaceType = PopulatedPlaceType.City,
+        Site = SiteNames.AutoBg,
         ImageUrls = new[]
         {
             "//mobistatic2.focus.bg/mobile/photosorg/282/1/med/11647188804139282_fc.jpg",

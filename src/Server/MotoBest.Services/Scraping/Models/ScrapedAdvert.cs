@@ -43,6 +43,8 @@ public class ScrapedAdvert
 
     public DateTime? ModifiedOn { get; set; }
 
+    public string Site { get; set; } = "";
+
     public PopulatedPlaceType? PopulatedPlaceType { get; set; }
 
     public IEnumerable<string> ImageUrls { get; set; } = new List<string>();

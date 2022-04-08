@@ -19,6 +19,7 @@ public class AppSeeder : ISeeder
             new RolesSeeder(),
             new PopulatedPlacesSeeder(),
             new EuroStandardsSeeder(),
+            new SitesSeeder(),
         };
 
         foreach (var seeder in seeders)

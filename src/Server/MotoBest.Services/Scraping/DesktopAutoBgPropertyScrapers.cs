@@ -146,7 +146,7 @@ internal static class DesktopAutoBgPropertyScrapers
         string kilometrageAsText = kilometrageDomElement
             .TextContent
             .ToLower()
-            .RemoveMany(KilometersLabel)
+            .RemoveMany(KilometersSuffix)
             .Trim();
 
         advert.Kilometrage = ParseKilometrage(kilometrageAsText);
@@ -157,7 +157,7 @@ internal static class DesktopAutoBgPropertyScrapers
         string horsePowersAsText = horsePowersDomElement
             .TextContent
             .ToLower()
-            .RemoveMany(HorsePowersLabel)
+            .RemoveMany(HorsePowersSuffix)
             .Trim();
 
         advert.HorsePowers = ParseHorsePowers(horsePowersAsText);
@@ -168,7 +168,7 @@ internal static class DesktopAutoBgPropertyScrapers
         string manufacturedOnDateAsText = manufacturedOnDateDomElement
             .TextContent
             .ToLower()
-            .RemoveMany(YearLabel)
+            .RemoveMany(YearSuffix)
             .Trim();
 
         advert.ManufacturedOn = ParseManufacturedOnDate(manufacturedOnDateAsText);
@@ -207,7 +207,7 @@ internal static class DesktopAutoBgPropertyScrapers
         int month = todayDate.Month;
         int year = todayDate.Year;
 
-        if (modifiedOnDateAsText != TodayTextLabel)
+        if (modifiedOnDateAsText != TodayDateAsText)
         {
             var modifiedOnDateArgs = modifiedOnDateAsText.Split(".");
 
@@ -253,7 +253,7 @@ internal static class DesktopAutoBgPropertyScrapers
 
     private static decimal? ParsePrice(string priceAsText)
     {
-        if (priceAsText == "цена по договаряне")
+        if (priceAsText == NegotiablePrice)
         {
             return 0;
         }

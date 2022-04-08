@@ -42,7 +42,8 @@ public class PopulatedPlacesSeeder : ISeeder
         }
     }
 
-    private static async Task SeedPopulatedPlacesAsync(IEnumerable<PopulatedPlaceDto> populatedPlaceDtos, AppDbContext dbContext, int regionId)
+    private static async Task SeedPopulatedPlacesAsync(
+        IEnumerable<PopulatedPlaceDto> populatedPlaceDtos, AppDbContext dbContext, int regionId)
     {
         foreach (var populatedPlaceDto in populatedPlaceDtos)
         {

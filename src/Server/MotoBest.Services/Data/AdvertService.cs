@@ -2,65 +2,72 @@
 
 using MotoBest.Data.Models;
 using MotoBest.Data.Repositories;
+
 using MotoBest.Services.Normalizing;
 
 namespace MotoBest.Services.Data;
 
 public class AdvertService : IAdvertService
 {
-    private readonly IRepository<Advert> advertsRepository;
-    private readonly IRepository<Transmission> transmissionsRepository;
-    private readonly IRepository<BodyStyle> bodyStylesRepository;
-    private readonly IRepository<Engine> enginesRepository;
-    private readonly IRepository<Condition> conditionsRepository;
-    private readonly IRepository<Color> colorsRepository;
-    private readonly IRepository<Region> regionsRepository;
-    private readonly IRepository<EuroStandard> euroStandardsRepository;
-    private readonly IRepository<PopulatedPlace> townsRepository;
-    private readonly IRepository<Brand> brandsRepository;
+    private readonly IRepository<Advert> advertRepository;
+    private readonly IRepository<Transmission> transmissionRepository;
+    private readonly IRepository<BodyStyle> bodyStyleRepository;
+    private readonly IRepository<Engine> engineRepository;
+    private readonly IRepository<Condition> conditionRepository;
+    private readonly IRepository<Color> colorRepository;
+    private readonly IRepository<Region> regionRepository;
+    private readonly IRepository<EuroStandard> euroStandardRepository;
+    private readonly IRepository<PopulatedPlace> populatedPlaceRepository;
+    private readonly IRepository<Brand> brandRepository;
+    private readonly IRepository<Site> siteRepository;
 
     public AdvertService(
-        IRepository<Advert> advertsRepository,
-        IRepository<Transmission> transmissionsRepository,
-        IRepository<BodyStyle> bodyStylesRepository,
-        IRepository<Engine> enginesRepository,
-        IRepository<Condition> conditionsRepository,
-        IRepository<Color> colorsRepository,
-        IRepository<Region> regionsRepository,
-        IRepository<EuroStandard> euroStandardsRepository,
-        IRepository<PopulatedPlace> townsRepository,
-        IRepository<Brand> brandsRepository)
+        IRepository<Advert> advertRepository,
+        IRepository<Transmission> transmissionRepository,
+        IRepository<BodyStyle> bodyStyleRepository,
+        IRepository<Engine> engineRepository,
+        IRepository<Condition> conditionRepository,
+        IRepository<Color> colorRepository,
+        IRepository<Region> regionRepository,
+        IRepository<EuroStandard> euroStandardRepository,
+        IRepository<PopulatedPlace> populatedPlaceRepository,
+        IRepository<Brand> brandRepository,
+        IRepository<Site> siteRepository)
     {
-        this.advertsRepository = advertsRepository;
-        this.transmissionsRepository = transmissionsRepository;
-        this.bodyStylesRepository = bodyStylesRepository;
-        this.enginesRepository = enginesRepository;
-        this.conditionsRepository = conditionsRepository;
-        this.colorsRepository = colorsRepository;
-        this.regionsRepository = regionsRepository;
-        this.euroStandardsRepository = euroStandardsRepository;
-        this.townsRepository = townsRepository;
-        this.brandsRepository = brandsRepository;
+        this.advertRepository = advertRepository;
+        this.transmissionRepository = transmissionRepository;
+        this.bodyStyleRepository = bodyStyleRepository;
+        this.engineRepository = engineRepository;
+        this.conditionRepository = conditionRepository;
+        this.colorRepository = colorRepository;
+        this.regionRepository = regionRepository;
+        this.euroStandardRepository = euroStandardRepository;
+        this.populatedPlaceRepository = populatedPlaceRepository;
+        this.brandRepository = brandRepository;
+        this.siteRepository = siteRepository;
     }
 
     public async Task AddAsync(NormalizedAdvert normalizedAdvert)
     {
-        Transmission? transmission = await transmissionsRepository.All()
+        var site = await siteRepository.All()
+            .FirstOrDefaultAsync(s => s.Name == normalizedAdvert.Site);
+
+        var transmission = await transmissionRepository.All()
             .FirstOrDefaultAsync(t => t.Name == normalizedAdvert.Transmission);
 
-        BodyStyle? bodyStyle = await bodyStylesRepository.All()
+        var bodyStyle = await bodyStyleRepository.All()
             .FirstOrDefaultAsync(bs => bs.Name == normalizedAdvert.BodyStyle);
 
-        Engine? engine = await enginesRepository.All()
+        var engine = await engineRepository.All()
             .FirstOrDefaultAsync(e => e.Name == normalizedAdvert.Engine);
 
-        Condition? condition = await conditionsRepository.All()
+        var condition = await conditionRepository.All()
             .FirstOrDefaultAsync(c => c.Name == normalizedAdvert.Condition);
 
-        Color? color = await colorsRepository.All()
+        var color = await colorRepository.All()
             .FirstOrDefaultAsync(c => c.Name == normalizedAdvert.Color);
 
-        EuroStandard? euroStandard = await euroStandardsRepository.All()
+        var euroStandard = await euroStandardRepository.All()
             .FirstOrDefaultAsync(es => es.Name == normalizedAdvert.EuroStandard);
 
         bool isEuroStandardApproximate = false;
@@ -69,25 +76,31 @@ public class AdvertService : IAdvertService
         {
             isEuroStandardApproximate = true;
 
-            euroStandard = await euroStandardsRepository.All()
+            euroStandard = await euroStandardRepository.All()
                 .Where(es => es.FromDate > normalizedAdvert.ManufacturedOn)
                 .OrderByDescending(es => es.FromDate)
                 .FirstOrDefaultAsync();
         }
 
-        Region? region = await regionsRepository.All()
+        var region = await regionRepository.All()
             .FirstOrDefaultAsync(r => r.Name == normalizedAdvert.Region);
 
-        PopulatedPlace? town = await townsRepository.All()
-            .FirstOrDefaultAsync(t => t.Name == normalizedAdvert.PopulatedPlace);
+        var populatedPlaceSource = region?.PopulatedPlaces.AsQueryable() ?? populatedPlaceRepository.All();
 
-        Brand? brand = await brandsRepository.All()
+        var populatedPlace = populatedPlaceSource.FirstOrDefault(pp =>
+            pp.Name == normalizedAdvert.PopulatedPlace && pp.Type == normalizedAdvert.PopulatedPlaceType);
+
+        region ??= populatedPlace?.Region;
+
+        var brand = await brandRepository.All()
             .FirstOrDefaultAsync(b => b.Name == normalizedAdvert.Brand);
 
-        Model? model = brand?.Models.FirstOrDefault(m => m.Name == normalizedAdvert.Model);
+        var model = brand?.Models.FirstOrDefault(m => m.Name == normalizedAdvert.Model);
 
-        await advertsRepository.AddAsync(new Advert
+        await advertRepository.AddAsync(new Advert
         {
+            SiteId = site?.Id,
+            RemoteId = normalizedAdvert.RemoteId,
             Title = normalizedAdvert.Title,
             Description = normalizedAdvert.Description,
             PriceBgn = normalizedAdvert.PriceBgn,
@@ -99,15 +112,14 @@ public class AdvertService : IAdvertService
             EngineId = engine?.Id,
             ConditionId = condition?.Id,
             ColorId = color?.Id,
-            RegionId = region?.Id ?? town?.RegionId,
+            RegionId = region?.Id,
             IsEuroStandardApproximate = isEuroStandardApproximate,
             EuroStandardId = euroStandard?.Id,
-            PopulatedPlaceId = town?.Id,
+            PopulatedPlaceId = populatedPlace?.Id,
             BrandId = brand?.Id,
             ModelId = model?.Id,
-            RemoteId = normalizedAdvert.RemoteId,
         });
 
-        await advertsRepository.SaveChangesAsync();
+        await advertRepository.SaveChangesAsync();
     }
 }

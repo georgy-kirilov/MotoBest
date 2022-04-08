@@ -1,5 +1,5 @@
 ﻿using AngleSharp.Dom;
-
+using MotoBest.Data.Seeding.Constants;
 using MotoBest.Services.Scraping.Models;
 
 using static MotoBest.Services.Scraping.DesktopAutoBgPropertyScrapers;
@@ -13,14 +13,14 @@ public class DesktopAutoBgSiteScraper : ISiteScraper
     {
         [ColorLabel] = ScrapeColor,
         [BodyStyleLabel] = ScrapeBodyStyle,
-        ["скоростна кутия"] = ScrapeTransmission,
-        ["тип двигател"] = ScrapeEngine,
-        ["състояние"] = ScrapeCondition,
-        ["пробег"] = ScrapeKilometrage,
-        ["мощност[к.с.]"] = ScrapeHorsePowers,
-        ["произведено"] = ScrapeManufacturedOnDate,
-        ["цена"] = ScrapePriceAndCurrency,
-        ["модел"] = ScrapeBrandAndModel,
+        [TransmissionLabel] = ScrapeTransmission,
+        [EngineLabel] = ScrapeEngine,
+        [ConditionLabel] = ScrapeCondition,
+        [KilometrageLabel] = ScrapeKilometrage,
+        [HorsePowersLabel] = ScrapeHorsePowers,
+        [ManufacturedOnDateLabel] = ScrapeManufacturedOnDate,
+        [PriceLabel] = ScrapePriceAndCurrency,
+        [ModelLabel] = ScrapeBrandAndModel,
     };
 
     private readonly IDateTimeManager dateTimeManager;
@@ -42,6 +42,7 @@ public class DesktopAutoBgSiteScraper : ISiteScraper
             Title = ScrapeTitle(document),
             Description = ScrapeDescription(document),
             ImageUrls = ScapeImageUrls(document),
+            Site = SiteNames.AutoBg,
         };
 
         ScrapeMainAdvertData(document, scrapedAdvert);

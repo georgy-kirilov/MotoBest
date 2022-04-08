@@ -1,11 +1,12 @@
 ﻿using AngleSharp;
+
+using System.Text;
+
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-using MotoBest.Common;
 using MotoBest.Services.Data;
 using MotoBest.Services.Normalizing;
-using System.Text;
 
 namespace MotoBest.Services.Scraping;
 
@@ -37,7 +38,7 @@ public class ScrapingBackgroundService : BackgroundService
         {
             await Task.Delay(delayMilliseconds, stoppingToken);
 
-            var latestModifiedOnDate = DateTime.Now.Subtract(TimeSpan.FromHours(1));
+            var latestModifiedOnDate = DateTime.Now.Subtract(TimeSpan.FromHours(2));
             int resultsPageIndex = 1;
 
             while (true)
@@ -60,12 +61,12 @@ public class ScrapingBackgroundService : BackgroundService
                     async Task method()
                     {
                         using var scope = serviceScopeFactory.CreateScope();
-                        var advertsService = scope.ServiceProvider.GetRequiredService<IAdvertService>();
+                        var advertService = scope.ServiceProvider.GetRequiredService<IAdvertService>();
                         var fullAdvertDocument = await context.OpenAsync(advertResult!.Url, stoppingToken);
                         var scrapedAdvert = scraper.ScrapeAdvert(fullAdvertDocument);
                         scrapedAdvert.ModifiedOn = advertResult.ModifiedOn;
                         var normalizedAdvert = normalizer.NormalizeAdvert(scrapedAdvert);
-                        await advertsService.AddAsync(normalizedAdvert);
+                        await advertService.AddAsync(normalizedAdvert);
                     }
 
                     var task = Task.Run(method, stoppingToken);

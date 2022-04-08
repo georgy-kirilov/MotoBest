@@ -1,4 +1,6 @@
-﻿namespace MotoBest.Services.Normalizing;
+﻿using MotoBest.Data.Models;
+
+namespace MotoBest.Services.Normalizing;
 
 public class NormalizedAdvert
 {
@@ -36,7 +38,11 @@ public class NormalizedAdvert
 
     public string? Region { get; set; }
 
+    public string Site { get; set; } = "";
+
     public DateTime? ModifiedOn { get; set; }
+
+    public PopulatedPlaceType? PopulatedPlaceType { get; set; }
 
     public IEnumerable<string> ImageUrls { get; set; } = new List<string>();
 }

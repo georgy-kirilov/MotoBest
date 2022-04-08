@@ -1,9 +1,11 @@
 ﻿using MotoBest.Common;
 
+using MotoBest.Data.Models;
 using MotoBest.Data.Seeding.Constants;
 
-using MotoBest.Services.Scraping;
 using MotoBest.Services.Scraping.Models;
+
+using static MotoBest.Services.Normalizing.NormalizingConstants;
 
 namespace MotoBest.Services.Normalizing;
 
@@ -41,16 +43,18 @@ public class SiteDataNormalizer : ISiteDataNormalizer
             HorsePowers = scrapedAdvert.HorsePowers,
             Kilometrage = scrapedAdvert.Kilometrage,
             ManufacturedOn = scrapedAdvert.ManufacturedOn,
-            PopulatedPlace = NormalizeTown(scrapedAdvert.PopulatedPlace),
+            PopulatedPlace = NormalizePopulatedPlace(scrapedAdvert.PopulatedPlace),
             Region = NormalizeRegion(scrapedAdvert.Region),
             Transmission = scrapedAdvert.Transmission?.Trim().ToLower(),
             Brand = NormalizeBrand(scrapedAdvert.Brand),
             ModifiedOn = scrapedAdvert.ModifiedOn,
+            PopulatedPlaceType = NormalizePopulatedPlaceType(scrapedAdvert.PopulatedPlace),
             PriceBgn = NormalizePrice(scrapedAdvert.Price, scrapedAdvert.Currency),
             ImageUrls = scrapedAdvert.ImageUrls,
             EuroStandard = scrapedAdvert.EuroStandard?.Trim().ToLower(),
             RemoteId = scrapedAdvert.RemoteId?.Trim(),
             Model = scrapedAdvert.Model?.Trim(),
+            Site = scrapedAdvert.Site,
         };
 
     private decimal? NormalizePrice(decimal? price, Currency? currency)
@@ -59,51 +63,59 @@ public class SiteDataNormalizer : ISiteDataNormalizer
         {
             return price;
         }
-
+        
         return price * currencyCourseProvider.GetCourseToBgn(currency.Value);
     }
 
-    private static string? NormalizeRegion(string? region)
+    private static PopulatedPlaceType? NormalizePopulatedPlaceType(string? populatedPlace)
     {
-        return region?.RemoveMany("регион").Trim();
+        populatedPlace = populatedPlace?.Trim();
+
+        if (populatedPlace == null)
+        {
+            return null;
+        }
+
+        if (populatedPlace.Contains(CityPrefix))
+        {
+            return PopulatedPlaceType.City;
+        }
+
+        if (populatedPlace.Contains(VillagePrefix))
+        {
+            return PopulatedPlaceType.Village;
+        }
+        
+        return PopulatedPlaceType.Country;
     }
+
+    private static string? NormalizeRegion(string? region)
+        => region?.RemoveMany(RegionPrefix).Trim();
 
     private static string? NormalizeBrand(string? brand)
     {
+        brand = brand?.Trim();
+
         if (brand == null)
         {
             return null;
         }
 
-        brand = brand.Trim();
-
-        if (!brandVariations.ContainsKey(brand))
-        {
-            return brand;
-        }
-
-        return brandVariations[brand];
+        return brandVariations.ContainsKey(brand) ? brandVariations[brand] : brand;
     }
 
-    private static string? NormalizeTown(string? town)
-    {
-        return town?.RemoveMany("с.", "гр.").Trim();
-    }
+    private static string? NormalizePopulatedPlace(string? populatedPlace)
+        => populatedPlace?.RemoveMany(CityPrefix, VillagePrefix).Trim();
 
     private static string? NormalizeEngine(string? engine)
     {
+        engine = engine?.Trim().ToLower();
+
         if (engine == null)
         {
             return null;
         }
 
-        engine = engine.Trim().ToLower()!;
-
-        if (!engineVariations.ContainsKey(engine))
-        {
-            return engine;
-        }
-
-        return engineVariations[engine];
+        return engineVariations.ContainsKey(engine) ? engineVariations[engine] : engine;
     }
 }

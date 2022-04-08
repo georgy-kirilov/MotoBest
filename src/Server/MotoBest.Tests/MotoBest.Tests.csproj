@@ -67,8 +67,4 @@
     </None>
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Normalizing\NormalizedAdverts\" />
-  </ItemGroup>
-
 </Project>

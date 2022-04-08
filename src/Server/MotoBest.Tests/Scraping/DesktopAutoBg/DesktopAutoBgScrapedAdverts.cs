@@ -1,6 +1,7 @@
 ﻿using System;
 
 using MotoBest.Common;
+using MotoBest.Data.Seeding.Constants;
 using MotoBest.Services.Scraping.Models;
 
 namespace MotoBest.Tests.Scraping.AutoBg;
@@ -30,6 +31,7 @@ public static class DesktopAutoBgScrapedAdverts
         Model = "Mokka",
         Region = "регион Хасково",
         EuroStandard = null,
+        Site = SiteNames.AutoBg,
         ImageUrls = new[]
         {
             "//cdn2.focus.bg/mobile/photosorg/570/2/med/21647687287424570_JI.jpg",
@@ -67,6 +69,7 @@ public static class DesktopAutoBgScrapedAdverts
         Model = "E 320",
         Region = null,
         EuroStandard = null,
+        Site = SiteNames.AutoBg,
         ImageUrls = new[]
         {
             "//mobistatic2.focus.bg/mobile/photosorg/877/1/med/11647548823966877_Hu.jpg",
@@ -114,6 +117,7 @@ public static class DesktopAutoBgScrapedAdverts
         Model = "Rav4",
         Region = "регион Шумен",
         EuroStandard = null,
+        Site = SiteNames.AutoBg,
         ImageUrls = new[]
         {
             "//mobistatic4.focus.bg/mobile/photosorg/459/2/med/21643890746724459_oO.jpg",
@@ -149,6 +153,7 @@ public static class DesktopAutoBgScrapedAdverts
         Model = "Corsa",
         Region = "регион Перник",
         EuroStandard = null,
+        Site = SiteNames.AutoBg,
         ImageUrls = new[]
         {
             "//mobistatic1.focus.bg/mobile/photosorg/937/1/med/11647691017352937_4s.jpg",
@@ -188,6 +193,7 @@ public static class DesktopAutoBgScrapedAdverts
         Model = "I20",
         Region = null,
         EuroStandard = null,
+        Site = SiteNames.AutoBg,
         ImageUrls = new[]
         {
             "//mobistatic1.focus.bg/mobile/photosorg/101/1/med/11647703904840101_hX.jpg",
@@ -223,6 +229,7 @@ public static class DesktopAutoBgScrapedAdverts
         Model = "Niva",
         Region = null,
         EuroStandard = null,
+        Site = SiteNames.AutoBg,
         ImageUrls = new[]
         {
             "//cdn2.focus.bg/mobile/photosorg/850/2/med/21647695485012850_Cw.jpg",
@@ -252,6 +259,7 @@ public static class DesktopAutoBgScrapedAdverts
         Model = "Prius",
         Region = null,
         EuroStandard = null,
+        Site = SiteNames.AutoBg,
         ImageUrls = new[]
         {
             "//mobistatic1.focus.bg/mobile/photosorg/077/1/med/11625296974013077_Yu.jpg",
@@ -294,6 +302,7 @@ public static class DesktopAutoBgScrapedAdverts
         Model = "E 350",
         Region = null,
         EuroStandard = null,
+        Site = SiteNames.AutoBg,
         ImageUrls = new[]
         {
             "//mobistatic2.focus.bg/mobile/photosorg/036/1/med/11606854971240036_R4.png",
@@ -334,6 +343,7 @@ public static class DesktopAutoBgScrapedAdverts
         Model = "NX",
         Region = "регион Перник",
         EuroStandard = null,
+        Site = SiteNames.AutoBg,
         ImageUrls = new[]
         {
             "//mobistatic1.focus.bg/mobile/photosorg/976/2/med/21647438561242976_Z2.jpg",
@@ -371,6 +381,7 @@ public static class DesktopAutoBgScrapedAdverts
         Model = "Scenic",
         Region = "регион Варна",
         EuroStandard = null,
+        Site = SiteNames.AutoBg,
         ImageUrls = new[]
         {
             "//mobistatic2.focus.bg/mobile/photosorg/282/1/med/11647188804139282_fc.jpg",

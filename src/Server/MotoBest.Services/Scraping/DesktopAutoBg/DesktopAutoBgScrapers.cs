@@ -29,6 +29,7 @@ internal static class DesktopAutoBgScrapers
     {
         var anchor = domElement.QuerySelector("a");
         var arguments = anchor?.GetAttribute("href")?.Split("/");
+
         string? content = anchor?.TextContent;
 
         if (arguments == null || arguments.Length < 2 || content == null)
@@ -38,13 +39,12 @@ internal static class DesktopAutoBgScrapers
 
         advert.Brand = ParseBrand(arguments[^2]);
 
-        string originalBrand = advert.Brand.Replace(Whitespace, "-");
+        string brandWithSpaces = advert.Brand;
+        string brandWithDashes = advert.Brand.Replace(Whitespace, "-");
 
         advert.Model = content
-            .RemoveMany(
-                advert.Brand,
-                originalBrand,
-                originalBrand.ToUpper())
+            .Replace(brandWithDashes, string.Empty, StringComparison.InvariantCultureIgnoreCase)
+            .Replace(brandWithSpaces, string.Empty, StringComparison.InvariantCultureIgnoreCase)
             .Trim();
     }
 
@@ -147,7 +147,7 @@ internal static class DesktopAutoBgScrapers
         string kilometrageAsText = kilometrageDomElement
             .TextContent
             .ToLower()
-            .RemoveMany(KilometersSuffix)
+            .RemoveStrings(KilometersSuffix)
             .Trim();
 
         advert.Kilometrage = ParseKilometrage(kilometrageAsText);
@@ -158,7 +158,7 @@ internal static class DesktopAutoBgScrapers
         string horsePowersAsText = horsePowersDomElement
             .TextContent
             .ToLower()
-            .RemoveMany(HorsePowersSuffix)
+            .RemoveStrings(HorsePowersSuffix)
             .Trim();
 
         advert.HorsePowers = ParseHorsePowers(horsePowersAsText);
@@ -169,7 +169,7 @@ internal static class DesktopAutoBgScrapers
         string manufacturedOnDateAsText = manufacturedOnDateDomElement
             .TextContent
             .ToLower()
-            .RemoveMany(YearSuffix)
+            .RemoveStrings(YearSuffix)
             .Trim();
 
         advert.ManufacturedOn = ParseManufacturedOnDate(manufacturedOnDateAsText);
@@ -259,7 +259,7 @@ internal static class DesktopAutoBgScrapers
             return 0;
         }
 
-        string sanitizedPriceAsText = priceAsText.RemoveMany(Whitespace, Bgn, Eur);
+        string sanitizedPriceAsText = priceAsText.RemoveStrings(Whitespace, Bgn, Eur);
         bool isPriceValid = decimal.TryParse(sanitizedPriceAsText, out decimal price);
 
         return isPriceValid ? price : null;

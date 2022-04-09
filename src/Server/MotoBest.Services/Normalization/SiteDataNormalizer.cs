@@ -91,7 +91,7 @@ public class SiteDataNormalizer : ISiteDataNormalizer
     }
 
     private static string? NormalizeRegion(string? region)
-        => region?.RemoveMany(RegionPrefix).Trim();
+        => region?.RemoveStrings(RegionPrefix).Trim();
 
     private static string? NormalizeBrand(string? brand)
     {
@@ -106,7 +106,7 @@ public class SiteDataNormalizer : ISiteDataNormalizer
     }
 
     private static string? NormalizePopulatedPlace(string? populatedPlace)
-        => populatedPlace?.RemoveMany(CityPrefix, VillagePrefix).Trim();
+        => populatedPlace?.RemoveStrings(CityPrefix, VillagePrefix).Trim();
 
     private static string? NormalizeEngine(string? engine)
     {

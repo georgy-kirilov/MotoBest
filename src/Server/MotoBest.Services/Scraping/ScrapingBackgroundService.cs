@@ -39,7 +39,7 @@ public class ScrapingBackgroundService : BackgroundService
         {
             await Task.Delay(delayMilliseconds, stoppingToken);
 
-            var latestModifiedOnDate = DateTime.Now.Subtract(TimeSpan.FromHours(2));
+            var latestModifiedOnDate = DateTime.Now.Subtract(TimeSpan.FromHours(6));
             int resultsPageIndex = 1;
 
             while (true)

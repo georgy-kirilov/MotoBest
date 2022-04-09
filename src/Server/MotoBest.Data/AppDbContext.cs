@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+
 using Microsoft.EntityFrameworkCore;
+
 using MotoBest.Data.Models.Identity;
 
 namespace MotoBest.Data;
@@ -41,6 +43,11 @@ public class AppDbContext : IdentityDbContext<User, Role, string>
     {
         base.OnModelCreating(builder);
         ChangeDefaultIdentityColumnNames(builder);
+
+        builder
+            .Entity<Advert>()
+            .HasIndex(a => a.RemoteId)
+            .IsUnique();
 
         builder.AddUniqueConstraintTo("Name",
             typeof(BodyStyle),

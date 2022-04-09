@@ -23,3 +23,7 @@ left join Conditions as con on con.Id = ConditionId
 left join Regions as r on r.Id = RegionId
 left join PopulatedPlaces as pp on pp.Id = PopulatedPlaceId
 left join Models as m on m.Id = ModelId
+where r.Name = 'Alfa Romeo'
+select count(*) from Adverts
+delete from Adverts
+select * from Models where [Name] = 'Rexton'

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MotoBest.Data;
 
@@ -11,9 +12,10 @@ using MotoBest.Data;
 namespace MotoBest.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220409211934_AddUniqueConstraintToRemoteIdColumnInAdvertsTable")]
+    partial class AddUniqueConstraintToRemoteIdColumnInAdvertsTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -168,9 +170,6 @@ namespace MotoBest.Data.Migrations
 
                     b.Property<int?>("ModelId")
                         .HasColumnType("int");
-
-                    b.Property<DateTime?>("ModifiedOn")
-                        .HasColumnType("datetime2");
 
                     b.Property<int?>("PopulatedPlaceId")
                         .HasColumnType("int");

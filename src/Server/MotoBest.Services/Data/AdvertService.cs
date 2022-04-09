@@ -101,30 +101,50 @@ public class AdvertService : IAdvertService
             .Select(url => new Image { Url = url })
             .ToList();
 
-        await advertRepository.AddAsync(new Advert
+        var advert = await advertRepository.All()
+            .FirstOrDefaultAsync(a => a.RemoteId == normalizedAdvert.RemoteId);
+
+        bool doesAdvertExist = advert != null;
+
+        if (advert == null)
         {
-            SiteId = site?.Id,
-            RemoteId = normalizedAdvert.RemoteId,
-            Title = normalizedAdvert.Title,
-            Description = normalizedAdvert.Description,
-            PriceBgn = normalizedAdvert.PriceBgn,
-            ManufacturedOn = normalizedAdvert.ManufacturedOn,
-            HorsePowers = normalizedAdvert.HorsePowers,
-            Kilometrage = normalizedAdvert.Kilometrage,
-            TransmissionId = transmission?.Id,
-            BodyStyleId = bodyStyle?.Id,
-            EngineId = engine?.Id,
-            ConditionId = condition?.Id,
-            ColorId = color?.Id,
-            RegionId = region?.Id,
-            IsEuroStandardApproximate = isEuroStandardApproximate,
-            EuroStandardId = euroStandard?.Id,
-            PopulatedPlaceId = populatedPlace?.Id,
-            BrandId = brand?.Id,
-            ModelId = model?.Id,
-            Images = images,
-        });
+            advert = new Advert();
+        }
+
+        advert.SiteId = site?.Id;
+        advert.RemoteId = normalizedAdvert.RemoteId;
+        advert.Title = normalizedAdvert.Title;
+        advert.Description = normalizedAdvert.Description;
+        advert.PriceBgn = normalizedAdvert.PriceBgn;
+        advert.ManufacturedOn = normalizedAdvert.ManufacturedOn;
+        advert.ModifiedOn = normalizedAdvert.ModifiedOn;
+        advert.HorsePowers = normalizedAdvert.HorsePowers;
+        advert.Kilometrage = normalizedAdvert.Kilometrage;
+        advert.TransmissionId = transmission?.Id;
+        advert.BodyStyleId = bodyStyle?.Id;
+        advert.EngineId = engine?.Id;
+        advert.ConditionId = condition?.Id;
+        advert.ColorId = color?.Id;
+        advert.RegionId = region?.Id;
+        advert.IsEuroStandardApproximate = isEuroStandardApproximate;
+        advert.EuroStandardId = euroStandard?.Id;
+        advert.PopulatedPlaceId = populatedPlace?.Id;
+        advert.BrandId = brand?.Id;
+        advert.ModelId = model?.Id;
+        advert.Images = images;
+        
+        if (!doesAdvertExist)
+        {
+            await advertRepository.AddAsync(advert);
+        }
 
         await advertRepository.SaveChangesAsync();
+    }
+
+    public DateTime? GetLatestAdvertModifiedOnDate(string site)
+    {
+        int? siteId = siteRepository.All().FirstOrDefault(s => s.Name == site)?.Id;
+        var advert = advertRepository.All().Where(a => a.SiteId == siteId).FirstOrDefault();
+        return advert?.ModifiedOn;
     }
 }

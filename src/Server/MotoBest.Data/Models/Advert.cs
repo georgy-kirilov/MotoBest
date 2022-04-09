@@ -34,6 +34,8 @@ public class Advert : BaseModel<string>
 
     public DateTime? ManufacturedOn { get; set; }
 
+    public DateTime? ModifiedOn { get; set; }
+
     public int? Kilometrage { get; set; }
 
     public int? HorsePowers { get; set; }

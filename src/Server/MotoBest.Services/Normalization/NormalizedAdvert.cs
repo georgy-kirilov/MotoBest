@@ -1,6 +1,6 @@
 ﻿using MotoBest.Data.Models;
 
-namespace MotoBest.Services.Normalizing;
+namespace MotoBest.Services.Normalization;
 
 public class NormalizedAdvert
 {

@@ -6,7 +6,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
 using MotoBest.Services.Data;
-using MotoBest.Services.Normalizing;
+using MotoBest.Services.Normalization;
+using MotoBest.Services.Scraping.Common;
 
 namespace MotoBest.Services.Scraping;
 

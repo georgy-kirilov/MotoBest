@@ -1,7 +1,8 @@
 ﻿using AngleSharp.Dom;
+
 using MotoBest.Services.Scraping.Models;
 
-namespace MotoBest.Services.Scraping;
+namespace MotoBest.Services.Scraping.Common;
 
 public interface ISiteScraper
 {

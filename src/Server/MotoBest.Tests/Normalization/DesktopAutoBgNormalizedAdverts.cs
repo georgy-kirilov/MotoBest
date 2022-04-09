@@ -3,7 +3,7 @@
 using MotoBest.Data.Models;
 using MotoBest.Data.Seeding.Constants;
 
-using MotoBest.Services.Normalizing;
+using MotoBest.Services.Normalization;
 
 namespace MotoBest.Tests.Normalizing;
 

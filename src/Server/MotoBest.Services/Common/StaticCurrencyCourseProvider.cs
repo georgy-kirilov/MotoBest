@@ -1,6 +1,6 @@
 ﻿using MotoBest.Common;
 
-namespace MotoBest.Services;
+namespace MotoBest.Services.Common;
 
 public class StaticCurrencyCourseProvider : ICurrencyCourseProvider
 {

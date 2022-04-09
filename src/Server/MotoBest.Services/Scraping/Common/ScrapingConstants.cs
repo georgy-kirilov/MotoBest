@@ -1,4 +1,4 @@
-﻿namespace MotoBest.Services.Scraping;
+﻿namespace MotoBest.Services.Scraping.Common;
 
 public static class ScrapingConstants
 {

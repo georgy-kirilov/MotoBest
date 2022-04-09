@@ -1,4 +1,4 @@
-﻿using MotoBest.Services.Normalizing;
+﻿using MotoBest.Services.Normalization;
 
 namespace MotoBest.Services.Data;
 

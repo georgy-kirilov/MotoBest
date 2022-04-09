@@ -1,6 +1,6 @@
 ﻿using MotoBest.Services.Scraping.Models;
 
-namespace MotoBest.Services.Normalizing;
+namespace MotoBest.Services.Normalization;
 
 public interface ISiteDataNormalizer
 {

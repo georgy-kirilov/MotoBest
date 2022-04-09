@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MotoBest.Common\MotoBest.Common.csproj" />
+    <ProjectReference Include="..\MotoBest.Data\MotoBest.Data.csproj" />
+    <ProjectReference Include="..\MotoBest.Services\MotoBest.Services.csproj" />
+    <ProjectReference Include="..\MotoBest.WebApi\MotoBest.WebApi.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Output\" />
+  </ItemGroup>
+
+</Project>

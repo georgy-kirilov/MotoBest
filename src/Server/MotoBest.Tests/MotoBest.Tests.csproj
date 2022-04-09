@@ -8,6 +8,86 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Scraping\DesktopAutoBg\ScrapedAdvertsPages\Test_001.html" />
+    <None Remove="Scraping\DesktopAutoBg\ScrapedAdvertsPages\Test_002.html" />
+    <None Remove="Scraping\DesktopAutoBg\ScrapedAdvertsPages\Test_003.html" />
+    <None Remove="Scraping\DesktopAutoBg\ScrapedAdvertsPages\Test_004.html" />
+    <None Remove="Scraping\DesktopAutoBg\ScrapedAdvertsPages\Test_005.html" />
+    <None Remove="Scraping\DesktopAutoBg\ScrapedAdvertsPages\Test_006.html" />
+    <None Remove="Scraping\DesktopAutoBg\ScrapedAdvertsPages\Test_007.html" />
+    <None Remove="Scraping\DesktopAutoBg\ScrapedAdvertsPages\Test_008.html" />
+    <None Remove="Scraping\DesktopAutoBg\ScrapedAdvertsPages\Test_009.html" />
+    <None Remove="Scraping\DesktopAutoBg\ScrapedAdvertsPages\Test_010.html" />
+    <None Remove="Scraping\DesktopAutoBg\ScrapedModelsPages\AlfaRomeo.html" />
+    <None Remove="Scraping\DesktopAutoBg\ScrapedModelsPages\Honda.html" />
+    <None Remove="Scraping\DesktopAutoBg\ScrapedModelsPages\Peugeot.html" />
+    <None Remove="Scraping\DesktopAutoBg\ScrapedModelsPages\Pobeda.html" />
+    <None Remove="Scraping\DesktopAutoBg\SearchAdvertResultsPages\Test_001.html" />
+    <None Remove="Scraping\DesktopAutoBg\SearchAdvertResultsPages\Test_002.html" />
+    <None Remove="Scraping\DesktopAutoBg\SearchAdvertResultsPages\Test_003.html" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Scraping\DesktopAutoBg\ScrapedModelsPages\Pobeda.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Scraping\DesktopAutoBg\ScrapedModelsPages\Honda.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Scraping\DesktopAutoBg\ScrapedAdvertsPages\Test_001.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Scraping\DesktopAutoBg\ScrapedAdvertsPages\Test_002.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Scraping\DesktopAutoBg\ScrapedAdvertsPages\Test_003.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Scraping\DesktopAutoBg\ScrapedAdvertsPages\Test_004.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Scraping\DesktopAutoBg\ScrapedAdvertsPages\Test_005.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Scraping\DesktopAutoBg\ScrapedAdvertsPages\Test_006.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Scraping\DesktopAutoBg\ScrapedAdvertsPages\Test_007.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Scraping\DesktopAutoBg\ScrapedAdvertsPages\Test_008.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Scraping\DesktopAutoBg\ScrapedAdvertsPages\Test_009.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Scraping\DesktopAutoBg\ScrapedAdvertsPages\Test_010.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Scraping\DesktopAutoBg\ScrapedModelsPages\AlfaRomeo.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Scraping\DesktopAutoBg\ScrapedModelsPages\Peugeot.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Scraping\DesktopAutoBg\SearchAdvertResultsPages\Test_001.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Scraping\DesktopAutoBg\SearchAdvertResultsPages\Test_002.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Scraping\DesktopAutoBg\SearchAdvertResultsPages\Test_003.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.11.0" />
     <PackageReference Include="xunit" Version="2.4.1" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
@@ -23,48 +103,6 @@
   <ItemGroup>
     <ProjectReference Include="..\MotoBest.Services\MotoBest.Services.csproj" />
     <ProjectReference Include="..\MotoBest.WebApi\MotoBest.WebApi.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="Scraping\DesktopAutoBg\SearchAdvertResultPages\Test_001.html">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Scraping\DesktopAutoBg\SearchAdvertResultPages\Test_002.html">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Scraping\DesktopAutoBg\SearchAdvertResultPages\Test_003.html">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Scraping\DesktopAutoBg\ScrapedAdvertPages\Test_001.html">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Scraping\DesktopAutoBg\ScrapedAdvertPages\Test_002.html">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Scraping\DesktopAutoBg\ScrapedAdvertPages\Test_003.html">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Scraping\DesktopAutoBg\ScrapedAdvertPages\Test_004.html">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Scraping\DesktopAutoBg\ScrapedAdvertPages\Test_005.html">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Scraping\DesktopAutoBg\ScrapedAdvertPages\Test_006.html">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Scraping\DesktopAutoBg\ScrapedAdvertPages\Test_007.html">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Scraping\DesktopAutoBg\ScrapedAdvertPages\Test_008.html">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Scraping\DesktopAutoBg\ScrapedAdvertPages\Test_009.html">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Scraping\DesktopAutoBg\ScrapedAdvertPages\Test_010.html">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 
 </Project>

@@ -1,4 +1,4 @@
-﻿namespace MotoBest.Services;
+﻿namespace MotoBest.Services.Common;
 
 public class DateTimeManager : IDateTimeManager
 {

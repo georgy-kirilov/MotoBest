@@ -3,11 +3,12 @@
 using MotoBest.Data.Models;
 using MotoBest.Data.Seeding.Constants;
 
+using MotoBest.Services.Common;
 using MotoBest.Services.Scraping.Models;
 
-using static MotoBest.Services.Normalizing.NormalizingConstants;
+using static MotoBest.Services.Normalization.NormalizationConstants;
 
-namespace MotoBest.Services.Normalizing;
+namespace MotoBest.Services.Normalization;
 
 public class SiteDataNormalizer : ISiteDataNormalizer
 {

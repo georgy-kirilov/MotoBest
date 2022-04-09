@@ -1,11 +1,15 @@
 ﻿using AngleSharp.Dom;
+
 using MotoBest.Data.Seeding.Constants;
+
+using MotoBest.Services.Common;
+using MotoBest.Services.Scraping.Common;
 using MotoBest.Services.Scraping.Models;
 
-using static MotoBest.Services.Scraping.DesktopAutoBgPropertyScrapers;
-using static MotoBest.Services.Scraping.ScrapingConstants.DesktopAutoBg;
+using static MotoBest.Services.Scraping.DesktopAutoBg.DesktopAutoBgScrapers;
+using static MotoBest.Services.Scraping.Common.ScrapingConstants.DesktopAutoBg;
 
-namespace MotoBest.Services.Scraping;
+namespace MotoBest.Services.Scraping.DesktopAutoBg;
 
 public class DesktopAutoBgSiteScraper : ISiteScraper
 {
@@ -53,6 +57,22 @@ public class DesktopAutoBgSiteScraper : ISiteScraper
         => document
             .QuerySelectorAll("#resultsPage > ul > #rightColumn > .results > .resultItem")
             .Select(item => ScrapeAdvertResult(item, dateTimeManager.Today()));
+
+    public IEnumerable<string> ScrapeAllModels(IDocument document)
+    {
+        var divs = document.QuerySelectorAll("#resultsPage > .scheme13 > #rightColumn > .results > .similar > div");
+
+        if (divs?.Length < 2)
+        {
+            return Array.Empty<string>();
+        }
+
+        return divs![1]
+            .QuerySelectorAll("a")?
+            .Select(a => a.TextContent.Trim())
+            .Distinct() ?? Array.Empty<string>();
+    }
+            
 
     private static void ScrapeMainAdvertData(IDocument document, ScrapedAdvert scrapedAdvert)
     {

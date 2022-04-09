@@ -1,16 +1,17 @@
 ﻿using AngleSharp.Dom;
 
+using System.Text;
+using System.Globalization;
+
 using MotoBest.Common;
 using MotoBest.Services.Scraping.Models;
-using System.Globalization;
-using System.Text;
 
 using static MotoBest.Common.GlobalConstants;
-using static MotoBest.Services.Scraping.ScrapingConstants.DesktopAutoBg;
+using static MotoBest.Services.Scraping.Common.ScrapingConstants.DesktopAutoBg;
 
-namespace MotoBest.Services.Scraping;
+namespace MotoBest.Services.Scraping.DesktopAutoBg;
 
-internal static class DesktopAutoBgPropertyScrapers
+internal static class DesktopAutoBgScrapers
 {
     internal static void ScrapeBodyStyle(IElement bodyStyleDomElement, ScrapedAdvert advert)
         => advert.BodyStyle = bodyStyleDomElement.TextContent.Trim();

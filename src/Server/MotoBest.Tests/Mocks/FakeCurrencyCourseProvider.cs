@@ -1,7 +1,7 @@
-﻿using MotoBest.Common;
-using MotoBest.Services;
+﻿using System;
 
-using System;
+using MotoBest.Common;
+using MotoBest.Services.Common;
 
 namespace MotoBest.Tests.Mocks;
 

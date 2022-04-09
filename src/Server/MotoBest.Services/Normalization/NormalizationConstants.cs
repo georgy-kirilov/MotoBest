@@ -1,6 +1,6 @@
-﻿namespace MotoBest.Services.Normalizing;
+﻿namespace MotoBest.Services.Normalization;
 
-public static class NormalizingConstants
+public static class NormalizationConstants
 {
     public const string CityPrefix = "гр.";
     public const string VillagePrefix = "с.";

@@ -2,7 +2,7 @@
 
 using MotoBest.Services.Scraping.Models;
 
-namespace MotoBest.Tests.Scraping.AutoBg;
+namespace MotoBest.Tests.Scraping.DesktopAutoBg;
 
 public static class DesktopAutoBgSearchAdvertResults
 {

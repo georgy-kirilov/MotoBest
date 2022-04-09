@@ -2,11 +2,11 @@
 
 using MotoBest.Common;
 
-using MotoBest.Services.Normalizing;
+using MotoBest.Services.Normalization;
 using MotoBest.Services.Scraping.Models;
 
 using MotoBest.Tests.Mocks;
-using MotoBest.Tests.Scraping.AutoBg;
+using MotoBest.Tests.Scraping.DesktopAutoBg;
 
 using Xunit;
 

@@ -11,14 +11,9 @@ public class PopulatedPlacesSeeder : ISeeder
 {
     public async Task SeedAsync(AppDbContext dbContext, IServiceProvider serviceProvider)
     {
-        var encoderSettings = new TextEncoderSettings();
-
-        encoderSettings.AllowRanges(
-            UnicodeRanges.Cyrillic, UnicodeRanges.BasicLatin);
-
         var options = new JsonSerializerOptions
         {
-            Encoder = JavaScriptEncoder.Create(encoderSettings),
+            Encoder = JavaScriptEncoder.Create(UnicodeRanges.Cyrillic, UnicodeRanges.BasicLatin),
             WriteIndented = true
         };
 

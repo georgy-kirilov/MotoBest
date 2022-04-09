@@ -42,7 +42,10 @@ public class PopulatedPlacesSeeder : ISeeder
     {
         foreach (var populatedPlaceDto in populatedPlaceDtos)
         {
-            if (dbContext.PopulatedPlaces.Any(pp => pp.Name == populatedPlaceDto.Name))
+            bool doesPopulatedPlaceExist = dbContext.PopulatedPlaces.Any(
+                pp => pp.Name == populatedPlaceDto.Name && pp.RegionId == regionId);
+
+            if (doesPopulatedPlaceExist)
             {
                 continue;
             }

@@ -14,8 +14,4 @@
     <ProjectReference Include="..\MotoBest.WebApi\MotoBest.WebApi.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Output\" />
-  </ItemGroup>
-
 </Project>

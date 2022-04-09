@@ -23,3 +23,7 @@ left join Conditions as con on con.Id = ConditionId
 left join Regions as r on r.Id = RegionId
 left join PopulatedPlaces as pp on pp.Id = PopulatedPlaceId
 left join Models as m on m.Id = ModelId
+
+select * from Regions inner join PopulatedPlaces as pp on pp.RegionId = Regions.Id where pp.[Name] = N'???????'
+
+delete from Adverts

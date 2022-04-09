@@ -97,6 +97,10 @@ public class AdvertService : IAdvertService
 
         var model = brand?.Models.FirstOrDefault(m => m.Name == normalizedAdvert.Model);
 
+        var images = normalizedAdvert.ImageUrls
+            .Select(url => new Image { Url = url })
+            .ToList();
+
         await advertRepository.AddAsync(new Advert
         {
             SiteId = site?.Id,
@@ -118,6 +122,7 @@ public class AdvertService : IAdvertService
             PopulatedPlaceId = populatedPlace?.Id,
             BrandId = brand?.Id,
             ModelId = model?.Id,
+            Images = images,
         });
 
         await advertRepository.SaveChangesAsync();

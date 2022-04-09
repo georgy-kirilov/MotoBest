@@ -42,7 +42,10 @@ public class ModelsSeeder : ISeeder
     {
         foreach (var modelDto in modelDtos)
         {
-            if (dbContext.Models.Any(m => m.Name == modelDto.Name && m.BrandId == brandId))
+            bool doesModelExist = dbContext.Models.Any(
+                m => m.Name == modelDto.Name && m.BrandId == brandId);
+
+            if (doesModelExist)
             {
                 continue;
             }

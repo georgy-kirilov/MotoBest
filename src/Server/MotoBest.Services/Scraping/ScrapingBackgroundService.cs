@@ -5,10 +5,10 @@ using System.Text;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-using MotoBest.Services.Data;
 using MotoBest.Services.Normalization;
 using MotoBest.Services.Scraping.Common;
 using MotoBest.Data.Seeding.Constants;
+using MotoBest.Services.Data.Adverts;
 
 namespace MotoBest.Services.Scraping;
 
@@ -41,8 +41,8 @@ public class ScrapingBackgroundService : BackgroundService
             await Task.Delay(delayMilliseconds, stoppingToken);
 
             using var scope = serviceScopeFactory.CreateScope();
-            var latestModifiedOnDate = scope.ServiceProvider.GetRequiredService<IAdvertService>()
-                .GetLatestAdvertModifiedOnDate(SiteNames.AutoBg) ?? DateTime.Now.Subtract(TimeSpan.FromHours(1));
+            var latestModifiedOnDate = await scope.ServiceProvider.GetRequiredService<IAdvertService>()
+                .LatestAdvertModifiedOnDateAsync(SiteNames.AutoBg) ?? DateTime.Now.Subtract(TimeSpan.FromHours(1));
 
             int resultsPageIndex = 1;
 

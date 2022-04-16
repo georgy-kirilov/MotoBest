@@ -8,5 +8,5 @@ public interface ISiteScraper
 {
     ScrapedAdvert ScrapeAdvert(IDocument document);
 
-    IEnumerable<SearchAdvertResult?> ScrapeSearchAdvertResults(IDocument document);
+    IEnumerable<ScrapedSearchAdvertResult?> ScrapeSearchAdvertResults(IDocument document);
 }

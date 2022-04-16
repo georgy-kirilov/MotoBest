@@ -61,7 +61,7 @@ public class DesktopAutoBgSiteScraperTests
         var field = typeof(DesktopAutoBgSearchAdvertResults).GetField(advertResultTestName);
         var document = await OpenDocumentFromFileSystemAsync("SearchAdvertResultsPages", advertResultTestName);
 
-        var expectedAdvertResults = field?.GetValue(null) as SearchAdvertResult[];
+        var expectedAdvertResults = field?.GetValue(null) as ScrapedSearchAdvertResult[];
         var actualAdvertResults = siteScraper.ScrapeSearchAdvertResults(document).ToArray();
 
         Assert.Equal(expectedAdvertResults, actualAdvertResults);

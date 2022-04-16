@@ -1,13 +1,15 @@
-using AngleSharp;
-
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 using MotoBest.Data.Repositories;
 
 using MotoBest.Services.Common;
-using MotoBest.Services.Data;
+
+using MotoBest.Services.Data.AdvertFeatures;
+using MotoBest.Services.Data.Adverts;
+
 using MotoBest.Services.Normalization;
+
 using MotoBest.Services.Scraping;
 using MotoBest.Services.Scraping.Common;
 using MotoBest.Services.Scraping.DesktopAutoBg;
@@ -29,7 +31,10 @@ builder.Services
     .AddScoped(typeof(IRepository<>), typeof(Repository<>))
     .AddSingleton<ICurrencyCourseProvider, StaticCurrencyCourseProvider>()
     .AddTransient<ISiteDataNormalizer, SiteDataNormalizer>()
-    .AddTransient<IAdvertService, AdvertService>();
+    .AddTransient<IAdvertService, AdvertService>()
+    .AddTransient(typeof(IAdvertFeatureService<>), typeof(AdvertFeatureService<>))
+    .AddTransient<IEuroStandardService, EuroStandardService>()
+    .AddTransient<IPopulatedPlaceService, PopulatedPlaceService>();
 
 builder.Services.AddHostedService<ScrapingBackgroundService>();
 

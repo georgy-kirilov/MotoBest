@@ -1,19 +1,19 @@
 ﻿namespace MotoBest.Services.Scraping.Models;
 
-public class SearchAdvertResult
+public class ScrapedSearchAdvertResult
 {
-    public string Url { get; init; } = "";
+    public string Url { get; init; } = string.Empty;
 
     public DateTime ModifiedOn { get; init; }
 
     public override bool Equals(object? obj)
     {
-        if (obj == null || obj is not SearchAdvertResult)
+        if (obj == null || obj is not ScrapedSearchAdvertResult)
         {
             return false;
         }
 
-        var other = obj as SearchAdvertResult;
+        var other = obj as ScrapedSearchAdvertResult;
         return Url == other?.Url && ModifiedOn == other.ModifiedOn;
     }
 

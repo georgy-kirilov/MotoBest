@@ -6,7 +6,7 @@ namespace MotoBest.Tests.Scraping.DesktopAutoBg;
 
 public static class DesktopAutoBgSearchAdvertResults
 {
-    public static readonly SearchAdvertResult[] Test_001 = new SearchAdvertResult[]
+    public static readonly ScrapedSearchAdvertResult[] Test_001 = new ScrapedSearchAdvertResult[]
     {
         new()
         {
@@ -105,7 +105,7 @@ public static class DesktopAutoBgSearchAdvertResults
         }
     };
 
-    public static readonly SearchAdvertResult[] Test_002 = new SearchAdvertResult[]
+    public static readonly ScrapedSearchAdvertResult[] Test_002 = new ScrapedSearchAdvertResult[]
     {
         new()
         {
@@ -204,7 +204,7 @@ public static class DesktopAutoBgSearchAdvertResults
         }
     };
 
-    public static readonly SearchAdvertResult[] Test_003 = new SearchAdvertResult[]
+    public static readonly ScrapedSearchAdvertResult[] Test_003 = new ScrapedSearchAdvertResult[]
     {
         new()
         {

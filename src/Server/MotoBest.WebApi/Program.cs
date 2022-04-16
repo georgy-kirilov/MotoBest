@@ -29,8 +29,7 @@ builder.Services
     .AddScoped(typeof(IRepository<>), typeof(Repository<>))
     .AddSingleton<ICurrencyCourseProvider, StaticCurrencyCourseProvider>()
     .AddTransient<ISiteDataNormalizer, SiteDataNormalizer>()
-    .AddTransient<IAdvertService, AdvertService>()
-    .AddTransient(serviceProvider => BrowsingContext.New(Configuration.Default.WithDefaultLoader()));
+    .AddTransient<IAdvertService, AdvertService>();
 
 builder.Services.AddHostedService<ScrapingBackgroundService>();
 

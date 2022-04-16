@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+
 using Microsoft.EntityFrameworkCore;
+
 using MotoBest.Data.Models.Identity;
 
 namespace MotoBest.Data;
@@ -33,7 +35,7 @@ public class AppDbContext : IdentityDbContext<User, Role, string>
 
     public DbSet<Site> Sites { get; init; } = default!;
 
-    public DbSet<Town> Towns { get; init; } = default!;
+    public DbSet<PopulatedPlace> PopulatedPlaces { get; init; } = default!;
 
     public DbSet<Transmission> Transmissions { get; init; } = default!;
 
@@ -41,6 +43,11 @@ public class AppDbContext : IdentityDbContext<User, Role, string>
     {
         base.OnModelCreating(builder);
         ChangeDefaultIdentityColumnNames(builder);
+
+        builder
+            .Entity<Advert>()
+            .HasIndex(a => a.RemoteId)
+            .IsUnique();
 
         builder.AddUniqueConstraintTo("Name",
             typeof(BodyStyle),

@@ -17,8 +17,10 @@ public class AppSeeder : ISeeder
             new ConstantAdvertFeaturesSeeder<Region, RegionNames>(),
             new ConstantAdvertFeaturesSeeder<Color, ColorNames>(),
             new RolesSeeder(),
-            new TownsSeeder(),
+            new PopulatedPlacesSeeder(),
             new EuroStandardsSeeder(),
+            new SitesSeeder(),
+            new ModelsSeeder(),
         };
 
         foreach (var seeder in seeders)

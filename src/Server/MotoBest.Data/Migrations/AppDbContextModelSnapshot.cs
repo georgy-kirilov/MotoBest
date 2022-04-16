@@ -169,6 +169,12 @@ namespace MotoBest.Data.Migrations
                     b.Property<int?>("ModelId")
                         .HasColumnType("int");
 
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("PopulatedPlaceId")
+                        .HasColumnType("int");
+
                     b.Property<decimal?>("PriceBgn")
                         .HasPrecision(14, 2)
                         .HasColumnType("decimal(14,2)");
@@ -177,16 +183,13 @@ namespace MotoBest.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("RemoteId")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int?>("SiteId")
                         .HasColumnType("int");
 
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("TownId")
-                        .HasColumnType("int");
 
                     b.Property<int?>("TransmissionId")
                         .HasColumnType("int");
@@ -207,11 +210,15 @@ namespace MotoBest.Data.Migrations
 
                     b.HasIndex("ModelId");
 
+                    b.HasIndex("PopulatedPlaceId");
+
                     b.HasIndex("RegionId");
 
-                    b.HasIndex("SiteId");
+                    b.HasIndex("RemoteId")
+                        .IsUnique()
+                        .HasFilter("[RemoteId] IS NOT NULL");
 
-                    b.HasIndex("TownId");
+                    b.HasIndex("SiteId");
 
                     b.HasIndex("TransmissionId");
 
@@ -477,6 +484,31 @@ namespace MotoBest.Data.Migrations
                     b.ToTable("Models");
                 });
 
+            modelBuilder.Entity("MotoBest.Data.Models.PopulatedPlace", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("RegionId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RegionId");
+
+                    b.ToTable("PopulatedPlaces");
+                });
+
             modelBuilder.Entity("MotoBest.Data.Models.Region", b =>
                 {
                     b.Property<int>("Id")
@@ -519,31 +551,6 @@ namespace MotoBest.Data.Migrations
                         .IsUnique();
 
                     b.ToTable("Sites");
-                });
-
-            modelBuilder.Entity("MotoBest.Data.Models.Town", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<bool>("IsVillage")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("RegionId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RegionId");
-
-                    b.ToTable("Towns");
                 });
 
             modelBuilder.Entity("MotoBest.Data.Models.Transmission", b =>
@@ -647,6 +654,10 @@ namespace MotoBest.Data.Migrations
                         .WithMany("Adverts")
                         .HasForeignKey("ModelId");
 
+                    b.HasOne("MotoBest.Data.Models.PopulatedPlace", "PopulatedPlace")
+                        .WithMany("Adverts")
+                        .HasForeignKey("PopulatedPlaceId");
+
                     b.HasOne("MotoBest.Data.Models.Region", "Region")
                         .WithMany("Adverts")
                         .HasForeignKey("RegionId");
@@ -654,10 +665,6 @@ namespace MotoBest.Data.Migrations
                     b.HasOne("MotoBest.Data.Models.Site", "Site")
                         .WithMany("Adverts")
                         .HasForeignKey("SiteId");
-
-                    b.HasOne("MotoBest.Data.Models.Town", "Town")
-                        .WithMany("Adverts")
-                        .HasForeignKey("TownId");
 
                     b.HasOne("MotoBest.Data.Models.Transmission", "Transmission")
                         .WithMany("Adverts")
@@ -677,11 +684,11 @@ namespace MotoBest.Data.Migrations
 
                     b.Navigation("Model");
 
+                    b.Navigation("PopulatedPlace");
+
                     b.Navigation("Region");
 
                     b.Navigation("Site");
-
-                    b.Navigation("Town");
 
                     b.Navigation("Transmission");
                 });
@@ -708,10 +715,10 @@ namespace MotoBest.Data.Migrations
                     b.Navigation("Brand");
                 });
 
-            modelBuilder.Entity("MotoBest.Data.Models.Town", b =>
+            modelBuilder.Entity("MotoBest.Data.Models.PopulatedPlace", b =>
                 {
                     b.HasOne("MotoBest.Data.Models.Region", "Region")
-                        .WithMany("Towns")
+                        .WithMany("PopulatedPlaces")
                         .HasForeignKey("RegionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -761,19 +768,19 @@ namespace MotoBest.Data.Migrations
                     b.Navigation("Adverts");
                 });
 
+            modelBuilder.Entity("MotoBest.Data.Models.PopulatedPlace", b =>
+                {
+                    b.Navigation("Adverts");
+                });
+
             modelBuilder.Entity("MotoBest.Data.Models.Region", b =>
                 {
                     b.Navigation("Adverts");
 
-                    b.Navigation("Towns");
+                    b.Navigation("PopulatedPlaces");
                 });
 
             modelBuilder.Entity("MotoBest.Data.Models.Site", b =>
-                {
-                    b.Navigation("Adverts");
-                });
-
-            modelBuilder.Entity("MotoBest.Data.Models.Town", b =>
                 {
                     b.Navigation("Adverts");
                 });

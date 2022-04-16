@@ -8,7 +8,8 @@
 
   <ItemGroup>
     <None Remove="appsettings.json" />
-    <None Remove="Seeding\Resources\towns-by-regions.json" />
+    <None Remove="Seeding\Resources\models-by-brands.json" />
+    <None Remove="Seeding\Resources\populated-places-by-region.json" />
   </ItemGroup>
 
   <ItemGroup>
@@ -17,7 +18,10 @@
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
-    <Content Include="Seeding\Resources\towns-by-regions.json">
+    <Content Include="Seeding\Resources\models-by-brands.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Seeding\Resources\populated-places-by-region.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

@@ -23,7 +23,7 @@ public class Advert : BaseModel<string>
     /// <summary>
     /// Returns null if the advert belongs to MotoBest
     /// </summary>
-    public virtual Site? Site { get; set; }
+    public virtual Site? Site { get; set; } = default!;
 
     public string? Title { get; set; }
 
@@ -33,6 +33,8 @@ public class Advert : BaseModel<string>
     public decimal? PriceBgn { get; set; }
 
     public DateTime? ManufacturedOn { get; set; }
+
+    public DateTime? ModifiedOn { get; set; }
 
     public int? Kilometrage { get; set; }
 
@@ -72,9 +74,9 @@ public class Advert : BaseModel<string>
 
     public virtual Region? Region { get; set; }
 
-    public int? TownId { get; set; }
+    public int? PopulatedPlaceId { get; set; }
 
-    public virtual Town? Town { get; set; }
+    public virtual PopulatedPlace? PopulatedPlace { get; set; }
 
     public int? EuroStandardId { get; set; }
 

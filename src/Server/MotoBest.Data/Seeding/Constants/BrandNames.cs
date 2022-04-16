@@ -119,7 +119,7 @@ public class BrandNames
     public const string Maybach = "Maybach";
     public const string Mazda = "Mazda";
     public const string McLaren = "McLaren";
-    public const string Mercedes = "Mercedes";
+    public const string MercedesBenz = "Mercedes-Benz";
     public const string Mercury = "Mercury";
     public const string MG = "MG";
     public const string Microcar = "Microcar";

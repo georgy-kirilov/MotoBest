@@ -1,8 +1,17 @@
+using AngleSharp;
+
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
-using MotoBest.Services;
+using MotoBest.Data.Repositories;
+
+using MotoBest.Services.Common;
+using MotoBest.Services.Data;
+using MotoBest.Services.Normalization;
 using MotoBest.Services.Scraping;
+using MotoBest.Services.Scraping.Common;
+using MotoBest.Services.Scraping.DesktopAutoBg;
+
 using MotoBest.WebApi;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,10 +24,14 @@ builder.Services
     .AddAppIdentity(identityOptions);
 
 builder.Services
-    .AddTransient<IScraper, AutoBgScraper>()
-    .AddSingleton<IDateTimeManager, DateTimeManager>();
+    .AddTransient<ISiteScraper, DesktopAutoBgSiteScraper>()
+    .AddSingleton<IDateTimeManager, DateTimeManager>()
+    .AddScoped(typeof(IRepository<>), typeof(Repository<>))
+    .AddSingleton<ICurrencyCourseProvider, StaticCurrencyCourseProvider>()
+    .AddTransient<ISiteDataNormalizer, SiteDataNormalizer>()
+    .AddTransient<IAdvertService, AdvertService>();
 
-//builder.Services.AddHostedService<ScrapingBackgroundService>();
+builder.Services.AddHostedService<ScrapingBackgroundService>();
 
 builder.Services.AddControllers();
 

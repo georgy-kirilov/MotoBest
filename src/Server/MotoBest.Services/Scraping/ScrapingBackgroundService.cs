@@ -1,26 +1,37 @@
 ﻿using AngleSharp;
 
+using System.Text;
+
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-using MotoBest.Common;
-
-using System.Text;
+using MotoBest.Services.Data;
+using MotoBest.Services.Normalization;
+using MotoBest.Services.Scraping.Common;
+using MotoBest.Data.Seeding.Constants;
 
 namespace MotoBest.Services.Scraping;
 
 public class ScrapingBackgroundService : BackgroundService
 {
-    private readonly IScraper scraper;
+    private readonly ISiteScraper scraper;
+    private readonly ISiteDataNormalizer normalizer;
+    private readonly IServiceScopeFactory serviceScopeFactory;
 
-    public ScrapingBackgroundService(IScraper scraper)
+    public ScrapingBackgroundService(
+        ISiteScraper scraper,
+        ISiteDataNormalizer normalizer,
+        IServiceScopeFactory serviceScopeFactory)
     {
         this.scraper = scraper;
+        this.normalizer = normalizer;
+        this.serviceScopeFactory = serviceScopeFactory;
     }
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
         Console.OutputEncoding = Encoding.Unicode;
-        int delayMilliseconds = 1_000 * 12;
+        int delayMilliseconds = 1_000 * 5;
 
         var config = Configuration.Default.WithDefaultLoader();
         var context = BrowsingContext.New(config);
@@ -29,7 +40,10 @@ public class ScrapingBackgroundService : BackgroundService
         {
             await Task.Delay(delayMilliseconds, stoppingToken);
 
-            var latestModifiedOnDate = DateTime.Now.Subtract(TimeSpan.FromHours(1));
+            using var scope = serviceScopeFactory.CreateScope();
+            var latestModifiedOnDate = scope.ServiceProvider.GetRequiredService<IAdvertService>()
+                .GetLatestAdvertModifiedOnDate(SiteNames.AutoBg) ?? DateTime.Now.Subtract(TimeSpan.FromHours(1));
+
             int resultsPageIndex = 1;
 
             while (true)
@@ -39,7 +53,7 @@ public class ScrapingBackgroundService : BackgroundService
                 var advertResultsPageDocument = await context.OpenAsync(advertResultsUrl, stoppingToken);
 
                 var advertResults = scraper
-                    .ScrapeAdvertResultsFromPage(advertResultsPageDocument)
+                    .ScrapeSearchAdvertResults(advertResultsPageDocument)
                     .Where(res => res != null && res.ModifiedOn >= latestModifiedOnDate);
 
                 if (!advertResults.Any())
@@ -51,10 +65,13 @@ public class ScrapingBackgroundService : BackgroundService
                 {
                     async Task method()
                     {
+                        using var scope = serviceScopeFactory.CreateScope();
+                        var advertService = scope.ServiceProvider.GetRequiredService<IAdvertService>();
                         var fullAdvertDocument = await context.OpenAsync(advertResult!.Url, stoppingToken);
                         var scrapedAdvert = scraper.ScrapeAdvert(fullAdvertDocument);
                         scrapedAdvert.ModifiedOn = advertResult.ModifiedOn;
-                        Console.WriteLine(scrapedAdvert.ToJson());
+                        var normalizedAdvert = normalizer.NormalizeAdvert(scrapedAdvert);
+                        await advertService.AddAsync(normalizedAdvert);
                     }
 
                     var task = Task.Run(method, stoppingToken);

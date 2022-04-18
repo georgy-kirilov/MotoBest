@@ -45,7 +45,7 @@ public class DesktopAutoBgSiteScraper : ISiteScraper
             RemoteId = ScrapeRemoteId(document),
             Title = ScrapeTitle(document),
             Description = ScrapeDescription(document),
-            ImageUrls = ScapeImageUrls(document),
+            ImageUrls = ScrapeImageUrls(document),
             Site = SiteNames.AutoBg,
         };
 

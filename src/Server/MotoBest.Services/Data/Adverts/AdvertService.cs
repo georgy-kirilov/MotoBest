@@ -6,6 +6,7 @@ using MotoBest.Data.Models;
 using MotoBest.Data.Repositories;
 
 using MotoBest.Services.Data.AdvertFeatures;
+using MotoBest.Services.Data.Adverts.Models;
 using MotoBest.Services.Normalization;
 
 namespace MotoBest.Services.Data.Adverts;
@@ -126,6 +127,18 @@ public class AdvertService : IAdvertService
         await advertRepository.SaveChangesAsync();
     }
 
+    public async Task<FullAdvertDto?> GetFullAdvertAsync(string id)
+    {
+        var advert = await advertRepository.All().FirstOrDefaultAsync(a => a.Id == id);
+
+        if (advert == null)
+        {
+            return null;
+        }
+
+        return mapper.Map<FullAdvertDto>(advert);
+    }
+
     public DateTime? GetLatestAdvertModifiedOnDate(string site)
     {
         var siteId = siteService.FindIdByName(site);
@@ -136,14 +149,14 @@ public class AdvertService : IAdvertService
             .ModifiedOn;
     }
 
-    public IEnumerable<AdvertSearchResult> SearchAdverts(AdvertSearchFilter filter, int pageIndex, int resultsPerPageCount)
+    public IEnumerable<AdvertSearchResultDto> SearchAdverts(AdvertSearchFilterDto filter, int pageIndex, int resultsPerPageCount)
         => FilterAdvertsBy(filter)
             .Skip(count: pageIndex * resultsPerPageCount)
             .Take(resultsPerPageCount)
             .ToList()
-            .Select(mapper.Map<Advert, AdvertSearchResult>);
+            .Select(mapper.Map<Advert, AdvertSearchResultDto>);
 
-    private IQueryable<Advert> FilterAdvertsBy(AdvertSearchFilter filter)
+    private IQueryable<Advert> FilterAdvertsBy(AdvertSearchFilterDto filter)
         => searchAdvertsFilterBuilder
             .CreateFilterFor(advertRepository.All())
             .ByBodyStyle(filter.BodyStyle)

@@ -77,7 +77,7 @@ internal static class DesktopAutoBgScrapers
         return (region, populatedPlace);
     }
 
-    internal static IEnumerable<string> ScapeImageUrls(IDocument document)
+    internal static IEnumerable<string> ScrapeImageUrls(IDocument document)
     {
         var imageUrls = document
             .QuerySelectorAll("#carGallery > .smallPhotos > ul > li")
@@ -90,7 +90,9 @@ internal static class DesktopAutoBgScrapers
 
         imageUrls.Add(bigImageUrl);
 
-        return imageUrls.Where(imageUrl => imageUrl != null).Distinct()!;
+        return imageUrls
+            .Where(imageUrl => imageUrl != null && imageUrl != VipImageUrl)
+            .Distinct()!;
     }
 
     internal static string? ScrapeTitle(IDocument document)

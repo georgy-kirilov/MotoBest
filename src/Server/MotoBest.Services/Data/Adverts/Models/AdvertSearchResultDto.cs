@@ -1,7 +1,9 @@
-﻿namespace MotoBest.Services.Data.Adverts;
+﻿namespace MotoBest.Services.Data.Adverts.Models;
 
-public class AdvertSearchResult
+public class AdvertSearchResultDto
 {
+    public string Id { get; init; } = string.Empty;
+
     public string? Title { get; init; }
 
     public decimal? Price { get; init; }
@@ -20,6 +22,5 @@ public class AdvertSearchResult
 
     public DateTime? ModifiedOn { get; init; }
 
-    public string MainImageUrl { get; init; } = string.Empty;
-
+    public string? MainImageUrl { get; init; }
 }

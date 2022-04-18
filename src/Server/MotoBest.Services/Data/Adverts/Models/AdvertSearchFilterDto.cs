@@ -1,6 +1,6 @@
-﻿namespace MotoBest.Services.Data.Adverts;
+﻿namespace MotoBest.Services.Data.Adverts.Models;
 
-public class AdvertSearchFilter
+public class AdvertSearchFilterDto
 {
     public string? Brand { get; init; }
 

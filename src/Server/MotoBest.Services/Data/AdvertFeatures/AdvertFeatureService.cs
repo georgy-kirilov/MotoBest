@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-
-using MotoBest.Data.Models.Common;
+﻿using MotoBest.Data.Models.Common;
 using MotoBest.Data.Repositories;
 
 namespace MotoBest.Services.Data.AdvertFeatures;
@@ -15,9 +13,8 @@ public class AdvertFeatureService<TFeature> : IAdvertFeatureService<TFeature>
         this.featureRepository = featureRepository;
     }
 
-    public async Task<int?> FindIdByNameAsync(string? name)
-        => (await FindByNameAsync(name))?.Id;
+    public int? FindIdByName(string? name) => FindByName(name)?.Id;
 
-    public async Task<TFeature?> FindByNameAsync(string? name)
-        => await featureRepository.All().FirstOrDefaultAsync(f => f.Name == name);
+    public TFeature? FindByName(string? name)
+        => featureRepository.All().FirstOrDefault(f => f.Name == name);
 }

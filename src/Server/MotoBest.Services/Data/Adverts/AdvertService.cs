@@ -1,7 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+
+using Microsoft.EntityFrameworkCore;
 
 using MotoBest.Data.Models;
 using MotoBest.Data.Repositories;
+
 using MotoBest.Services.Data.AdvertFeatures;
 using MotoBest.Services.Normalization;
 
@@ -9,16 +12,21 @@ namespace MotoBest.Services.Data.Adverts;
 
 public class AdvertService : IAdvertService
 {
+    private readonly IMapper mapper;
     private readonly IRepository<Advert> advertRepository;
+
     private readonly IAdvertFeatureService<Transmission> transmissionService;
     private readonly IAdvertFeatureService<BodyStyle> bodyStyleService;
     private readonly IAdvertFeatureService<Engine> engineService;
+
     private readonly IAdvertFeatureService<Condition> conditionService;
     private readonly IAdvertFeatureService<Color> colorService;
     private readonly IEuroStandardService euroStandardService;
+
     private readonly IPopulatedPlaceService populatedPlaceService;
     private readonly IAdvertFeatureService<Brand> brandService;
     private readonly IAdvertFeatureService<Site> siteService;
+    private readonly IAdvertSearchFilterBuilder searchAdvertsFilterBuilder;
 
     public AdvertService(
         IRepository<Advert> advertRepository,
@@ -30,7 +38,9 @@ public class AdvertService : IAdvertService
         IEuroStandardService euroStandardService,
         IPopulatedPlaceService populatedPlaceService,
         IAdvertFeatureService<Brand> brandService,
-        IAdvertFeatureService<Site> siteService)
+        IAdvertFeatureService<Site> siteService,
+        IAdvertSearchFilterBuilder searchAdvertsFilterBuilder,
+        IMapper mapper)
     {
         this.advertRepository = advertRepository;
         this.transmissionService = transmissionService;
@@ -42,25 +52,29 @@ public class AdvertService : IAdvertService
         this.populatedPlaceService = populatedPlaceService;
         this.brandService = brandService;
         this.siteService = siteService;
+        this.searchAdvertsFilterBuilder = searchAdvertsFilterBuilder;
+        this.mapper = mapper;
     }
 
-    public async Task AddAsync(NormalizedAdvert normalizedAdvert)
+    public async Task AddOrUpdateAsync(NormalizedAdvert normalizedAdvert)
     {
-        var siteId = await siteService.FindIdByNameAsync(normalizedAdvert.Site);
-        var transmissionId = await transmissionService.FindIdByNameAsync(normalizedAdvert.Transmission);
-        var bodyStyleId = await bodyStyleService.FindIdByNameAsync(normalizedAdvert.BodyStyle);
-        var engineId = await engineService.FindIdByNameAsync(normalizedAdvert.Engine);
-        var conditionId = await conditionService.FindIdByNameAsync(normalizedAdvert.Condition);
-        var colorId = await colorService.FindIdByNameAsync(normalizedAdvert.Color);
+        var siteId = siteService.FindIdByName(normalizedAdvert.Site);
+        var transmissionId = transmissionService.FindIdByName(normalizedAdvert.Transmission);
 
-        var brand = await brandService.FindByNameAsync(normalizedAdvert.Brand);
+        var bodyStyleId = bodyStyleService.FindIdByName(normalizedAdvert.BodyStyle);
+        var engineId = engineService.FindIdByName(normalizedAdvert.Engine);
+
+        var conditionId = conditionService.FindIdByName(normalizedAdvert.Condition);
+        var colorId = colorService.FindIdByName(normalizedAdvert.Color);
+
+        var brand = brandService.FindByName(normalizedAdvert.Brand);
         var model = brand?.Models.FirstOrDefault(m => m.Name == normalizedAdvert.Model);
 
-        var populatedPlace = await populatedPlaceService.FindByRegionAsync(
+        var populatedPlace = populatedPlaceService.FindByRegion(
             normalizedAdvert.Region, normalizedAdvert.PopulatedPlace, normalizedAdvert.PopulatedPlaceType);
 
         bool isEuroStandardApproximate = false;
-        var euroStandard = await euroStandardService.FindByNameAsync(normalizedAdvert.EuroStandard);
+        var euroStandard = euroStandardService.FindByName(normalizedAdvert.EuroStandard);
 
         if (euroStandard == null)
         {
@@ -112,9 +126,9 @@ public class AdvertService : IAdvertService
         await advertRepository.SaveChangesAsync();
     }
 
-    public async Task<DateTime?> LatestAdvertModifiedOnDateAsync(string site)
+    public DateTime? GetLatestAdvertModifiedOnDate(string site)
     {
-        var siteId = await siteService.FindIdByNameAsync(site);
+        var siteId = siteService.FindIdByName(site);
 
         return advertRepository.All()
             .Where(a => a.SiteId == siteId)
@@ -122,38 +136,25 @@ public class AdvertService : IAdvertService
             .ModifiedOn;
     }
 
-    public async Task<IEnumerable<SearchAdvertResult>> SearchAdvertsAsync(SearchAdvertsFilter filter, int pageIndex, int resultsPerPageCount)
-        => (await ApplyFilterToAdvertsAsync(filter))
-            .Skip(pageIndex * resultsPerPageCount)
+    public IEnumerable<AdvertSearchResult> SearchAdverts(AdvertSearchFilter filter, int pageIndex, int resultsPerPageCount)
+        => FilterAdvertsBy(filter)
+            .Skip(count: pageIndex * resultsPerPageCount)
             .Take(resultsPerPageCount)
             .ToList()
-            .Select(a => new SearchAdvertResult
-            {
-                Title = a.Title,
-                ModifiedOn = a.ModifiedOn,
-                HorsePowers = a.HorsePowers,
-                Kilometrage = a.Kilometrage,
-                MainImageUrl = a.Images.FirstOrDefault()?.Url ?? "default-image",
-                Month = a.ManufacturedOn?.Month.ToString(),
-                Year = a.ManufacturedOn?.Year,
-                Price = a.PriceBgn,
-                Transmission = a.Transmission?.Name,
-                Engine = a.Engine?.Name,
-            });
+            .Select(mapper.Map<Advert, AdvertSearchResult>);
 
-    private async Task<IQueryable<Advert>> ApplyFilterToAdvertsAsync(SearchAdvertsFilter filter)
-    {
-        var engineId = await engineService.FindIdByNameAsync(filter.Engine);
-        var transmissionId = await transmissionService.FindIdByNameAsync(filter.Transmission);
-        var colorId = await colorService.FindIdByNameAsync(filter.Color);
-        var conditionId = await conditionService.FindIdByNameAsync(filter.Condition);
-        var brandId = await brandService.FindIdByNameAsync(filter.Brand);
-
-        return advertRepository.All()
-            .Where(a => (filter.Engine == null || a.EngineId == engineId)
-                && (filter.Transmission == null || a.TransmissionId == transmissionId)
-                && (filter.Color == null || a.ColorId == colorId)
-                && (filter.Condition == null || a.ConditionId == conditionId)
-                && (filter.Brand == null || a.BrandId == brandId));
-    }
+    private IQueryable<Advert> FilterAdvertsBy(AdvertSearchFilter filter)
+        => searchAdvertsFilterBuilder
+            .CreateFilterFor(advertRepository.All())
+            .ByBodyStyle(filter.BodyStyle)
+            .ByBrand(filter.Brand)
+            .ByColor(filter.Color)
+            .ByCondition(filter.Condition)
+            .ByEngine(filter.Engine)
+            .ByRegion(filter.Region)
+            .ByTransmission(filter.Transmission)
+            .ByHorsePowers(filter.MinHorsePowers, filter.MaxHorsePowers)
+            .ByKilometrage(filter.MinKilometrage, filter.MaxKilometrage)
+            .ByYear(filter.MinYear, filter.MaxYear)
+            .ApplyFilter();   
 }

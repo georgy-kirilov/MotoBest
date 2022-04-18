@@ -22,6 +22,7 @@ string connectionString = builder.Configuration.GetConnectionString("DefaultConn
 var identityOptions = builder.Configuration.GetSection("IdentityOptions").Get<IdentityOptions>();
 
 builder.Services
+    .AddAutoMapper()
     .AddAppDbContext(connectionString)
     .AddAppIdentity(identityOptions);
 
@@ -34,7 +35,8 @@ builder.Services
     .AddTransient<IAdvertService, AdvertService>()
     .AddTransient(typeof(IAdvertFeatureService<>), typeof(AdvertFeatureService<>))
     .AddTransient<IEuroStandardService, EuroStandardService>()
-    .AddTransient<IPopulatedPlaceService, PopulatedPlaceService>();
+    .AddTransient<IPopulatedPlaceService, PopulatedPlaceService>()
+    .AddTransient<IAdvertSearchFilterBuilder, AdvertSearchFilterOptionsBuilder>();
 
 builder.Services.AddHostedService<ScrapingBackgroundService>();
 

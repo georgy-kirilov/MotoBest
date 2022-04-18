@@ -13,8 +13,8 @@ public class AdvertsController : ApiController
     }
 
     [HttpGet]
-    public async Task<IEnumerable<SearchAdvertResult>> Search([FromQuery] SearchAdvertsFilter filter)
+    public IEnumerable<AdvertSearchResult> Search([FromQuery] AdvertSearchFilter filter)
     {
-        return await advertService.SearchAdvertsAsync(filter);
+        return advertService.SearchAdverts(filter);
     }
 }

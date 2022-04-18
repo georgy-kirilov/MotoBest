@@ -41,8 +41,8 @@ public class ScrapingBackgroundService : BackgroundService
             await Task.Delay(delayMilliseconds, stoppingToken);
 
             using var scope = serviceScopeFactory.CreateScope();
-            var latestModifiedOnDate = await scope.ServiceProvider.GetRequiredService<IAdvertService>()
-                .LatestAdvertModifiedOnDateAsync(SiteNames.AutoBg) ?? DateTime.Now.Subtract(TimeSpan.FromHours(1));
+            var latestModifiedOnDate = scope.ServiceProvider.GetRequiredService<IAdvertService>()
+                .GetLatestAdvertModifiedOnDate(SiteNames.AutoBg) ?? DateTime.Now.Subtract(TimeSpan.FromHours(1));
 
             int resultsPageIndex = 1;
 
@@ -71,7 +71,7 @@ public class ScrapingBackgroundService : BackgroundService
                         var scrapedAdvert = scraper.ScrapeAdvert(fullAdvertDocument);
                         scrapedAdvert.ModifiedOn = advertResult.ModifiedOn;
                         var normalizedAdvert = normalizer.NormalizeAdvert(scrapedAdvert);
-                        await advertService.AddAsync(normalizedAdvert);
+                        await advertService.AddOrUpdateAsync(normalizedAdvert);
                     }
 
                     var task = Task.Run(method, stoppingToken);

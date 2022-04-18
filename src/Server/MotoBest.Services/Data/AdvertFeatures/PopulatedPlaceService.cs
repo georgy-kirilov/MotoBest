@@ -15,12 +15,12 @@ public class PopulatedPlaceService : AdvertFeatureService<PopulatedPlace>, IPopu
         this.regionService = regionService;
     }
 
-    public async Task<PopulatedPlace?> FindByRegionAsync(
+    public PopulatedPlace? FindByRegion(
         string? regionName,
         string? populatedPlaceName,
         PopulatedPlaceType? populatedPlaceType)
     {
-        var region = await regionService.FindByNameAsync(regionName);
+        var region = regionService.FindByName(regionName);
         var source = region?.PopulatedPlaces.AsQueryable() ?? featureRepository.All();
         return source.FirstOrDefault(pp => pp.Name == populatedPlaceName && pp.Type == populatedPlaceType);
     }

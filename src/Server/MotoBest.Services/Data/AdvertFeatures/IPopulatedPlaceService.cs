@@ -4,7 +4,7 @@ namespace MotoBest.Services.Data.AdvertFeatures;
 
 public interface IPopulatedPlaceService : IAdvertFeatureService<PopulatedPlace>
 {
-    Task<PopulatedPlace?> FindByRegionAsync(
+    PopulatedPlace? FindByRegion(
         string? regionName,
         string? populatedPlaceName,
         PopulatedPlaceType? populatedPlaceType);

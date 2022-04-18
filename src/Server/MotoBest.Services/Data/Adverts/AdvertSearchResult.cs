@@ -1,6 +1,6 @@
 ﻿namespace MotoBest.Services.Data.Adverts;
 
-public class SearchAdvertResult
+public class AdvertSearchResult
 {
     public string? Title { get; init; }
 

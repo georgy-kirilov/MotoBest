@@ -29,6 +29,9 @@ public class Advert : BaseModel<string>
 
     public string? Description { get; set; }
 
+    /// <summary>
+    /// Returns zero if the price is not fixed
+    /// </summary>
     [Precision(14, 2)]
     public decimal? PriceBgn { get; set; }
 

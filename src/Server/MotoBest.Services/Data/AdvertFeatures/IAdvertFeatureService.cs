@@ -8,10 +8,10 @@ public interface IAdvertFeatureService<TFeature>
     /// <summary>
     /// Returns the id of the model with the given name or null if such is not found
     /// </summary>
-    Task<int?> FindIdByNameAsync(string? name);
+    int? FindIdByName(string? name);
 
     /// <summary>
     /// Returns the model with the given name or null if such is not found
     /// </summary>
-    Task<TFeature?> FindByNameAsync(string? name);
+    TFeature? FindByName(string? name);
 }

@@ -7,7 +7,7 @@ public interface IAdvertService
 {
     Task AddOrUpdateAsync(NormalizedAdvert advert);
 
-    DateTime? GetLatestAdvertModifiedOnDate(string site);
+    DateTime? FindLatestAdvertModifiedOnDate(string site);
 
     IEnumerable<AdvertSearchResultDto> SearchAdverts(
         AdvertSearchFilterDto filter,

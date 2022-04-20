@@ -16,9 +16,7 @@ public class AdvertsController : ApiController
 
     [HttpGet]
     public IEnumerable<AdvertSearchResultDto> Search([FromQuery] AdvertSearchFilterDto filter)
-    {
-        return advertService.SearchAdverts(filter);
-    }
+        => advertService.SearchAdverts(filter);
 
     [HttpGet("{id}")]
     public async Task<IActionResult> GetById(string id)

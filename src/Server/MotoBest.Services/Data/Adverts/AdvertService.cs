@@ -7,6 +7,7 @@ using MotoBest.Data.Repositories;
 
 using MotoBest.Services.Data.AdvertFeatures;
 using MotoBest.Services.Data.Adverts.Models;
+
 using MotoBest.Services.Normalization;
 
 namespace MotoBest.Services.Data.Adverts;
@@ -14,36 +15,43 @@ namespace MotoBest.Services.Data.Adverts;
 public class AdvertService : IAdvertService
 {
     private readonly IMapper mapper;
+
+    private readonly IEuroStandardService euroStandardService;
+    private readonly IPopulatedPlaceService populatedPlaceService;
+
     private readonly IRepository<Advert> advertRepository;
+    private readonly IRepository<Image> imageRepository;
 
     private readonly IAdvertFeatureService<Transmission> transmissionService;
     private readonly IAdvertFeatureService<BodyStyle> bodyStyleService;
+
     private readonly IAdvertFeatureService<Engine> engineService;
-
     private readonly IAdvertFeatureService<Condition> conditionService;
-    private readonly IAdvertFeatureService<Color> colorService;
-    private readonly IEuroStandardService euroStandardService;
 
-    private readonly IPopulatedPlaceService populatedPlaceService;
+    private readonly IAdvertFeatureService<Color> colorService;
     private readonly IAdvertFeatureService<Brand> brandService;
+
     private readonly IAdvertFeatureService<Site> siteService;
-    private readonly IAdvertSearchFilterBuilder searchAdvertsFilterBuilder;
+    private readonly IAdvertSearchFilterBuilder advertSearchFilterBuilder;
 
     public AdvertService(
+        IMapper mapper,
+        IEuroStandardService euroStandardService,
+        IPopulatedPlaceService populatedPlaceService,
         IRepository<Advert> advertRepository,
+        IRepository<Image> imageRepository,
         IAdvertFeatureService<Transmission> transmissionService,
         IAdvertFeatureService<BodyStyle> bodyStyleService,
         IAdvertFeatureService<Engine> engineService,
         IAdvertFeatureService<Condition> conditionService,
         IAdvertFeatureService<Color> colorService,
-        IEuroStandardService euroStandardService,
-        IPopulatedPlaceService populatedPlaceService,
         IAdvertFeatureService<Brand> brandService,
         IAdvertFeatureService<Site> siteService,
-        IAdvertSearchFilterBuilder searchAdvertsFilterBuilder,
-        IMapper mapper)
+        IAdvertSearchFilterBuilder advertSearchFilterBuilder)
     {
+        this.mapper = mapper;
         this.advertRepository = advertRepository;
+        this.imageRepository = imageRepository;
         this.transmissionService = transmissionService;
         this.bodyStyleService = bodyStyleService;
         this.engineService = engineService;
@@ -53,8 +61,7 @@ public class AdvertService : IAdvertService
         this.populatedPlaceService = populatedPlaceService;
         this.brandService = brandService;
         this.siteService = siteService;
-        this.searchAdvertsFilterBuilder = searchAdvertsFilterBuilder;
-        this.mapper = mapper;
+        this.advertSearchFilterBuilder = advertSearchFilterBuilder;
     }
 
     public async Task AddOrUpdateAsync(NormalizedAdvert normalizedAdvert)
@@ -62,63 +69,63 @@ public class AdvertService : IAdvertService
         var siteId = siteService.FindIdByName(normalizedAdvert.Site);
         var transmissionId = transmissionService.FindIdByName(normalizedAdvert.Transmission);
 
-        var bodyStyleId = bodyStyleService.FindIdByName(normalizedAdvert.BodyStyle);
         var engineId = engineService.FindIdByName(normalizedAdvert.Engine);
+        var bodyStyleId = bodyStyleService.FindIdByName(normalizedAdvert.BodyStyle);
 
-        var conditionId = conditionService.FindIdByName(normalizedAdvert.Condition);
         var colorId = colorService.FindIdByName(normalizedAdvert.Color);
+        var conditionId = conditionService.FindIdByName(normalizedAdvert.Condition);
 
         var brand = brandService.FindByName(normalizedAdvert.Brand);
         var model = brand?.Models.FirstOrDefault(m => m.Name == normalizedAdvert.Model);
 
+        var (euroStandard, isEuroStandardApproximate) = await FindEuroStandardAsync(
+            normalizedAdvert.EuroStandard,
+            normalizedAdvert.ManufacturedOn);
+
         var populatedPlace = populatedPlaceService.FindByRegion(
-            normalizedAdvert.Region, normalizedAdvert.PopulatedPlace, normalizedAdvert.PopulatedPlaceType);
-
-        bool isEuroStandardApproximate = false;
-        var euroStandard = euroStandardService.FindByName(normalizedAdvert.EuroStandard);
-
-        if (euroStandard == null)
-        {
-            isEuroStandardApproximate = true;
-            euroStandard = await euroStandardService.ApproximateAsync(normalizedAdvert.ManufacturedOn);
-        }
+            normalizedAdvert.Region,
+            normalizedAdvert.PopulatedPlace,
+            normalizedAdvert.PopulatedPlaceType);
 
         var images = normalizedAdvert.ImageUrls
-            .Select(url => new Image { Url = url })
-            .ToList();
+            .Select(url => new Image { Url = url }).ToList();
 
-        var advert = await advertRepository.All()
-            .FirstOrDefaultAsync(a => a.RemoteId == normalizedAdvert.RemoteId);
+        var (advert, doesAdvertExist) = await FindAdvertBySiteInfoAsync(normalizedAdvert.RemoteId, siteId);
 
-        bool doesAdvertExist = advert != null;
+        DeleteAdvertImages(advert.Images.ToList());
 
-        if (advert == null)
-        {
-            advert = new Advert();
-        }
+        advert.Images = images;
 
         advert.SiteId = siteId;
         advert.RemoteId = normalizedAdvert.RemoteId;
+
         advert.Title = normalizedAdvert.Title;
         advert.Description = normalizedAdvert.Description;
+
+        advert.ColorId = colorId;
+        advert.ConditionId = conditionId;
+
+        advert.EngineId = engineId;
         advert.PriceBgn = normalizedAdvert.PriceBgn;
-        advert.ManufacturedOn = normalizedAdvert.ManufacturedOn;
+
+        advert.BodyStyleId = bodyStyleId;
+        advert.TransmissionId = transmissionId;
+
         advert.ModifiedOn = normalizedAdvert.ModifiedOn;
+        advert.ManufacturedOn = normalizedAdvert.ManufacturedOn;
+
         advert.HorsePowers = normalizedAdvert.HorsePowers;
         advert.Kilometrage = normalizedAdvert.Kilometrage;
-        advert.TransmissionId = transmissionId;
-        advert.BodyStyleId = bodyStyleId;
-        advert.EngineId = engineId;
-        advert.ConditionId = conditionId;
-        advert.ColorId = colorId;
+
         advert.RegionId = populatedPlace?.RegionId;
-        advert.IsEuroStandardApproximate = isEuroStandardApproximate;
-        advert.EuroStandardId = euroStandard?.Id;
         advert.PopulatedPlaceId = populatedPlace?.Id;
+
         advert.BrandId = brand?.Id;
         advert.ModelId = model?.Id;
-        advert.Images = images;
-        
+
+        advert.EuroStandardId = euroStandard?.Id;
+        advert.IsEuroStandardApproximate = isEuroStandardApproximate;
+
         if (!doesAdvertExist)
         {
             await advertRepository.AddAsync(advert);
@@ -130,26 +137,18 @@ public class AdvertService : IAdvertService
     public async Task<FullAdvertDto?> GetFullAdvertAsync(string id)
     {
         var advert = await advertRepository.All().FirstOrDefaultAsync(a => a.Id == id);
-
-        if (advert == null)
-        {
-            return null;
-        }
-
         return mapper.Map<FullAdvertDto>(advert);
     }
 
-    public DateTime? GetLatestAdvertModifiedOnDate(string site)
-    {
-        var siteId = siteService.FindIdByName(site);
-
-        return advertRepository.All()
-            .Where(a => a.SiteId == siteId)
+    public DateTime? FindLatestAdvertModifiedOnDate(string site)
+        => FindAdvertsBySiteId(siteService.FindIdByName(site))
             .FirstOrDefault()?
             .ModifiedOn;
-    }
 
-    public IEnumerable<AdvertSearchResultDto> SearchAdverts(AdvertSearchFilterDto filter, int pageIndex, int resultsPerPageCount)
+    public IEnumerable<AdvertSearchResultDto> SearchAdverts(
+        AdvertSearchFilterDto filter,
+        int pageIndex,
+        int resultsPerPageCount)
         => FilterAdvertsBy(filter)
             .Skip(count: pageIndex * resultsPerPageCount)
             .Take(resultsPerPageCount)
@@ -157,7 +156,7 @@ public class AdvertService : IAdvertService
             .Select(mapper.Map<Advert, AdvertSearchResultDto>);
 
     private IQueryable<Advert> FilterAdvertsBy(AdvertSearchFilterDto filter)
-        => searchAdvertsFilterBuilder
+        => advertSearchFilterBuilder
             .CreateFilterFor(advertRepository.All())
             .ByBodyStyle(filter.BodyStyle)
             .ByBrand(filter.Brand)
@@ -169,5 +168,42 @@ public class AdvertService : IAdvertService
             .ByHorsePowers(filter.MinHorsePowers, filter.MaxHorsePowers)
             .ByKilometrage(filter.MinKilometrage, filter.MaxKilometrage)
             .ByYear(filter.MinYear, filter.MaxYear)
-            .ApplyFilter();   
+            .ApplyFilter();
+
+    private IQueryable<Advert> FindAdvertsBySiteId(int? siteId)
+        => advertRepository.All().Where(a => a.SiteId == siteId);
+
+    private async Task<(Advert advert, bool doesAdvertExist)> FindAdvertBySiteInfoAsync(string? remoteId, int? siteId)
+    {
+        var advert = await advertRepository.All()
+            .FirstOrDefaultAsync(a => a.RemoteId == remoteId && a.SiteId == siteId) ?? new Advert();
+
+        bool doesAdvertExist = advertRepository.All()
+            .Any(a => a.RemoteId == remoteId && a.SiteId == siteId);
+
+        return (advert, doesAdvertExist);
+    }
+
+    private async Task<(EuroStandard? euroStandard, bool isApproximate)> FindEuroStandardAsync(
+        string? euroStandardName, DateTime? manufacturedOn)
+    {
+        bool isApproximate = false;
+        var euroStandard = euroStandardService.FindByName(euroStandardName);
+
+        if (euroStandard == null)
+        {
+            isApproximate = true;
+            euroStandard = await euroStandardService.ApproximateAsync(manufacturedOn);
+        }
+
+        return (euroStandard, isApproximate);
+    }
+
+    private void DeleteAdvertImages(IList<Image> imagesToDelete)
+    {
+        foreach (var imageToDelete in imagesToDelete)
+        {
+            imageRepository.Delete(imageToDelete);
+        }
+    }
 }

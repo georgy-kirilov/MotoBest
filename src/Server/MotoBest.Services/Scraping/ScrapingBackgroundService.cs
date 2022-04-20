@@ -42,7 +42,7 @@ public class ScrapingBackgroundService : BackgroundService
 
             using var scope = serviceScopeFactory.CreateScope();
             var latestModifiedOnDate = scope.ServiceProvider.GetRequiredService<IAdvertService>()
-                .GetLatestAdvertModifiedOnDate(SiteNames.AutoBg) ?? DateTime.Now.Subtract(TimeSpan.FromHours(1));
+                .FindLatestAdvertModifiedOnDate(SiteNames.AutoBg) ?? DateTime.Now.Subtract(TimeSpan.FromHours(1));
 
             int resultsPageIndex = 1;
 

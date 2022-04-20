@@ -7,7 +7,7 @@ using MotoBest.Services.Common;
 
 using MotoBest.Services.Data.AdvertFeatures;
 using MotoBest.Services.Data.Adverts;
-
+using MotoBest.Services.Data.Adverts.Filtering;
 using MotoBest.Services.Normalization;
 
 using MotoBest.Services.Scraping;
@@ -30,10 +30,10 @@ builder.Services
     .AddTransient<ISiteScraper, DesktopAutoBgSiteScraper>()
     .AddSingleton<IDateTimeManager, DateTimeManager>()
     .AddScoped(typeof(IRepository<>), typeof(Repository<>))
+    .AddTransient(typeof(IAdvertFeatureService<>), typeof(AdvertFeatureService<>))
     .AddSingleton<ICurrencyCourseProvider, StaticCurrencyCourseProvider>()
     .AddTransient<ISiteDataNormalizer, SiteDataNormalizer>()
     .AddTransient<IAdvertService, AdvertService>()
-    .AddTransient(typeof(IAdvertFeatureService<>), typeof(AdvertFeatureService<>))
     .AddTransient<IEuroStandardService, EuroStandardService>()
     .AddTransient<IPopulatedPlaceService, PopulatedPlaceService>()
     .AddTransient<IAdvertSearchFilterBuilder, AdvertSearchFilterOptionsBuilder>();

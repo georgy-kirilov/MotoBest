@@ -27,4 +27,8 @@ public class AdvertSearchFilterDto
     public int? MinYear { get; init; }
 
     public int? MaxYear { get; init; }
+
+    public decimal? MinPrice { get; init; }
+
+    public decimal? MaxPrice { get; init; }
 }

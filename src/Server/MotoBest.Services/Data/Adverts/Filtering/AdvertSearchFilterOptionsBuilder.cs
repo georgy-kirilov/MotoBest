@@ -1,7 +1,7 @@
 ﻿using MotoBest.Data.Models;
 using MotoBest.Services.Data.AdvertFeatures;
 
-namespace MotoBest.Services.Data.Adverts;
+namespace MotoBest.Services.Data.Adverts.Filtering;
 
 public class AdvertSearchFilterOptionsBuilder : IAdvertSearchFilterBuilder, IAdvertSearchFilterOptionsBuilder
 {
@@ -112,6 +112,14 @@ public class AdvertSearchFilterOptionsBuilder : IAdvertSearchFilterBuilder, IAdv
     {
         query = query.Where(a => (minYear == null || (a.ManufacturedOn != null && a.ManufacturedOn.Value.Year >= minYear)
             && (maxYear == null || (a.ManufacturedOn != null && a.ManufacturedOn.Value.Year <= maxYear))));
+
+        return this;
+    }
+
+    public IAdvertSearchFilterOptionsBuilder ByPrice(decimal? minPriceBgn, decimal? maxPriceBgn)
+    {
+        query = query.Where(a => (minPriceBgn == null || a.PriceBgn >= minPriceBgn)
+            && (maxPriceBgn == null || a.PriceBgn <= maxPriceBgn));
 
         return this;
     }

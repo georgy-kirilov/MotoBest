@@ -1,6 +1,6 @@
 ﻿using MotoBest.Data.Models;
 
-namespace MotoBest.Services.Data.Adverts;
+namespace MotoBest.Services.Data.Adverts.Filtering;
 
 public interface IAdvertSearchFilterOptionsBuilder
 {
@@ -25,4 +25,6 @@ public interface IAdvertSearchFilterOptionsBuilder
     IAdvertSearchFilterOptionsBuilder ByKilometrage(int? minKilometrage, int? maxKilometrage);
 
     IAdvertSearchFilterOptionsBuilder ByYear(int? minYear, int? maxYear);
+
+    IAdvertSearchFilterOptionsBuilder ByPrice(decimal? minPrice, decimal? maxPrice);
 }

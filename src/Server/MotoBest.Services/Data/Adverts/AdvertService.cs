@@ -6,6 +6,7 @@ using MotoBest.Data.Models;
 using MotoBest.Data.Repositories;
 
 using MotoBest.Services.Data.AdvertFeatures;
+using MotoBest.Services.Data.Adverts.Filtering;
 using MotoBest.Services.Data.Adverts.Models;
 
 using MotoBest.Services.Normalization;
@@ -168,6 +169,7 @@ public class AdvertService : IAdvertService
             .ByHorsePowers(filter.MinHorsePowers, filter.MaxHorsePowers)
             .ByKilometrage(filter.MinKilometrage, filter.MaxKilometrage)
             .ByYear(filter.MinYear, filter.MaxYear)
+            .ByPrice(filter.MinPrice, filter.MaxPrice)
             .ApplyFilter();
 
     private IQueryable<Advert> FindAdvertsBySiteId(int? siteId)

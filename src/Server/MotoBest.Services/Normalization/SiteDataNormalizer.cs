@@ -1,9 +1,11 @@
 ﻿using MotoBest.Common;
-
+using MotoBest.Common.Extensions;
+using MotoBest.Common.Units;
 using MotoBest.Data.Models;
 using MotoBest.Data.Seeding.Constants;
 
 using MotoBest.Services.Common;
+using MotoBest.Services.Common.Units;
 using MotoBest.Services.Scraping.Models;
 
 using static MotoBest.Services.Normalization.NormalizationConstants;
@@ -41,8 +43,8 @@ public class SiteDataNormalizer : ISiteDataNormalizer
             Color = scrapedAdvert.Color?.Trim().ToLower(),
             Condition = scrapedAdvert.Condition?.Trim().ToLower(),
             Engine = NormalizeEngine(scrapedAdvert.Engine),
-            HorsePowers = scrapedAdvert.HorsePowers,
-            Kilometrage = scrapedAdvert.Kilometrage,
+            PowerInHp = scrapedAdvert.Power,
+            MileageInKm = scrapedAdvert.Mileage,
             ManufacturedOn = scrapedAdvert.ManufacturedOn,
             PopulatedPlace = NormalizePopulatedPlace(scrapedAdvert.PopulatedPlace),
             Region = NormalizeRegion(scrapedAdvert.Region),
@@ -50,7 +52,7 @@ public class SiteDataNormalizer : ISiteDataNormalizer
             Brand = NormalizeBrand(scrapedAdvert.Brand),
             ModifiedOn = scrapedAdvert.ModifiedOn,
             PopulatedPlaceType = NormalizePopulatedPlaceType(scrapedAdvert.PopulatedPlace),
-            PriceBgn = NormalizePrice(scrapedAdvert.Price, scrapedAdvert.Currency),
+            PriceInBgn = NormalizePrice(scrapedAdvert.Price, scrapedAdvert.CurrencyUnit),
             ImageUrls = scrapedAdvert.ImageUrls,
             EuroStandard = scrapedAdvert.EuroStandard?.Trim().ToLower(),
             RemoteId = scrapedAdvert.RemoteId?.Trim(),
@@ -58,14 +60,14 @@ public class SiteDataNormalizer : ISiteDataNormalizer
             Site = scrapedAdvert.Site,
         };
 
-    private decimal? NormalizePrice(decimal? price, Currency? currency)
+    private decimal? NormalizePrice(decimal? price, CurrencyUnit? currencyUnit)
     {
-        if (currency == null || price == null)
+        if (currencyUnit == null || price == null)
         {
             return price;
         }
         
-        return price * currencyCourseProvider.GetCourseToBgn(currency.Value);
+        return price * currencyCourseProvider.GetBgnCourse(currencyUnit.Value);
     }
 
     private static PopulatedPlaceType? NormalizePopulatedPlaceType(string? populatedPlace)

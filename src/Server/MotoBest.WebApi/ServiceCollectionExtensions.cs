@@ -20,7 +20,7 @@ public static class ServiceCollectionExtensions
 
     public static IServiceCollection AddAutoMapper(this IServiceCollection serviceCollection)
     {
-        var mapperConfig = new MapperConfiguration(mc => mc.AddProfile(new MappingProfile()));
+        var mapperConfig = new MapperConfiguration(mc => mc.AddProfile(new AdvertProfile()));
         IMapper mapper = mapperConfig.CreateMapper();
         serviceCollection.AddSingleton(mapper);
         return serviceCollection;

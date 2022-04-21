@@ -20,8 +20,8 @@ public class DesktopAutoBgSiteScraper : ISiteScraper
         [TransmissionLabel] = ScrapeTransmission,
         [EngineLabel] = ScrapeEngine,
         [ConditionLabel] = ScrapeCondition,
-        [KilometrageLabel] = ScrapeKilometrage,
-        [HorsePowersLabel] = ScrapeHorsePowers,
+        [MileageLabel] = ScrapeKilometrage,
+        [PowerLabel] = ScrapeHorsePowers,
         [ManufacturedOnDateLabel] = ScrapeManufacturedOnDate,
         [PriceLabel] = ScrapePriceAndCurrency,
         [ModelLabel] = ScrapeBrandAndModel,
@@ -53,7 +53,7 @@ public class DesktopAutoBgSiteScraper : ISiteScraper
         return scrapedAdvert;
     }
 
-    public IEnumerable<ScrapedSearchAdvertResult?> ScrapeSearchAdvertResults(IDocument document)
+    public IEnumerable<ScrapedSearchAdvertResult?> ScrapeAdvertSearchResults(IDocument document)
         => document
             .QuerySelectorAll("#resultsPage > ul > #rightColumn > .results > .resultItem")
             .Select(item => ScrapeAdvertResult(item, dateTimeManager.Today()));

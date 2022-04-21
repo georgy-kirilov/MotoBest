@@ -4,7 +4,7 @@ using System.Text.Unicode;
 
 using Xunit;
 
-namespace MotoBest.Common;
+namespace MotoBest.Common.Extensions;
 
 public static class ObjectExtensions
 {
@@ -15,7 +15,7 @@ public static class ObjectExtensions
             WriteIndented = true
         });
 
-    public static void AssertPropertyValues<T>(this T expected, T actual)
+    public static void AssertProperties<T>(this T expected, T actual)
     {
         var properties = typeof(T).GetProperties();
 

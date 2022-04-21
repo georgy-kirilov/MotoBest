@@ -18,15 +18,15 @@ public class NormalizedAdvert
 
     public string? Condition { get; set; }
 
-    public int? Kilometrage { get; set; }
+    public int? MileageInKm { get; set; }
 
-    public int? HorsePowers { get; set; }
+    public int? PowerInHp { get; set; }
 
     public string? Color { get; set; }
 
     public DateTime? ManufacturedOn { get; set; }
 
-    public decimal? PriceBgn { get; set; }
+    public decimal? PriceInBgn { get; set; }
 
     public string? Brand { get; set; }
 
@@ -38,7 +38,7 @@ public class NormalizedAdvert
 
     public string? Region { get; set; }
 
-    public string Site { get; set; } = "";
+    public string Site { get; set; } = string.Empty;
 
     public DateTime? ModifiedOn { get; set; }
 

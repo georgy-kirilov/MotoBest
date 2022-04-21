@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-namespace MotoBest.Common;
+namespace MotoBest.Common.Extensions;
 
 public static class TypeExtensions
 {

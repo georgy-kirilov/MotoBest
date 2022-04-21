@@ -2,5 +2,5 @@
 
 public class Site : AdvertFeature
 {
-    public string FullAdvertPagePathFormat { get; set; } = "";
+    public string FullAdvertPagePathFormat { get; set; } = string.Empty;
 }

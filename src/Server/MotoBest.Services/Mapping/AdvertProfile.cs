@@ -1,17 +1,17 @@
 ﻿using AutoMapper;
-
 using System.Globalization;
 
 using MotoBest.Common;
 using MotoBest.Data.Models;
+
 using MotoBest.Services.Data.Adverts;
 using MotoBest.Services.Data.Adverts.Models;
 
 namespace MotoBest.Services.Mapping;
 
-public class MappingProfile : Profile
+public class AdvertProfile : Profile
 {
-    public MappingProfile()
+    public AdvertProfile()
     {
         CreateMap<Advert, AdvertSearchResultDto>()
             .ForMember(
@@ -19,7 +19,7 @@ public class MappingProfile : Profile
                 opt => opt.MapFrom(MapPrice))
             .ForMember(
                 dest => dest.Engine,
-                opt => opt.MapFrom((src, dest) => src.Engine?.Name))
+                opt => opt.MapFrom(MapEngine))
             .ForMember(
                 dest => dest.Year,
                 opt => opt.MapFrom(MapYear))
@@ -28,7 +28,7 @@ public class MappingProfile : Profile
                 opt => opt.MapFrom(MapTransmission))
             .ForMember(
                 dest => dest.MainImageUrl,
-                opt => opt.MapFrom((src, dest) => src.Images.FirstOrDefault()?.Url ?? AdvertServiceConstants.DefaultAdvertImageUrl))
+                opt => opt.MapFrom(MapMainImageUrl))
             .ForMember(
                 dest => dest.Month,
                 opt => opt.MapFrom(MapMonthName));
@@ -54,36 +54,54 @@ public class MappingProfile : Profile
                 opt => opt.MapFrom(MapEngine))
             .ForMember(
                 dest => dest.Brand,
-                opt => opt.MapFrom((src, dest) => src.Brand?.Name))
+                opt => opt.MapFrom(MapBrand))
             .ForMember(
                 dest => dest.Model,
-                opt => opt.MapFrom((src, dest) => src.Model?.Name))
+                opt => opt.MapFrom(MapModel))
             .ForMember(
                 dest => dest.Color,
-                opt => opt.MapFrom((src, dest) => src.Color?.Name))
+                opt => opt.MapFrom(MapColor))
             .ForMember(
                 dest => dest.Condition,
-                opt => opt.MapFrom((src, dest) => src.Condition?.Name))
+                opt => opt.MapFrom(MapCondition))
             .ForMember(
                 dest => dest.ImageUrls,
-                opt => opt.MapFrom((src, dest) => src.Images.Select(im => im.Url)));
+                opt => opt.MapFrom(MapImageUrls));
     }
 
-    private static string? MapMonthName<TDestination>(Advert source, TDestination destination)
+    private string? MapBrand<T>(Advert source, T destination)
+        => source.Brand?.Name;
+
+    private string? MapModel<T>(Advert source, T destination)
+        => source.Model?.Name;
+
+    private string? MapCondition<T>(Advert source, T destination)
+        => source.Condition?.Name;
+
+    private string? MapColor<T>(Advert source, T destination)
+        => source.Color?.Name;
+
+    private IEnumerable<string> MapImageUrls<T>(Advert source, T destination)
+        => source.Images.Where(im => im.Url != null).Select(im => im.Url)!;
+
+    private string MapMainImageUrl<T>(Advert source, T destination)
+        => source.Images.FirstOrDefault()?.Url ?? AdvertServiceConstants.DefaultAdvertImageUrl;
+
+    private string? MapMonthName<T>(Advert source, T destination)
         => source.ManufacturedOn?.ToString("MMMM", new CultureInfo(GlobalConstants.BulgarianCultureInfo));
 
-    private static int? MapYear<TDestination>(Advert source, TDestination destination)
+    private int? MapYear<T>(Advert source, T destination)
         => source.ManufacturedOn?.Year;
 
-    private static decimal? MapPrice<TDestination>(Advert source, TDestination destination)
-        => source.PriceBgn;
+    private decimal? MapPrice<T>(Advert source, T destination)
+        => source.PriceInBgn;
 
-    private static string? MapTransmission<TDestination>(Advert source, TDestination destination)
+    private string? MapTransmission<T>(Advert source, T destination)
         => source.Transmission?.Name;
 
-    private static string? MapBodyStyle<TDestination>(Advert source, TDestination destination)
+    private string? MapBodyStyle<T>(Advert source, T destination)
         => source.BodyStyle?.Name;
 
-    private static string? MapEngine<TDestination>(Advert source, TDestination destination)
+    private string? MapEngine<T>(Advert source, T destination)
         => source.Engine?.Name;
 }

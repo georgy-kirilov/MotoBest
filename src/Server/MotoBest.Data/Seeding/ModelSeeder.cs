@@ -2,12 +2,9 @@
 using System.Text.Unicode;
 using System.Text.Encodings.Web;
 
-using MotoBest.Data.Seeding.Common;
-using MotoBest.Data.Seeding.Dtos;
-
 namespace MotoBest.Data.Seeding;
 
-public class ModelsSeeder : ISeeder
+public class ModelSeeder : ISeeder
 {
     public async Task SeedAsync(AppDbContext dbContext, IServiceProvider serviceProvider)
     {

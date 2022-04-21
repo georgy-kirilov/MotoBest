@@ -1,7 +1,6 @@
 ﻿using System;
 
-using MotoBest.Common;
-
+using MotoBest.Common.Extensions;
 using MotoBest.Services.Normalization;
 using MotoBest.Services.Scraping.Models;
 
@@ -38,6 +37,6 @@ public class SiteDataNormalizerTests
         var actualNormalizedAdvert = new SiteDataNormalizer(
             new FakeCurrencyCourseProvider()).NormalizeAdvert(scrapedAdvert!);
 
-        expectedNormalizedAdvert.AssertPropertyValues(actualNormalizedAdvert);
+        expectedNormalizedAdvert.AssertProperties(actualNormalizedAdvert);
     }
 }

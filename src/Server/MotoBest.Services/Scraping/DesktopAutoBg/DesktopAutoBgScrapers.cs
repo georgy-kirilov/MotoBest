@@ -8,6 +8,8 @@ using MotoBest.Services.Scraping.Models;
 
 using static MotoBest.Common.GlobalConstants;
 using static MotoBest.Services.Scraping.Common.ScrapingConstants.DesktopAutoBg;
+using MotoBest.Common.Extensions;
+using MotoBest.Common.Units;
 
 namespace MotoBest.Services.Scraping.DesktopAutoBg;
 
@@ -152,7 +154,7 @@ internal static class DesktopAutoBgScrapers
             .RemoveStrings(KilometersSuffix)
             .Trim();
 
-        advert.Kilometrage = ParseKilometrage(kilometrageAsText);
+        advert.Mileage = ParseKilometrage(kilometrageAsText);
     }
 
     internal static void ScrapeHorsePowers(IElement horsePowersDomElement, ScrapedAdvert advert)
@@ -163,7 +165,7 @@ internal static class DesktopAutoBgScrapers
             .RemoveStrings(HorsePowersSuffix)
             .Trim();
 
-        advert.HorsePowers = ParseHorsePowers(horsePowersAsText);
+        advert.Power = ParseHorsePowers(horsePowersAsText);
     }
 
     internal static void ScrapeManufacturedOnDate(IElement manufacturedOnDateDomElement, ScrapedAdvert advert)
@@ -182,7 +184,7 @@ internal static class DesktopAutoBgScrapers
         string priceAsText = priceDomElement.TextContent.ToLower();
 
         advert.Price = ParsePrice(priceAsText);
-        advert.Currency = ParseCurrency(priceAsText);
+        advert.CurrencyUnit = ParseCurrency(priceAsText);
     }
 
     internal static ScrapedSearchAdvertResult? ScrapeAdvertResult(IElement resultItem, DateTime todayDate)
@@ -267,7 +269,7 @@ internal static class DesktopAutoBgScrapers
         return isPriceValid ? price : null;
     }
 
-    private static Currency? ParseCurrency(string priceAsText)
+    private static CurrencyUnit? ParseCurrency(string priceAsText)
     {
         var priceAsTextArgs = priceAsText.ToLower().Split(Whitespace);
 
@@ -276,12 +278,12 @@ internal static class DesktopAutoBgScrapers
             return null;
         }
 
-        string currencyAsText = priceAsTextArgs[^1];
+        string currencyUnitAsText = priceAsTextArgs[^1];
 
-        return currencyAsText switch
+        return currencyUnitAsText switch
         {
-            Bgn => Currency.Bgn,
-            Eur => Currency.Eur,
+            Bgn => CurrencyUnit.Bgn,
+            Eur => CurrencyUnit.Eur,
             _ => null
         };
     }

@@ -13,7 +13,7 @@ public class Advert : BaseModel<string>
     /// <summary>
     /// Returns null if the advert belongs to MotoBest
     /// </summary>
-    public string? RemoteId { get; set; } = "";
+    public string? RemoteId { get; set; } = string.Empty;
 
     /// <summary>
     /// Returns null if the advert belongs to MotoBest
@@ -33,15 +33,15 @@ public class Advert : BaseModel<string>
     /// Returns zero if the price is not fixed
     /// </summary>
     [Precision(14, 2)]
-    public decimal? PriceBgn { get; set; }
+    public decimal? PriceInBgn { get; set; }
 
     public DateTime? ManufacturedOn { get; set; }
 
     public DateTime? ModifiedOn { get; set; }
 
-    public int? Kilometrage { get; set; }
+    public int? MileageInKm { get; set; }
 
-    public int? HorsePowers { get; set; }
+    public int? PowerInHp { get; set; }
 
     public bool IsEuroStandardApproximate { get; set; }
 

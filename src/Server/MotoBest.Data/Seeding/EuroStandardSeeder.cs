@@ -1,9 +1,6 @@
-﻿using MotoBest.Data.Seeding.Common;
-using MotoBest.Data.Seeding.Constants;
+﻿namespace MotoBest.Data.Seeding;
 
-namespace MotoBest.Data.Seeding;
-
-public class EuroStandardsSeeder : BaseAdvertFeaturesSeeder<EuroStandard>
+public class EuroStandardSeeder : BaseAdvertFeatureSeeder<EuroStandard>
 {
     private static readonly EuroStandard[] euroStandards = new[]
     {
@@ -15,6 +12,6 @@ public class EuroStandardsSeeder : BaseAdvertFeaturesSeeder<EuroStandard>
         new EuroStandard { Name = EuroStandardNames.EuroSix, FromDate = new DateTime(2014, 9, 1) },
     };
 
-    public EuroStandardsSeeder() : base(euroStandards)
+    public EuroStandardSeeder() : base(euroStandards)
     { }
 }

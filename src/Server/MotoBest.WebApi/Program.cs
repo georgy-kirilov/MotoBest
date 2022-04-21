@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using MotoBest.Data.Repositories;
 
 using MotoBest.Services.Common;
-
+using MotoBest.Services.Common.Units;
 using MotoBest.Services.Data.AdvertFeatures;
 using MotoBest.Services.Data.Adverts;
 using MotoBest.Services.Data.Adverts.Filtering;
@@ -36,7 +36,8 @@ builder.Services
     .AddTransient<IAdvertService, AdvertService>()
     .AddTransient<IEuroStandardService, EuroStandardService>()
     .AddTransient<IPopulatedPlaceService, PopulatedPlaceService>()
-    .AddTransient<IAdvertSearchFilterBuilder, AdvertSearchFilterOptionsBuilder>();
+    .AddTransient<IAdvertSearchFilterBuilder, AdvertSearchFilterOptionsBuilder>()
+    .AddTransient<IUnitsManager, UnitsManager>();
 
 builder.Services.AddHostedService<ScrapingBackgroundService>();
 

@@ -9,18 +9,18 @@ public class AppSeeder : ISeeder
     {
         var seeders = new List<ISeeder>
         {
-            new ConstantAdvertFeaturesSeeder<Transmission, TransmissionNames>(),
-            new ConstantAdvertFeaturesSeeder<Engine, EngineNames>(),
-            new ConstantAdvertFeaturesSeeder<BodyStyle, BodyStyleNames>(),
-            new ConstantAdvertFeaturesSeeder<Condition, ConditionNames>(),
-            new ConstantAdvertFeaturesSeeder<Brand, BrandNames>(),
-            new ConstantAdvertFeaturesSeeder<Region, RegionNames>(),
-            new ConstantAdvertFeaturesSeeder<Color, ColorNames>(),
-            new RolesSeeder(),
-            new PopulatedPlacesSeeder(),
-            new EuroStandardsSeeder(),
-            new SitesSeeder(),
-            new ModelsSeeder(),
+            new ConstantAdvertFeatureSeeder<Transmission, TransmissionNames>(),
+            new ConstantAdvertFeatureSeeder<Engine, EngineNames>(),
+            new ConstantAdvertFeatureSeeder<BodyStyle, BodyStyleNames>(),
+            new ConstantAdvertFeatureSeeder<Condition, ConditionNames>(),
+            new ConstantAdvertFeatureSeeder<Brand, BrandNames>(),
+            new ConstantAdvertFeatureSeeder<Region, RegionNames>(),
+            new ConstantAdvertFeatureSeeder<Color, ColorNames>(),
+            new RoleSeeder(),
+            new PopulatedPlaceSeeder(),
+            new EuroStandardSeeder(),
+            new SiteSeeder(),
+            new ModelSeeder(),
         };
 
         foreach (var seeder in seeders)

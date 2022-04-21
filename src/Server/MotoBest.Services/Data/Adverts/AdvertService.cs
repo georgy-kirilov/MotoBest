@@ -107,7 +107,7 @@ public class AdvertService : IAdvertService
         advert.ConditionId = conditionId;
 
         advert.EngineId = engineId;
-        advert.PriceBgn = normalizedAdvert.PriceBgn;
+        advert.PriceInBgn = normalizedAdvert.PriceInBgn;
 
         advert.BodyStyleId = bodyStyleId;
         advert.TransmissionId = transmissionId;
@@ -115,8 +115,8 @@ public class AdvertService : IAdvertService
         advert.ModifiedOn = normalizedAdvert.ModifiedOn;
         advert.ManufacturedOn = normalizedAdvert.ManufacturedOn;
 
-        advert.HorsePowers = normalizedAdvert.HorsePowers;
-        advert.Kilometrage = normalizedAdvert.Kilometrage;
+        advert.PowerInHp = normalizedAdvert.PowerInHp;
+        advert.MileageInKm = normalizedAdvert.MileageInKm;
 
         advert.RegionId = populatedPlace?.RegionId;
         advert.PopulatedPlaceId = populatedPlace?.Id;

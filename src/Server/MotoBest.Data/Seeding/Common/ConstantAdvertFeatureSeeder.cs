@@ -1,9 +1,11 @@
-﻿namespace MotoBest.Data.Seeding.Common;
+﻿using MotoBest.Common.Extensions;
 
-public class ConstantAdvertFeaturesSeeder<TFeature, TConstantsSource> : BaseAdvertFeaturesSeeder<TFeature>
+namespace MotoBest.Data.Seeding.Common;
+
+public class ConstantAdvertFeatureSeeder<TFeature, TConstantsSource> : BaseAdvertFeatureSeeder<TFeature>
     where TFeature : AdvertFeature, new()
 {
-    public ConstantAdvertFeaturesSeeder()
+    public ConstantAdvertFeatureSeeder()
         : base(CreateModelsFromNameConstants())
     { }
 

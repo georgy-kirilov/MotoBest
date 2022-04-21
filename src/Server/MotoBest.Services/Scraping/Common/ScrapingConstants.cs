@@ -18,8 +18,8 @@ public static class ScrapingConstants
         public const string TransmissionLabel = "скоростна кутия";
         public const string EngineLabel = "тип двигател";
         public const string ConditionLabel = "състояние";
-        public const string KilometrageLabel = "пробег";
-        public const string HorsePowersLabel = "мощност[к.с.]";
+        public const string MileageLabel = "пробег";
+        public const string PowerLabel = "мощност[к.с.]";
         public const string ManufacturedOnDateLabel = "произведено";
         public const string PriceLabel = "цена";
         public const string ModelLabel = "модел";

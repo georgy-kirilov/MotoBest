@@ -49,7 +49,8 @@ public class AppDbContext : IdentityDbContext<User, Role, string>
             .HasIndex(a => a.RemoteId)
             .IsUnique();
 
-        builder.AddUniqueConstraintTo("Name",
+        builder.AddUniqueConstraintTo(
+            nameof(AdvertFeature.Name),
             typeof(BodyStyle),
             typeof(Brand),
             typeof(Color),

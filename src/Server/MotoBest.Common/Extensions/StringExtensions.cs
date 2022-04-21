@@ -1,27 +1,27 @@
 ﻿using System.Text;
 
-namespace MotoBest.Common;
+namespace MotoBest.Common.Extensions;
 
 public static class StringExtensions
 {
     public static string RemoveRepeatingWhiteSpaces(this string text)
     {
-        var descriptionBuilder = new StringBuilder();
+        var stringBuilder = new StringBuilder();
 
         foreach (string word in text.Split(' ', StringSplitOptions.RemoveEmptyEntries))
         {
-            descriptionBuilder.Append(word);
-            descriptionBuilder.Append(' ');
+            stringBuilder.Append(word);
+            stringBuilder.Append(' ');
         }
 
-        return descriptionBuilder.ToString().Trim();
+        return stringBuilder.ToString().Trim();
     }
 
     public static string RemoveStrings(this string text, params string[] stringsToSanitize)
-        => text.ReplaceManyWith(newValue: string.Empty, stringsToSanitize);
+        => text.ReplaceMany(newValue: string.Empty, stringsToSanitize);
 
 
-    public static string ReplaceManyWith(this string text, string newValue, params string[] oldValues)
+    public static string ReplaceMany(this string text, string newValue, params string[] oldValues)
     {
         var stringBuilder = new StringBuilder(text);
 

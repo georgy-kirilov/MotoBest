@@ -5,7 +5,7 @@ using MotoBest.Data.Seeding.Common;
 
 namespace MotoBest.Data.Seeding;
 
-internal class RolesSeeder : ISeeder
+internal class RoleSeeder : ISeeder
 {
     public async Task SeedAsync(AppDbContext dbContext, IServiceProvider serviceProvider)
     {

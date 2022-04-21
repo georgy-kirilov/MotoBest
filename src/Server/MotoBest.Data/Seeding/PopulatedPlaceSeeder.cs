@@ -1,13 +1,10 @@
-﻿using MotoBest.Data.Seeding.Common;
-using MotoBest.Data.Seeding.Dtos;
-
-using System.Text.Encodings.Web;
-using System.Text.Json;
+﻿using System.Text.Json;
 using System.Text.Unicode;
+using System.Text.Encodings.Web;
 
 namespace MotoBest.Data.Seeding;
 
-public class PopulatedPlacesSeeder : ISeeder
+public class PopulatedPlaceSeeder : ISeeder
 {
     public async Task SeedAsync(AppDbContext dbContext, IServiceProvider serviceProvider)
     {

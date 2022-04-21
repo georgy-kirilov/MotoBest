@@ -7,7 +7,7 @@ public static class ScrapingConstants
         public const string Bgn = "лв.";
         public const string Eur = "eur";
         public const string YearSuffix = "г.";
-        public const string HorsePowersSuffix = "к.с";
+        public const string HorsepowersSuffix = "к.с";
         public const string KilometersSuffix = "км";
         public const string TodayDateAsText = "днес";
         public const string NegotiablePrice = "цена по договаряне";

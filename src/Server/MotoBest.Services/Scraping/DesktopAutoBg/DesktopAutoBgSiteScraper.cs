@@ -20,8 +20,8 @@ public class DesktopAutoBgSiteScraper : ISiteScraper
         [TransmissionLabel] = ScrapeTransmission,
         [EngineLabel] = ScrapeEngine,
         [ConditionLabel] = ScrapeCondition,
-        [MileageLabel] = ScrapeKilometrage,
-        [PowerLabel] = ScrapeHorsePowers,
+        [MileageLabel] = ScrapeMileage,
+        [PowerLabel] = ScrapePower,
         [ManufacturedOnDateLabel] = ScrapeManufacturedOnDate,
         [PriceLabel] = ScrapePriceAndCurrency,
         [ModelLabel] = ScrapeBrandAndModel,
@@ -72,7 +72,6 @@ public class DesktopAutoBgSiteScraper : ISiteScraper
             .Select(a => a.TextContent.Trim())
             .Distinct() ?? Array.Empty<string>();
     }
-            
 
     private static void ScrapeMainAdvertData(IDocument document, ScrapedAdvert scrapedAdvert)
     {

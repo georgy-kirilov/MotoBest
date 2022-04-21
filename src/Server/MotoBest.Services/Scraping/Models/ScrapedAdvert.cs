@@ -43,7 +43,7 @@ public class ScrapedAdvert
 
     public DateTime? ModifiedOn { get; set; }
 
-    public string Site { get; set; } = "";
+    public string Site { get; set; } = string.Empty;
 
     public PopulatedPlaceType? PopulatedPlaceType { get; set; }
 

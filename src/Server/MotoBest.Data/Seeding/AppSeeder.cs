@@ -1,7 +1,4 @@
-﻿using MotoBest.Data.Seeding.Common;
-using MotoBest.Data.Seeding.Constants;
-
-namespace MotoBest.Data.Seeding;
+﻿namespace MotoBest.Data.Seeding;
 
 public class AppSeeder : ISeeder
 {

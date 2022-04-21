@@ -1,17 +1,20 @@
-﻿namespace MotoBest.Data.Seeding;
+﻿using static MotoBest.Data.Seeding.Constants.EuroStandardNames;
+
+namespace MotoBest.Data.Seeding;
 
 public class EuroStandardSeeder : BaseAdvertFeatureSeeder<EuroStandard>
 {
-    private static readonly EuroStandard[] euroStandards = new[]
+    private static readonly EuroStandard[] euroStandards = new EuroStandard[]
     {
-        new EuroStandard { Name = EuroStandardNames.EuroOne, FromDate = new DateTime(1992, 7, 1) },
-        new EuroStandard { Name = EuroStandardNames.EuroTwo, FromDate = new DateTime(1996, 1, 1) },
-        new EuroStandard { Name = EuroStandardNames.EuroThree, FromDate = new DateTime(2000, 1, 1) },
-        new EuroStandard { Name = EuroStandardNames.EuroFour, FromDate = new DateTime(2005, 1, 1) },
-        new EuroStandard { Name = EuroStandardNames.EuroFive, FromDate = new DateTime(2009, 9, 1) },
-        new EuroStandard { Name = EuroStandardNames.EuroSix, FromDate = new DateTime(2014, 9, 1) },
+        new() { Name = EuroOne, FromDate = new(1992, 7, 1) },
+        new() { Name = EuroTwo, FromDate = new(1996, 1, 1) },
+        new() { Name = EuroThree, FromDate = new(2000, 1, 1) },
+        new() { Name = EuroFour, FromDate = new(2005, 1, 1) },
+        new() { Name = EuroFive, FromDate = new(2009, 9, 1) },
+        new() { Name = EuroSix, FromDate = new(2014, 9, 1) },
     };
 
     public EuroStandardSeeder() : base(euroStandards)
-    { }
+    {
+    }
 }

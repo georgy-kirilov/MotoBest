@@ -3,13 +3,13 @@
 using System.Text;
 using System.Globalization;
 
-using MotoBest.Common;
 using MotoBest.Services.Scraping.Models;
+
+using MotoBest.Common.Extensions;
+using MotoBest.Common.Units;
 
 using static MotoBest.Common.GlobalConstants;
 using static MotoBest.Services.Scraping.Common.ScrapingConstants.DesktopAutoBg;
-using MotoBest.Common.Extensions;
-using MotoBest.Common.Units;
 
 namespace MotoBest.Services.Scraping.DesktopAutoBg;
 
@@ -146,26 +146,26 @@ internal static class DesktopAutoBgScrapers
         }
     }
 
-    internal static void ScrapeKilometrage(IElement kilometrageDomElement, ScrapedAdvert advert)
+    internal static void ScrapeMileage(IElement mileageDomElement, ScrapedAdvert advert)
     {
-        string kilometrageAsText = kilometrageDomElement
+        string mileageAsText = mileageDomElement
             .TextContent
             .ToLower()
             .RemoveStrings(KilometersSuffix)
             .Trim();
 
-        advert.Mileage = ParseKilometrage(kilometrageAsText);
+        advert.Mileage = ParseMileage(mileageAsText);
     }
 
-    internal static void ScrapeHorsePowers(IElement horsePowersDomElement, ScrapedAdvert advert)
+    internal static void ScrapePower(IElement powerDomElement, ScrapedAdvert advert)
     {
-        string horsePowersAsText = horsePowersDomElement
+        string powerAsText = powerDomElement
             .TextContent
             .ToLower()
-            .RemoveStrings(HorsePowersSuffix)
+            .RemoveStrings(HorsepowersSuffix)
             .Trim();
 
-        advert.Power = ParseHorsePowers(horsePowersAsText);
+        advert.Power = ParsePower(powerAsText);
     }
 
     internal static void ScrapeManufacturedOnDate(IElement manufacturedOnDateDomElement, ScrapedAdvert advert)
@@ -233,16 +233,16 @@ internal static class DesktopAutoBgScrapers
         };
     }
 
-    private static int? ParseKilometrage(string kilometrageAsText)
+    private static int? ParseMileage(string mileageAsText)
     {
-        bool isKilometrageValid = int.TryParse(kilometrageAsText, out int kilometrage);
-        return isKilometrageValid ? kilometrage : null;
+        bool isMileageValid = int.TryParse(mileageAsText, out int mileage);
+        return isMileageValid ? mileage : null;
     }
 
-    private static int? ParseHorsePowers(string horsePowersAsText)
+    private static int? ParsePower(string powerAsText)
     {
-        bool areHorsePowersValid = int.TryParse(horsePowersAsText, out int horsePowers);
-        return areHorsePowersValid ? horsePowers : null;
+        bool isPowerValid = int.TryParse(powerAsText, out int power);
+        return isPowerValid ? power : null;
     }
 
     private static DateTime? ParseManufacturedOnDate(string manufacturedOnDateAsText)

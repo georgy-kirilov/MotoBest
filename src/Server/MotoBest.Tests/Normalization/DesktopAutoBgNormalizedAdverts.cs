@@ -12,7 +12,7 @@ public static class DesktopAutoBgNormalizedAdverts
     public static readonly NormalizedAdvert Test_001 = new()
     {
         RemoteId = "17067064",
-        Title = "Opel Mokka 1,7-CDTI-4x4-80000км!!!!! - 19 300 лв.",
+        Title = "Opel Mokka 1,7-CDTI-4x4-80000км!!!!!",
         Description = "Нов внос от Австрия, без забележки по интириора и екстириора Реални км. пълна сервизна история два ключа Всичко " +
         "по коалата работи Възможен лизинг без първоначална вноска и отговор до 30мин Съдействие в КАТ при регистрация или " +
         "вадене на транзитни номера За повече инфо на посочения тел",
@@ -50,7 +50,7 @@ public static class DesktopAutoBgNormalizedAdverts
     public static readonly NormalizedAdvert Test_002 = new()
     {
         RemoteId = "19495548",
-        Title = "Mercedes-Benz E 320 Mercedes-Benz E320CDI 4matic - 10 000 лв.",
+        Title = "Mercedes-Benz E 320 Mercedes-Benz E320CDI 4matic",
         Description = "Внос от Италия преди 1година първи собственик в България, реални километри. " +
         "Обслужена и подържана винаги на време. Перфектна работа на мотор и скорости. " +
         "Няма належащи ремонти Колата се кара всеки ден За повече инфо на тел: 0893598392",
@@ -88,7 +88,7 @@ public static class DesktopAutoBgNormalizedAdverts
     public static readonly NormalizedAdvert Test_003 = new()
     {
         RemoteId = "26525379",
-        Title = "Toyota Rav4 2.2D4D-4x4-6SP-ANDROID-VNOS IT-LIZING-GARANCIQ - 12 500 лв.",
+        Title = "Toyota Rav4 2.2D4D-4x4-6SP-ANDROID-VNOS IT-LIZING-GARANCIQ",
         Description = "СОБСТВЕН ЛИЗИНГ БЕЗ ДОКАЗВАНЕ НА ДОХОД! ! ! ОДОБРЕНИЕ ВЕДНАГА НА 100% ! ! ! ! САМОУЧАСТИЕ ОТ 20 ДО 30% ИЛИ СТАРИЯТ ВИ " +
         "АВТОМОБИЛ КАТО ПЪРВОНАЧАЛНА ВНОСКА! ! ! ! ВСИЧКИ АВТОМОБИЛИ ПРИ НАС МОГАТ ДА БЪДАТ ЗАКУПЕНИ СЪС ШЕСТ МЕСЕЦА ГАРАНЦИЯ ИЛИ 30000км! ! " +
         "! ЛИЗИНГ ПРИ МНОГО ДОБРИ УСЛОВИЯ! ! ! ПРЕДЛАГАМЕ АВТОМОБИЛИ ЗА ЕКСПОРТ! ! ! ИЗВАЖДАНЕ НА ТРАНЗИТНИ НОМЕРА ЗА ЕКСПОРТ! ! ! ОСИГУРЕН " +
@@ -136,7 +136,7 @@ public static class DesktopAutoBgNormalizedAdverts
     public static readonly NormalizedAdvert Test_004 = new()
     {
         RemoteId = "31490804",
-        Title = "Opel Corsa 1.0I - 4 200 лв.",
+        Title = "Opel Corsa 1.0I",
         Description = null,
         PriceInBgn = 4200,
         BodyStyle = BodyStyleNames.Hatchback,
@@ -172,7 +172,7 @@ public static class DesktopAutoBgNormalizedAdverts
     public static readonly NormalizedAdvert Test_005 = new()
     {
         RemoteId = "32842469",
-        Title = "Hyundai I20 Hot hatch 1.4, 100к.с. - 16 990 лв.",
+        Title = "Hyundai I20 Hot hatch 1.4, 100к.с.",
         Description = "Автомобилът е в абсолютно оригинален вид, напълно обслужен. Сменени флуиди и всички филтри, комплект накладки, тампони на " +
         "стабилизираща щанга - декември 2021. (Колата не е карана от тогава. ) Платени данъци, каско, гражданска отговорност и преглед валидни до " +
         "декември 2022. Всички екстри се виждат на снимките. Специфично за автомобила е че с двигател 1400куб. см, 16 клапана и мощност от 100к. с. " +
@@ -212,7 +212,7 @@ public static class DesktopAutoBgNormalizedAdverts
     public static readonly NormalizedAdvert Test_006 = new()
     {
         RemoteId = "62031689",
-        Title = "Lada Niva - Цена по договаряне",
+        Title = "Lada Niva",
         Description = null,
         PriceInBgn = 0,
         BodyStyle = BodyStyleNames.Jeep,
@@ -242,7 +242,7 @@ public static class DesktopAutoBgNormalizedAdverts
     public static readonly NormalizedAdvert Test_007 = new()
     {
         RemoteId = "68156462",
-        Title = "Toyota Prius 1,8 бензин хибрит - 18 000 EUR",
+        Title = "Toyota Prius 1,8 бензин хибрит",
         Description = "Обслужена",
         PriceInBgn = 54000,
         BodyStyle = "хечбек",
@@ -272,7 +272,7 @@ public static class DesktopAutoBgNormalizedAdverts
     public static readonly NormalizedAdvert Test_008 = new()
     {
         RemoteId = "78524242",
-        Title = "Mercedes-Benz E 350 CDI Avantgarde - 23 999 лв.",
+        Title = "Mercedes-Benz E 350 CDI Avantgarde",
         Description = "Произведен през месец декември 2009 г. , закупен от частно лице в Германия, реални километри, проверен в Силвър Стар - Варна. " +
         "Автомобилът разполага със следното оборудване: дизайн и ниво на оборудване Aвангард (Avantgarde), автоматична 7-степенна трансмисия с " +
         "възможност за смяна на предавките от волана, автоматични завиващи биксенонови предни светлини, кожен салон, кожен волан, темпомат със " +
@@ -321,7 +321,7 @@ public static class DesktopAutoBgNormalizedAdverts
     public static readonly NormalizedAdvert Test_009 = new()
     {
         RemoteId = "82790797",
-        Title = "Lexus NX 350 AWD 2.4L НАЛИЧЕН - Цена по договаряне",
+        Title = "Lexus NX 350 AWD 2.4L НАЛИЧЕН",
         Description = "НОВ LEXUS NX 350 PREMIUM AWD, двигател 2. 4L с мощност 275 к. с. , 8-степенна автоматична скоростна кутия, размер гуми " +
         "P235/60HR18, задвижване 4х4. Оборудване: интериор кожен салон, избираеми режими за шофиране еко и спорт, навигационна система, камера за " +
         "задно виждане, темпомат, двузонов климатроник с гласово активиране, безключов достъп, Bluetooth, USB/12V изводи, подгряване и вентилация на" +
@@ -364,7 +364,7 @@ public static class DesktopAutoBgNormalizedAdverts
     public static readonly NormalizedAdvert Test_010 = new()
     {
         RemoteId = "94058504",
-        Title = "Renault Scenic 2.0 16v - 2 600 лв.",
+        Title = "Renault Scenic 2.0 16v",
         Description = "Нов внос -Кожен салон -Подгрев на предно стъкло -Подгрев на огледала -Климатроник -Подгрев на седалки -Хладилна джабка " +
         "-Тракшън контрол - 4 ел. Стъкла - 140 конски сили Без точица ръжда, има една забележка и тя се вижда на снимките ! Коментар на цената, " +
         "може и бартер !",

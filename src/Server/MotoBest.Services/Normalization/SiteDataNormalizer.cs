@@ -1,21 +1,19 @@
-﻿using MotoBest.Common;
-using MotoBest.Common.Extensions;
+﻿using MotoBest.Common.Extensions;
 using MotoBest.Common.Units;
+
 using MotoBest.Data.Models;
 using MotoBest.Data.Seeding.Constants;
 
-using MotoBest.Services.Common;
 using MotoBest.Services.Common.Units;
 using MotoBest.Services.Scraping.Models;
 
+using static MotoBest.Common.GlobalConstants;
 using static MotoBest.Services.Normalization.NormalizationConstants;
 
 namespace MotoBest.Services.Normalization;
 
 public class SiteDataNormalizer : ISiteDataNormalizer
 {
-    private readonly ICurrencyCourseProvider currencyCourseProvider;
-
     private static readonly Dictionary<string, string> engineVariations = new()
     {
         ["dizelov"] = EngineNames.Diesel,
@@ -29,15 +27,17 @@ public class SiteDataNormalizer : ISiteDataNormalizer
         ["Mercedes Benz"] = BrandNames.MercedesBenz
     };
 
-    public SiteDataNormalizer(ICurrencyCourseProvider currencyCourseProvider)
+    private readonly IUnitsManager unitsManager;
+
+    public SiteDataNormalizer(IUnitsManager unitsManager)
     {
-        this.currencyCourseProvider = currencyCourseProvider;
+        this.unitsManager = unitsManager;
     }
 
     public NormalizedAdvert NormalizeAdvert(ScrapedAdvert scrapedAdvert)
         => new()
         {
-            Title = scrapedAdvert.Title?.RemoveRepeatingWhiteSpaces(),
+            Title = NormalizeTitle(scrapedAdvert.Title),
             Description = scrapedAdvert.Description?.RemoveRepeatingWhiteSpaces(),
             BodyStyle = scrapedAdvert.BodyStyle?.Trim().ToLower(),
             Color = scrapedAdvert.Color?.Trim().ToLower(),
@@ -67,7 +67,7 @@ public class SiteDataNormalizer : ISiteDataNormalizer
             return price;
         }
         
-        return price * currencyCourseProvider.GetBgnCourse(currencyUnit.Value);
+        return price * unitsManager.GetBgnCourse(currencyUnit.Value);
     }
 
     private static PopulatedPlaceType? NormalizePopulatedPlaceType(string? populatedPlace)
@@ -120,5 +120,21 @@ public class SiteDataNormalizer : ISiteDataNormalizer
         }
 
         return engineVariations.ContainsKey(engine) ? engineVariations[engine] : engine;
+    }
+
+    private static string? NormalizeTitle(string? title)
+    {
+        title = title?.RemoveRepeatingWhiteSpaces();
+
+        if (title == null)
+        {
+            return null;
+        }
+
+        string titleAndPriceInfoSeparator = $"{Whitespace}-{Whitespace}";
+        string priceInfo = title.Split(titleAndPriceInfoSeparator).TakeLast(1).FirstOrDefault() ?? string.Empty;
+        int startIndex = title.Length - priceInfo.Length - titleAndPriceInfoSeparator.Length;
+
+        return title.Remove(startIndex);
     }
 }

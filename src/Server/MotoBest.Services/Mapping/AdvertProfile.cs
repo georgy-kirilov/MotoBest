@@ -6,17 +6,32 @@ using MotoBest.Data.Models;
 
 using MotoBest.Services.Data.Adverts;
 using MotoBest.Services.Data.Adverts.Models;
+using MotoBest.WebApi.Models.Adverts;
+using MotoBest.Services.Common.Units;
+using MotoBest.Common.Units;
 
 namespace MotoBest.Services.Mapping;
 
 public class AdvertProfile : Profile
 {
-    public AdvertProfile()
+    private readonly IUnitsManager unitsManager;
+
+    public AdvertProfile(IUnitsManager unitsManager)
     {
-        CreateMap<Advert, AdvertSearchResultDto>()
-            .ForMember(
-                dest => dest.Price,
-                opt => opt.MapFrom(MapPrice))
+        this.unitsManager = unitsManager;
+
+        CreateMap<SearchAdvertsRequestModel, SearchAdvertsServiceModel>()
+            .ForMember(m => m.MinMileageInKm, cfg => cfg.MapFrom(a => unitsManager.ToKm(a.MileageUnit, a.MinMileage)))
+            .ForMember(m => m.MaxMileageInKm, cfg => cfg.MapFrom(a => unitsManager.ToKm(a.MileageUnit, a.MaxMileage)))
+            .ForMember(m => m.MinPriceInBgn, cfg => cfg.MapFrom(a => unitsManager.ToBgn(a.CurrencyUnit, a.MinPrice)))
+            .ForMember(m => m.MaxPriceInBgn, cfg => cfg.MapFrom(a => unitsManager.ToBgn(a.CurrencyUnit, a.MaxPrice)))
+            .ForMember(m => m.MinPowerInHp, cfg => cfg.MapFrom(a => unitsManager.ToHp(a.PowerUnit, a.MinPower)))
+            .ForMember(m => m.MaxPowerInHp, cfg => cfg.MapFrom(a => unitsManager.ToHp(a.PowerUnit, a.MaxPower)));
+
+        CreateMap<SearchAdvertResultServiceModel, SearchAdvertResultResponseModel>();
+
+        CreateMap<Advert, SearchAdvertResultServiceModel>()
+            .ForMember(dest => dest.PriceInBgn,opt => opt.MapFrom(MapPrice))
             .ForMember(
                 dest => dest.Engine,
                 opt => opt.MapFrom(MapEngine))
@@ -33,7 +48,7 @@ public class AdvertProfile : Profile
                 dest => dest.Month,
                 opt => opt.MapFrom(MapMonthName));
 
-        CreateMap<Advert, FullAdvertDto>()
+        CreateMap<Advert, FullAdvertServiceModel>()
             .ForMember(
                 dest => dest.Price,
                 opt => opt.MapFrom(MapPrice))
@@ -86,6 +101,12 @@ public class AdvertProfile : Profile
 
     private string MapMainImageUrl<T>(Advert source, T destination)
         => source.Images.FirstOrDefault()?.Url ?? AdvertServiceConstants.DefaultAdvertImageUrl;
+
+    private int? MapMileage<T>(SearchAdvertsRequestModel source, SearchAdvertsServiceModel destination)
+        => ConvertMileageToKm(source.MileageUnit, source.MinMileage);
+
+    private int? ConvertMileageToKm(MileageUnit mileageUnit, int? mileage)
+        => (int) unitsManager.GetKmMultiplier(mileageUnit) * mileage;
 
     private string? MapMonthName<T>(Advert source, T destination)
         => source.ManufacturedOn?.ToString("MMMM", new CultureInfo(GlobalConstants.BulgarianCultureInfo));

@@ -1,5 +1,4 @@
 ﻿using MotoBest.Common.Units;
-using MotoBest.Data.Models;
 
 namespace MotoBest.Services.Scraping.Models;
 
@@ -7,7 +6,7 @@ public class ScrapedAdvert
 {
     public string? RemoteId { get; set; }
 
-    public string? Slug { get; set; }
+    public string? RemoteSlug { get; set; }
 
     public string Site { get; set; } = string.Empty;
 

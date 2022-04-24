@@ -20,11 +20,11 @@ public interface IAdvertSearchFilterOptionsBuilder
 
     IAdvertSearchFilterOptionsBuilder ByTransmission(string? transmission);
 
-    IAdvertSearchFilterOptionsBuilder ByHorsePowers(int? minHorsePowers, int? maxHorsePowers);
+    IAdvertSearchFilterOptionsBuilder ByPower(int? minPowerInHp, int? maxPowerInHp);
 
-    IAdvertSearchFilterOptionsBuilder ByKilometrage(int? minKilometrage, int? maxKilometrage);
+    IAdvertSearchFilterOptionsBuilder ByKilometrage(int? minMileageInKm, int? maxMileageInKm);
 
     IAdvertSearchFilterOptionsBuilder ByYear(int? minYear, int? maxYear);
 
-    IAdvertSearchFilterOptionsBuilder ByPrice(decimal? minPrice, decimal? maxPrice);
+    IAdvertSearchFilterOptionsBuilder ByPrice(decimal? minPriceInBgn, decimal? maxPriceInBgn);
 }

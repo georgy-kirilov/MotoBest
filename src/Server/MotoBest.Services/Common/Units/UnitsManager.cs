@@ -12,10 +12,13 @@ public class UnitsManager : IUnitsManager
         this.currencyCourseProvider = currencyCourseProvider;
     }
 
-    public decimal GetBgnCourse(CurrencyUnit currencyUnit)
+    public virtual decimal GetBgnCourse(CurrencyUnit currencyUnit)
         => currencyCourseProvider.GetBgnCourse(currencyUnit);
 
-    public double GetHpMultiplier(PowerUnit powerUnit)
+    public decimal? ToBgn(CurrencyUnit currencyUnit, decimal? value)
+        => GetBgnCourse(currencyUnit) * value;
+
+    public virtual double GetHpMultiplier(PowerUnit powerUnit)
         => powerUnit switch
         {
             PowerUnit.Hp => 1,
@@ -24,11 +27,17 @@ public class UnitsManager : IUnitsManager
             _ => throw new EnumValueNotSupportedException<PowerUnit>(powerUnit)
         };
 
-    public double GetKmMultiplier(MileageUnit mileageUnit)
+    public double? ToHp(PowerUnit powerUnit, double? value)
+        => GetHpMultiplier(powerUnit) * value;
+
+    public virtual double GetKmMultiplier(MileageUnit mileageUnit)
         => mileageUnit switch
         {
             MileageUnit.Km => 1,
             MileageUnit.Mi => 1.609344,
             _ => throw new EnumValueNotSupportedException<MileageUnit>(mileageUnit)
         };
+
+    public double? ToKm(MileageUnit mileageUnit, double? value)
+        => GetKmMultiplier(mileageUnit) * value;
 }

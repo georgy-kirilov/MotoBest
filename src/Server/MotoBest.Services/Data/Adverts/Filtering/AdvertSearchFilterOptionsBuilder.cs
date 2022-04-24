@@ -92,18 +92,18 @@ public class AdvertSearchFilterOptionsBuilder : IAdvertSearchFilterBuilder, IAdv
         return this;
     }
 
-    public IAdvertSearchFilterOptionsBuilder ByHorsePowers(int? minHorsePowers, int? maxHorsePowers)
+    public IAdvertSearchFilterOptionsBuilder ByPower(int? minPowerInHp, int? maxPowerInHp)
     {
-        query = query.Where(a => (minHorsePowers == null || a.PowerInHp >= minHorsePowers)
-            && (maxHorsePowers == null || a.PowerInHp <= maxHorsePowers));
+        query = query.Where(a => (minPowerInHp == null || a.PowerInHp >= minPowerInHp)
+            && (maxPowerInHp == null || a.PowerInHp <= maxPowerInHp));
 
         return this;
     }
 
-    public IAdvertSearchFilterOptionsBuilder ByKilometrage(int? minKilometrage, int? maxKilometrage)
+    public IAdvertSearchFilterOptionsBuilder ByKilometrage(int? minMileageInKm, int? maxMileageInKm)
     {
-        query = query.Where(a => (minKilometrage == null || a.MileageInKm >= minKilometrage)
-            && (maxKilometrage == null || a.MileageInKm <= maxKilometrage));
+        query = query.Where(a => (minMileageInKm == null || a.MileageInKm >= minMileageInKm)
+            && (maxMileageInKm == null || a.MileageInKm <= maxMileageInKm));
 
         return this;
     }
@@ -116,10 +116,10 @@ public class AdvertSearchFilterOptionsBuilder : IAdvertSearchFilterBuilder, IAdv
         return this;
     }
 
-    public IAdvertSearchFilterOptionsBuilder ByPrice(decimal? minPriceBgn, decimal? maxPriceBgn)
+    public IAdvertSearchFilterOptionsBuilder ByPrice(decimal? minPriceInBgn, decimal? maxPriceInBgn)
     {
-        query = query.Where(a => (minPriceBgn == null || a.PriceInBgn >= minPriceBgn)
-            && (maxPriceBgn == null || a.PriceInBgn <= maxPriceBgn));
+        query = query.Where(a => (minPriceInBgn == null || a.PriceInBgn >= minPriceInBgn)
+            && (maxPriceInBgn == null || a.PriceInBgn <= maxPriceInBgn));
 
         return this;
     }

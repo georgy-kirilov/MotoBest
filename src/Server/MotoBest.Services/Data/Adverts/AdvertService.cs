@@ -65,7 +65,7 @@ public class AdvertService : IAdvertService
         this.advertSearchFilterBuilder = advertSearchFilterBuilder;
     }
 
-    public async Task AddOrUpdateAsync(NormalizedAdvert normalizedAdvert)
+    public async Task AddOrUpdate(NormalizedAdvert normalizedAdvert)
     {
         var siteId = siteService.FindIdByName(normalizedAdvert.Site);
         var transmissionId = transmissionService.FindIdByName(normalizedAdvert.Transmission);
@@ -91,7 +91,7 @@ public class AdvertService : IAdvertService
         var images = normalizedAdvert.ImageUrls
             .Select(url => new Image { Url = url }).ToList();
 
-        var (advert, doesAdvertExist) = await FindAdvertBySiteInfoAsync(normalizedAdvert.RemoteId, siteId);
+        var (advert, doesAdvertExist) = await FindAdvertBySiteInfo(normalizedAdvert.RemoteId, siteId);
 
         DeleteAdvertImages(advert.Images.ToList());
 
@@ -135,10 +135,10 @@ public class AdvertService : IAdvertService
         await advertRepository.SaveChangesAsync();
     }
 
-    public async Task<FullAdvertDto?> GetFullAdvertAsync(string id)
+    public async Task<FullAdvertServiceModel?> GetFullAdvert(string id)
     {
         var advert = await advertRepository.All().FirstOrDefaultAsync(a => a.Id == id);
-        return mapper.Map<FullAdvertDto>(advert);
+        return mapper.Map<FullAdvertServiceModel>(advert);
     }
 
     public DateTime? FindLatestAdvertModifiedOnDate(string site)
@@ -146,36 +146,36 @@ public class AdvertService : IAdvertService
             .FirstOrDefault()?
             .ModifiedOn;
 
-    public IEnumerable<AdvertSearchResultDto> SearchAdverts(
-        AdvertSearchFilterDto filter,
+    public IEnumerable<SearchAdvertResultServiceModel> SearchAdverts(
+        SearchAdvertsServiceModel serviceModel,
         int pageIndex,
         int resultsPerPageCount)
-        => FilterAdvertsBy(filter)
+        => FilterAdvertsBy(serviceModel)
             .Skip(count: pageIndex * resultsPerPageCount)
             .Take(resultsPerPageCount)
             .ToList()
-            .Select(mapper.Map<Advert, AdvertSearchResultDto>);
+            .Select(mapper.Map<Advert, SearchAdvertResultServiceModel>);
 
-    private IQueryable<Advert> FilterAdvertsBy(AdvertSearchFilterDto filter)
+    private IQueryable<Advert> FilterAdvertsBy(SearchAdvertsServiceModel serviceModel)
         => advertSearchFilterBuilder
             .CreateFilterFor(advertRepository.All())
-            .ByBodyStyle(filter.BodyStyle)
-            .ByBrand(filter.Brand)
-            .ByColor(filter.Color)
-            .ByCondition(filter.Condition)
-            .ByEngine(filter.Engine)
-            .ByRegion(filter.Region)
-            .ByTransmission(filter.Transmission)
-            .ByHorsePowers(filter.MinHorsePowers, filter.MaxHorsePowers)
-            .ByKilometrage(filter.MinKilometrage, filter.MaxKilometrage)
-            .ByYear(filter.MinYear, filter.MaxYear)
-            .ByPrice(filter.MinPrice, filter.MaxPrice)
+            .ByBodyStyle(serviceModel.BodyStyle)
+            .ByBrand(serviceModel.Brand)
+            .ByColor(serviceModel.Color)
+            .ByCondition(serviceModel.Condition)
+            .ByEngine(serviceModel.Engine)
+            .ByRegion(serviceModel.Region)
+            .ByTransmission(serviceModel.Transmission)
+            .ByPower(serviceModel.MinPowerInHp, serviceModel.MaxPowerInHp)
+            .ByKilometrage(serviceModel.MinMileageInKm, serviceModel.MaxMileageInKm)
+            .ByYear(serviceModel.MinYear, serviceModel.MaxYear)
+            .ByPrice(serviceModel.MinPriceInBgn, serviceModel.MaxPriceInBgn)
             .ApplyFilter();
 
     private IQueryable<Advert> FindAdvertsBySiteId(int? siteId)
         => advertRepository.All().Where(a => a.SiteId == siteId);
 
-    private async Task<(Advert advert, bool doesAdvertExist)> FindAdvertBySiteInfoAsync(string? remoteId, int? siteId)
+    private async Task<(Advert advert, bool doesAdvertExist)> FindAdvertBySiteInfo(string? remoteId, int? siteId)
     {
         var advert = await advertRepository.All()
             .FirstOrDefaultAsync(a => a.RemoteId == remoteId && a.SiteId == siteId) ?? new Advert();

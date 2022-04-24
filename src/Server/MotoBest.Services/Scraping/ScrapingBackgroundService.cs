@@ -71,7 +71,7 @@ public class ScrapingBackgroundService : BackgroundService
                         var scrapedAdvert = scraper.ScrapeAdvert(fullAdvertDocument);
                         scrapedAdvert.ModifiedOn = advertResult.ModifiedOn;
                         var normalizedAdvert = normalizer.NormalizeAdvert(scrapedAdvert);
-                        await advertService.AddOrUpdateAsync(normalizedAdvert);
+                        await advertService.AddOrUpdate(normalizedAdvert);
                     }
 
                     var task = Task.Run(method, stoppingToken);

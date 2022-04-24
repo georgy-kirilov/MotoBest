@@ -1,6 +1,6 @@
 ﻿namespace MotoBest.Services.Data.Adverts.Models;
 
-public class FullAdvertDto
+public class FullAdvertServiceModel
 {
     public string? OriginalAdvertUrl { get; init; }
 

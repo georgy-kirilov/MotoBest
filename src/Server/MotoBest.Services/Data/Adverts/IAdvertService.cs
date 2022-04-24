@@ -5,14 +5,14 @@ namespace MotoBest.Services.Data.Adverts;
 
 public interface IAdvertService
 {
-    Task AddOrUpdateAsync(NormalizedAdvert advert);
+    Task AddOrUpdate(NormalizedAdvert advert);
 
     DateTime? FindLatestAdvertModifiedOnDate(string site);
 
-    IEnumerable<AdvertSearchResultDto> SearchAdverts(
-        AdvertSearchFilterDto filter,
+    IEnumerable<SearchAdvertResultServiceModel> SearchAdverts(
+        SearchAdvertsServiceModel serviceModel,
         int pageIndex = AdvertServiceConstants.AdvertSearchResultsFirstPageIndex,
         int resultsPerPageCount = AdvertServiceConstants.AdvertSearchResultsPerPageCount);
 
-    Task<FullAdvertDto?> GetFullAdvertAsync(string id);
+    Task<FullAdvertServiceModel?> GetFullAdvert(string id);
 }

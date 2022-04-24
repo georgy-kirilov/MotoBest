@@ -14,6 +14,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MotoBest.Data\MotoBest.Data.csproj" />
+    <ProjectReference Include="..\MotoBest.WebApi.Models\MotoBest.WebApi.Models.csproj" />
   </ItemGroup>
 
 </Project>

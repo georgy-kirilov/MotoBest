@@ -15,7 +15,7 @@ public class Advert : BaseModel<string>
     /// </summary>
     public string? RemoteId { get; set; } = string.Empty;
 
-    public string? Slug { get; set; }
+    public string? RemoteSlug { get; set; }
 
     /// <summary>
     /// Returns null if the advert belongs to MotoBest

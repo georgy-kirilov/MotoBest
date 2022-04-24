@@ -10,7 +10,7 @@ public static class DesktopAutoBgScrapedAdverts
     public static readonly ScrapedAdvert Test_001 = new()
     {
         RemoteId = "17067064",
-        Slug = "opel-mokka-1-7-cdti-4x4-80000km",
+        RemoteSlug = "opel-mokka-1-7-cdti-4x4-80000km",
         Title = "Opel Mokka 1,7-CDTI-4x4-80000км!!!!! - 19 300 лв.",
         Description = "Нов внос от Австрия, без забележки по интириора и екстириора Реални км. пълна сервизна история два ключа Всичко " +
         "по коалата работи Възможен лизинг без първоначална вноска и отговор до 30мин Съдействие в КАТ при регистрация или " +
@@ -49,7 +49,7 @@ public static class DesktopAutoBgScrapedAdverts
     public static readonly ScrapedAdvert Test_002 = new()
     {
         RemoteId = "19495548",
-        Slug = "mercedes-benz-e-320-mercedes-benz-e320cdi-4matic",
+        RemoteSlug = "mercedes-benz-e-320-mercedes-benz-e320cdi-4matic",
         Title = "Mercedes-Benz E 320 Mercedes-Benz E320CDI 4matic - 10 000 лв.",
         Description = "Внос от Италия преди 1година първи собственик в България, реални километри.  " +
         "Обслужена и подържана винаги на време.  Перфектна работа на мотор и скорости.  " +
@@ -88,7 +88,7 @@ public static class DesktopAutoBgScrapedAdverts
     public static readonly ScrapedAdvert Test_003 = new()
     {
         RemoteId = "26525379",
-        Slug = "toyota-rav4-2-2d4d-4x4-6sp-android-vnos-it-lizing-garanciq",
+        RemoteSlug = "toyota-rav4-2-2d4d-4x4-6sp-android-vnos-it-lizing-garanciq",
         Title = "Toyota Rav4 2.2D4D-4x4-6SP-ANDROID-VNOS IT-LIZING-GARANCIQ - 12 500 лв.",
         Description = "СОБСТВЕН ЛИЗИНГ БЕЗ ДОКАЗВАНЕ НА ДОХОД! ! ! ОДОБРЕНИЕ ВЕДНАГА НА 100% ! ! ! ! САМОУЧАСТИЕ ОТ 20 ДО 30% ИЛИ СТАРИЯТ ВИ " +
         "АВТОМОБИЛ КАТО ПЪРВОНАЧАЛНА ВНОСКА! ! ! ! ВСИЧКИ АВТОМОБИЛИ ПРИ НАС МОГАТ ДА БЪДАТ ЗАКУПЕНИ СЪС ШЕСТ МЕСЕЦА ГАРАНЦИЯ ИЛИ 30000км! ! " +
@@ -137,7 +137,7 @@ public static class DesktopAutoBgScrapedAdverts
     public static readonly ScrapedAdvert Test_004 = new()
     {
         RemoteId = "31490804",
-        Slug = "opel-corsa-1-0i",
+        RemoteSlug = "opel-corsa-1-0i",
         Title = "Opel Corsa 1.0I - 4 200 лв.",
         Description = null,
         Price = 4200,
@@ -174,7 +174,7 @@ public static class DesktopAutoBgScrapedAdverts
     public static readonly ScrapedAdvert Test_005 = new()
     {
         RemoteId = "32842469",
-        Slug = "hyundai-i20-hot-hatch-1-4-100k-s",
+        RemoteSlug = "hyundai-i20-hot-hatch-1-4-100k-s",
         Title = "Hyundai I20 Hot hatch 1.4, 100к.с.  - 16 990 лв.",
         Description = "Автомобилът е в абсолютно оригинален вид, напълно обслужен. Сменени флуиди и всички филтри, комплект накладки, тампони на " +
         "стабилизираща щанга - декември 2021.  (Колата не е карана от тогава. ) Платени данъци, каско, гражданска отговорност и преглед валидни до " +
@@ -215,7 +215,7 @@ public static class DesktopAutoBgScrapedAdverts
     public static readonly ScrapedAdvert Test_006 = new()
     {
         RemoteId = "62031689",
-        Slug = "lada-niva",
+        RemoteSlug = "lada-niva",
         Title = "Lada Niva  - Цена по договаряне",
         Description = null,
         Price = 0,
@@ -246,7 +246,7 @@ public static class DesktopAutoBgScrapedAdverts
     public static readonly ScrapedAdvert Test_007 = new()
     {
         RemoteId = "68156462",
-        Slug = "toyota-prius-1-8-benzin-hibrit",
+        RemoteSlug = "toyota-prius-1-8-benzin-hibrit",
         Title = "Toyota Prius 1,8 бензин хибрит - 18 000 EUR",
         Description = "Обслужена",
         Price = 18000,
@@ -277,7 +277,7 @@ public static class DesktopAutoBgScrapedAdverts
     public static readonly ScrapedAdvert Test_008 = new()
     {
         RemoteId = "78524242",
-        Slug = "mercedes-benz-e-350-cdi-avantgarde",
+        RemoteSlug = "mercedes-benz-e-350-cdi-avantgarde",
         Title = "Mercedes-Benz E 350 CDI Avantgarde - 23 999 лв.",
         Description = "Произведен през месец декември 2009 г. , закупен от частно лице в Германия, реални километри, проверен в Силвър Стар - Варна. " +
         "Автомобилът разполага със следното оборудване: дизайн и ниво на оборудване Aвангард (Avantgarde), автоматична 7-степенна трансмисия с " +
@@ -327,7 +327,7 @@ public static class DesktopAutoBgScrapedAdverts
     public static readonly ScrapedAdvert Test_009 = new()
     {
         RemoteId = "82790797",
-        Slug = "lexus-nx-350-awd-2-4l-nalichen",
+        RemoteSlug = "lexus-nx-350-awd-2-4l-nalichen",
         Title = "Lexus NX 350 AWD 2.4L НАЛИЧЕН - Цена по договаряне",
         Description = "НОВ LEXUS NX 350 PREMIUM AWD, двигател 2. 4L с мощност 275 к. с. , 8-степенна автоматична скоростна кутия, размер гуми " +
         "P235/60HR18, задвижване 4х4.  Оборудване: интериор кожен салон, избираеми режими за шофиране еко и спорт, навигационна система, камера за " +
@@ -369,7 +369,7 @@ public static class DesktopAutoBgScrapedAdverts
     public static readonly ScrapedAdvert Test_010 = new()
     {
         RemoteId = "94058504",
-        Slug = "renault-scenic-2-0-16v",
+        RemoteSlug = "renault-scenic-2-0-16v",
         Title = "Renault Scenic 2.0 16v - 2 600 лв.",
         Description = "Нов внос -Кожен салон -Подгрев на предно стъкло -Подгрев на огледала -Климатроник -Подгрев на седалки  -Хладилна джабка " +
         "-Тракшън контрол - 4 ел. Стъкла - 140 конски сили  Без точица ръжда, има една забележка и тя се вижда на снимките !  Коментар на цената, " +

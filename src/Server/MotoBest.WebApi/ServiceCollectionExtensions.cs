@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using MotoBest.Data;
 using MotoBest.Data.Models.Identity;
 using MotoBest.Data.Seeding;
+using MotoBest.Services.Common.Units;
 using MotoBest.Services.Mapping;
 
 namespace MotoBest.WebApi;
@@ -20,9 +21,13 @@ public static class ServiceCollectionExtensions
 
     public static IServiceCollection AddAutoMapper(this IServiceCollection serviceCollection)
     {
-        var mapperConfig = new MapperConfiguration(mc => mc.AddProfile(new AdvertProfile()));
-        IMapper mapper = mapperConfig.CreateMapper();
-        serviceCollection.AddSingleton(mapper);
+        serviceCollection
+            .AddSingleton(provider => new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile(new AdvertProfile(provider.GetRequiredService<IUnitsManager>()));
+            })
+            .CreateMapper());
+
         return serviceCollection;
     }
 

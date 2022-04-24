@@ -100,37 +100,27 @@ internal static class DesktopAutoBgScrapers
     internal static string? ScrapeTitle(IDocument document)
     {
         var title = document.QuerySelector("div.titleBig > h1")?.TextContent.Trim();
-
-        if (string.IsNullOrEmpty(title))
-        {
-            return null;
-        }
-
-        return title.Trim();
+        return !string.IsNullOrEmpty(title) ? title : null;
     }
 
     internal static string? ScrapeDescription(IDocument document)
     {
         var description = document.QuerySelector("div.moreInfo")?.TextContent.Trim();
-
-        if (string.IsNullOrEmpty(description))
-        {
-            return null;
-        }
-
-        return description.Trim();
+        return !string.IsNullOrEmpty(description) ? description : null;
     }
 
     internal static string? ScrapeRemoteId(IDocument document)
     {
-        var urlArgs = document.QuerySelector("title")?.TextContent.Split(Whitespace);
+        const int remoteIdIndex = 3;
+        var urlArgs = ScrapeUrlArguments(document);
+        return urlArgs.Length > remoteIdIndex ? urlArgs[remoteIdIndex] : null;
+    }
 
-        if (urlArgs == null || urlArgs.Length < 3)
-        {
-            return null;
-        }
-
-        return urlArgs[^3].Trim();
+    internal static string? ScrapeSlug(IDocument document)
+    {
+        const int slugIndex = 4;
+        var urlArgs = ScrapeUrlArguments(document);
+        return urlArgs.Length > slugIndex ? urlArgs[slugIndex] : null;
     }
 
     internal static void ScrapeEngine(IElement engineDomElement, ScrapedAdvert advert)
@@ -309,4 +299,11 @@ internal static class DesktopAutoBgScrapers
 
         return brandBuilder.ToString().Trim();
     }
+
+    private static string[] ScrapeUrlArguments(IDocument document)
+        => document.QuerySelector("meta[property='og:url']")?
+            .GetAttribute("content")?
+            .Split('/', StringSplitOptions.RemoveEmptyEntries)
+            .Select(arg => arg.Trim())
+            .ToArray() ?? Array.Empty<string>();
 }

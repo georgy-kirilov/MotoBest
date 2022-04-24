@@ -43,6 +43,7 @@ public class DesktopAutoBgSiteScraper : ISiteScraper
             Region = region,
             PopulatedPlace = populatedPlace,
             RemoteId = ScrapeRemoteId(document),
+            Slug = ScrapeSlug(document),
             Title = ScrapeTitle(document),
             Description = ScrapeDescription(document),
             ImageUrls = ScrapeImageUrls(document),

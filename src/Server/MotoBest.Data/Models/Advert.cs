@@ -15,6 +15,8 @@ public class Advert : BaseModel<string>
     /// </summary>
     public string? RemoteId { get; set; } = string.Empty;
 
+    public string? Slug { get; set; }
+
     /// <summary>
     /// Returns null if the advert belongs to MotoBest
     /// </summary>
@@ -23,7 +25,7 @@ public class Advert : BaseModel<string>
     /// <summary>
     /// Returns null if the advert belongs to MotoBest
     /// </summary>
-    public virtual Site? Site { get; set; } = default!;
+    public virtual Site? Site { get; set; }
 
     public string? Title { get; set; }
 

@@ -1,9 +1,13 @@
 ﻿using AutoMapper;
+
 using Microsoft.AspNetCore.Mvc;
-using MotoBest.Services.Common.Units;
+
 using MotoBest.Services.Data.Adverts;
 using MotoBest.Services.Data.Adverts.Models;
-using MotoBest.WebApi.Models.Adverts;
+using MotoBest.Services.Mapping;
+
+using MotoBest.WebApi.Models.Adverts.GetFullAdvert;
+using MotoBest.WebApi.Models.Adverts.SearchAdverts;
 
 namespace MotoBest.WebApi.Controllers;
 
@@ -11,38 +15,32 @@ public class AdvertsController : ApiController
 {
     private readonly IAdvertService advertService;
     private readonly IMapper mapper;
-    private readonly IUnitsManager unitsManager;
+    private readonly AdvertMapper advertMapper;
 
-    public AdvertsController(IAdvertService advertService, IMapper mapper, IUnitsManager unitsManager)
+    public AdvertsController(IAdvertService advertService, IMapper mapper, AdvertMapper advertMapper)
     {
         this.advertService = advertService;
         this.mapper = mapper;
-        this.unitsManager = unitsManager;
+        this.advertMapper = advertMapper;
     }
 
     [HttpGet("search")]
-    public IEnumerable<SearchAdvertResultResponseModel> Search([FromQuery] SearchAdvertsRequestModel requestModel)
+    public IEnumerable<SearchAdvertsResponseModel> SearchAdverts([FromQuery] SearchAdvertsRequestModel request)
         => advertService
-            .SearchAdverts(mapper.Map<SearchAdvertsServiceModel>(requestModel))
-            .Select(a =>
-            {
-                var result = mapper.Map<SearchAdvertResultResponseModel>(a);
+            .SearchAdverts(mapper.Map<SearchAdvertsInputModel>(request))
+            .Select(a => advertMapper.MapUnits<SearchAdvertsResponseModel>(a, request));
 
-                result.CurrencyUnit = requestModel.CurrencyUnit.ToString();
-                result.PowerUnit = requestModel.PowerUnit.ToString();
-                result.MileageUnit = requestModel.MileageUnit.ToString();
-
-                result.Price = (int?)(a.PriceInBgn / unitsManager.GetBgnCourse(requestModel.CurrencyUnit));
-                result.Mileage = (int?)(a.MileageInKm / unitsManager.GetKmMultiplier(requestModel.MileageUnit));
-                result.Power = (int?)(a.PowerInHp / unitsManager.GetHpMultiplier(requestModel.PowerUnit));
-
-                return result;
-            });
-
-    [HttpGet("{id}")]
-    public async Task<IActionResult> GetById(string id)
+    [HttpGet]
+    public async Task<IActionResult> GetFullAdvert([FromQuery] GetFullAdvertRequestModel request)
     {
-        var advert = await advertService.GetFullAdvert(id);
-        return advert == null ? NotFound() : Ok(advert);
+        var result = await advertService.GetFullAdvert(request.Id);
+
+        if (result == null)
+        {
+            return NotFound();
+        }
+
+        var response = advertMapper.MapUnits<GetFullAdvertResponseModel>(result, request);
+        return Ok(response);
     }
 }

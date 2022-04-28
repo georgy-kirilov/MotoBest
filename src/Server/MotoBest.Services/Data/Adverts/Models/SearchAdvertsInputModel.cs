@@ -1,8 +1,8 @@
-﻿using MotoBest.WebApi.Models;
+﻿using MotoBest.WebApi.Models.Adverts.SearchAdverts;
 
 namespace MotoBest.Services.Data.Adverts.Models;
 
-public class SearchAdvertsServiceModel : SearchAdvertsBaseModel
+public class SearchAdvertsInputModel : SearchAdvertsFilterBaseModel
 {
     public int? MinPowerInHp { get; init; }
 

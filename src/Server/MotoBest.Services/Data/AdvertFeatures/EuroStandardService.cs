@@ -12,7 +12,7 @@ public class EuroStandardService : AdvertFeatureService<EuroStandard>, IEuroStan
     {
     }
 
-    public async Task<EuroStandard?> ApproximateAsync(DateTime? manufacturedOn)
+    public async Task<EuroStandard?> Approximate(DateTime? manufacturedOn)
         => await featureRepository.All()
             .Where(es => es.FromDate > manufacturedOn)
             .OrderByDescending(es => es.FromDate)

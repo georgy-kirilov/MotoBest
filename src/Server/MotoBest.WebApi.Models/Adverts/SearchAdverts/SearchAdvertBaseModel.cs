@@ -1,6 +1,6 @@
-﻿namespace MotoBest.WebApi.Models.Adverts;
+﻿namespace MotoBest.WebApi.Models.Adverts.SearchAdverts;
 
-public abstract class SearchAdvertResultBaseModel
+public abstract class SearchAdvertBaseModel
 {
     public string Id { get; init; } = string.Empty;
 

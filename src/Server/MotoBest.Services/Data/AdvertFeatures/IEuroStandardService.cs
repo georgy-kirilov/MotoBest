@@ -9,5 +9,5 @@ public interface IEuroStandardService : IAdvertFeatureService<EuroStandard>
     /// </summary>
     /// <param name="manufacturedOn">The manufacturing date of the car</param>
     /// <returns>The closest value found or null if the manufacturing date is not supported</returns>
-    Task<EuroStandard?> ApproximateAsync(DateTime? manufacturedOn);
+    Task<EuroStandard?> Approximate(DateTime? manufacturedOn);
 }

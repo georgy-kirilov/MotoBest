@@ -1,6 +1,6 @@
-﻿namespace MotoBest.Services.Data.Adverts.Models;
+﻿namespace MotoBest.WebApi.Models.Adverts.GetFullAdvert;
 
-public class FullAdvertServiceModel
+public abstract class GetFullAdvertBaseModel
 {
     public string? OriginalAdvertUrl { get; init; }
 
@@ -8,15 +8,11 @@ public class FullAdvertServiceModel
 
     public string? Description { get; init; }
 
-    public decimal? Price { get; init; }
-
     public string? Brand { get; init; }
 
     public string? Model { get; init; }
 
     public string? Engine { get; init; }
-
-    public int? Kilometrage { get; init; }
 
     public string? Color { get; init; }
 
@@ -26,11 +22,13 @@ public class FullAdvertServiceModel
 
     public string? Transmission { get; init; }
 
+    public string? Region { get; init; }
+
+    public string? PopulatedPlace { get; init; }
+
     public int? Year { get; init; }
 
     public string? Month { get; init; }
-
-    public int? HorsePowers { get; init; }
 
     public IEnumerable<string> ImageUrls { get; init; } = new List<string>();
 }

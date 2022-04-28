@@ -1,6 +1,6 @@
-﻿namespace MotoBest.WebApi.Models.Adverts;
+﻿namespace MotoBest.WebApi.Models.Adverts.SearchAdverts;
 
-public class SearchAdvertResultResponseModel : SearchAdvertResultBaseModel
+public class SearchAdvertsResponseModel : SearchAdvertBaseModel, ICustomUnitableModel
 {
     public int? Power { get; set; }
 
@@ -10,7 +10,7 @@ public class SearchAdvertResultResponseModel : SearchAdvertResultBaseModel
 
     public string MileageUnit { get; set; } = string.Empty;
 
-    public decimal? Price { get; set; }
+    public int? Price { get; set; }
 
     public string CurrencyUnit { get; set; } = string.Empty;
 }

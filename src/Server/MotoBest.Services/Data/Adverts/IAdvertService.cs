@@ -9,10 +9,10 @@ public interface IAdvertService
 
     DateTime? FindLatestAdvertModifiedOnDate(string site);
 
-    IEnumerable<SearchAdvertResultServiceModel> SearchAdverts(
-        SearchAdvertsServiceModel serviceModel,
+    IEnumerable<SearchAdvertsResultModel> SearchAdverts(
+        SearchAdvertsInputModel serviceModel,
         int pageIndex = AdvertServiceConstants.AdvertSearchResultsFirstPageIndex,
         int resultsPerPageCount = AdvertServiceConstants.AdvertSearchResultsPerPageCount);
 
-    Task<FullAdvertServiceModel?> GetFullAdvert(string id);
+    Task<GetFullAdvertResultModel?> GetFullAdvert(string id);
 }

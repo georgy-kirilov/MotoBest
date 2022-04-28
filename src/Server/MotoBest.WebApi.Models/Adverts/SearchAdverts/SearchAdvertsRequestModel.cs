@@ -1,8 +1,8 @@
 ﻿using MotoBest.Common.Units;
 
-namespace MotoBest.WebApi.Models.Adverts;
+namespace MotoBest.WebApi.Models.Adverts.SearchAdverts;
 
-public class SearchAdvertsRequestModel : SearchAdvertsBaseModel
+public class SearchAdvertsRequestModel : SearchAdvertsFilterBaseModel, IUnitableModel
 {
     public decimal? MinPrice { get; init; }
 

@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 
 using Microsoft.EntityFrameworkCore;
-
 using MotoBest.Data.Models;
 using MotoBest.Data.Repositories;
 
@@ -79,7 +78,7 @@ public class AdvertService : IAdvertService
         var brand = brandService.FindByName(normalizedAdvert.Brand);
         var model = brand?.Models.FirstOrDefault(m => m.Name == normalizedAdvert.Model);
 
-        var (euroStandard, isEuroStandardApproximate) = await FindEuroStandardAsync(
+        var (euroStandard, isEuroStandardApproximate) = await FindEuroStandard(
             normalizedAdvert.EuroStandard,
             normalizedAdvert.ManufacturedOn);
 
@@ -99,6 +98,7 @@ public class AdvertService : IAdvertService
 
         advert.SiteId = siteId;
         advert.RemoteId = normalizedAdvert.RemoteId;
+        advert.RemoteSlug = normalizedAdvert.RemoteSlug;
 
         advert.Title = normalizedAdvert.Title;
         advert.Description = normalizedAdvert.Description;
@@ -135,10 +135,10 @@ public class AdvertService : IAdvertService
         await advertRepository.SaveChangesAsync();
     }
 
-    public async Task<FullAdvertServiceModel?> GetFullAdvert(string id)
+    public async Task<GetFullAdvertResultModel?> GetFullAdvert(string id)
     {
         var advert = await advertRepository.All().FirstOrDefaultAsync(a => a.Id == id);
-        return mapper.Map<FullAdvertServiceModel>(advert);
+        return mapper.Map<GetFullAdvertResultModel>(advert);
     }
 
     public DateTime? FindLatestAdvertModifiedOnDate(string site)
@@ -146,30 +146,30 @@ public class AdvertService : IAdvertService
             .FirstOrDefault()?
             .ModifiedOn;
 
-    public IEnumerable<SearchAdvertResultServiceModel> SearchAdverts(
-        SearchAdvertsServiceModel serviceModel,
+    public IEnumerable<SearchAdvertsResultModel> SearchAdverts(
+        SearchAdvertsInputModel serviceModel,
         int pageIndex,
         int resultsPerPageCount)
         => FilterAdvertsBy(serviceModel)
             .Skip(count: pageIndex * resultsPerPageCount)
             .Take(resultsPerPageCount)
             .ToList()
-            .Select(mapper.Map<Advert, SearchAdvertResultServiceModel>);
+            .Select(mapper.Map<Advert, SearchAdvertsResultModel>);
 
-    private IQueryable<Advert> FilterAdvertsBy(SearchAdvertsServiceModel serviceModel)
+    private IQueryable<Advert> FilterAdvertsBy(SearchAdvertsInputModel input)
         => advertSearchFilterBuilder
             .CreateFilterFor(advertRepository.All())
-            .ByBodyStyle(serviceModel.BodyStyle)
-            .ByBrand(serviceModel.Brand)
-            .ByColor(serviceModel.Color)
-            .ByCondition(serviceModel.Condition)
-            .ByEngine(serviceModel.Engine)
-            .ByRegion(serviceModel.Region)
-            .ByTransmission(serviceModel.Transmission)
-            .ByPower(serviceModel.MinPowerInHp, serviceModel.MaxPowerInHp)
-            .ByKilometrage(serviceModel.MinMileageInKm, serviceModel.MaxMileageInKm)
-            .ByYear(serviceModel.MinYear, serviceModel.MaxYear)
-            .ByPrice(serviceModel.MinPriceInBgn, serviceModel.MaxPriceInBgn)
+            .ByBodyStyle(input.BodyStyle)
+            .ByBrand(input.Brand)
+            .ByColor(input.Color)
+            .ByCondition(input.Condition)
+            .ByEngine(input.Engine)
+            .ByRegion(input.Region)
+            .ByTransmission(input.Transmission)
+            .ByPower(input.MinPowerInHp, input.MaxPowerInHp)
+            .ByKilometrage(input.MinMileageInKm, input.MaxMileageInKm)
+            .ByYear(input.MinYear, input.MaxYear)
+            .ByPrice(input.MinPriceInBgn, input.MaxPriceInBgn)
             .ApplyFilter();
 
     private IQueryable<Advert> FindAdvertsBySiteId(int? siteId)
@@ -186,8 +186,9 @@ public class AdvertService : IAdvertService
         return (advert, doesAdvertExist);
     }
 
-    private async Task<(EuroStandard? euroStandard, bool isApproximate)> FindEuroStandardAsync(
-        string? euroStandardName, DateTime? manufacturedOn)
+    private async Task<(EuroStandard? euroStandard, bool isApproximate)> FindEuroStandard(
+        string? euroStandardName,
+        DateTime? manufacturedOn)
     {
         bool isApproximate = false;
         var euroStandard = euroStandardService.FindByName(euroStandardName);
@@ -195,7 +196,7 @@ public class AdvertService : IAdvertService
         if (euroStandard == null)
         {
             isApproximate = true;
-            euroStandard = await euroStandardService.ApproximateAsync(manufacturedOn);
+            euroStandard = await euroStandardService.Approximate(manufacturedOn);
         }
 
         return (euroStandard, isApproximate);

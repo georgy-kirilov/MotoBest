@@ -1,5 +1,4 @@
-﻿using MotoBest.Common;
-using MotoBest.Data.Models;
+﻿using MotoBest.Common.Units;
 
 namespace MotoBest.Services.Scraping.Models;
 
@@ -7,9 +6,19 @@ public class ScrapedAdvert
 {
     public string? RemoteId { get; set; }
 
+    public string? RemoteSlug { get; set; }
+
+    public string Site { get; set; } = string.Empty;
+
     public string? Title { get; set; }
 
     public string? Description { get; set; }
+
+    public decimal? Price { get; set; }
+
+    public int? Mileage { get; set; }
+
+    public int? Power { get; set; }
 
     public string? BodyStyle { get; set; }
 
@@ -19,17 +28,11 @@ public class ScrapedAdvert
 
     public string? Condition { get; set; }
 
-    public int? Kilometrage { get; set; }
-
-    public int? HorsePowers { get; set; }
-
     public string? Color { get; set; }
 
     public DateTime? ManufacturedOn { get; set; }
 
-    public decimal? Price { get; set; }
-
-    public Currency? Currency { get; set; }
+    public CurrencyUnit? CurrencyUnit { get; set; }
 
     public string? Brand { get; set; }
 
@@ -42,10 +45,6 @@ public class ScrapedAdvert
     public string? Region { get; set; }
 
     public DateTime? ModifiedOn { get; set; }
-
-    public string Site { get; set; } = "";
-
-    public PopulatedPlaceType? PopulatedPlaceType { get; set; }
 
     public IEnumerable<string> ImageUrls { get; set; } = new List<string>();
 }

@@ -8,11 +8,12 @@ using MotoBest.Common;
 using MotoBest.Services.Common;
 using MotoBest.Services.Scraping.DesktopAutoBg;
 
-using MotoBest.Data.Seeding.Dtos;
+using MotoBest.Common.Extensions;
+
+using MotoBest.Data.Seeding.Models;
 using MotoBest.Data.Seeding.Constants;
 
 using static MotoBest.Common.GlobalConstants;
-using System.Text.Json;
 
 Console.OutputEncoding = Encoding.UTF8;
 
@@ -43,7 +44,6 @@ foreach (string brand in typeof(BrandNames).GetAllPublicConstantValues<string>()
 
     brandDtos.Add(new BrandDto(brand, modelDtos));
 }
-
 
 string filePath = $"./Output/models-by-brands-{Guid.NewGuid()}.json";
 

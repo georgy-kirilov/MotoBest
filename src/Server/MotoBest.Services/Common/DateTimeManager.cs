@@ -2,8 +2,5 @@
 
 public class DateTimeManager : IDateTimeManager
 {
-    public DateTime Today()
-    {
-        return DateTime.Today;
-    }
+    public DateTime Today() => DateTime.Today;
 }

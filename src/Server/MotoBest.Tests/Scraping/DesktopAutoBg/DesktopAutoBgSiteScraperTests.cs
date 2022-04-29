@@ -5,8 +5,6 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
-using MotoBest.Common;
-
 using MotoBest.Services.Common;
 using MotoBest.Services.Scraping.Models;
 using MotoBest.Services.Scraping.DesktopAutoBg;
@@ -14,6 +12,7 @@ using MotoBest.Services.Scraping.DesktopAutoBg;
 using MotoBest.Tests.Mocks;
 
 using Xunit;
+using MotoBest.Common.Extensions;
 
 namespace MotoBest.Tests.Scraping.DesktopAutoBg;
 
@@ -49,20 +48,20 @@ public class DesktopAutoBgSiteScraperTests
         var actualScrapedAdvert = siteScraper.ScrapeAdvert(document);
         var expectedScrapedAdvert = field?.GetValue(null) as ScrapedAdvert;
 
-        expectedScrapedAdvert.AssertPropertyValues(actualScrapedAdvert);
+        expectedScrapedAdvert.AssertProperties(actualScrapedAdvert);
     }
 
     [Theory]
-    [InlineData(nameof(DesktopAutoBgSearchAdvertResults.Test_001))]
-    [InlineData(nameof(DesktopAutoBgSearchAdvertResults.Test_002))]
-    [InlineData(nameof(DesktopAutoBgSearchAdvertResults.Test_003))]
+    [InlineData(nameof(DesktopAutoBgSearchAdvertsResults.Test_001))]
+    [InlineData(nameof(DesktopAutoBgSearchAdvertsResults.Test_002))]
+    [InlineData(nameof(DesktopAutoBgSearchAdvertsResults.Test_003))]
     public async Task ScrapeSearchAdvertResults_ShouldReturnCorrectResult(string advertResultTestName)
     {
-        var field = typeof(DesktopAutoBgSearchAdvertResults).GetField(advertResultTestName);
-        var document = await OpenDocumentFromFileSystemAsync("SearchAdvertResultsPages", advertResultTestName);
+        var field = typeof(DesktopAutoBgSearchAdvertsResults).GetField(advertResultTestName);
+        var document = await OpenDocumentFromFileSystemAsync("SearchAdvertsResultsPages", advertResultTestName);
 
-        var expectedAdvertResults = field?.GetValue(null) as SearchAdvertResult[];
-        var actualAdvertResults = siteScraper.ScrapeSearchAdvertResults(document).ToArray();
+        var expectedAdvertResults = field?.GetValue(null) as ScrapedSearchAdvertsResult[];
+        var actualAdvertResults = siteScraper.ScrapeSearchAdvertsResults(document).ToArray();
 
         Assert.Equal(expectedAdvertResults, actualAdvertResults);
     }

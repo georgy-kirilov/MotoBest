@@ -3,8 +3,10 @@
 using System.Text;
 using System.Globalization;
 
-using MotoBest.Common;
 using MotoBest.Services.Scraping.Models;
+
+using MotoBest.Common.Extensions;
+using MotoBest.Common.Units;
 
 using static MotoBest.Common.GlobalConstants;
 using static MotoBest.Services.Scraping.Common.ScrapingConstants.DesktopAutoBg;
@@ -77,7 +79,7 @@ internal static class DesktopAutoBgScrapers
         return (region, populatedPlace);
     }
 
-    internal static IEnumerable<string> ScapeImageUrls(IDocument document)
+    internal static IEnumerable<string> ScrapeImageUrls(IDocument document)
     {
         var imageUrls = document
             .QuerySelectorAll("#carGallery > .smallPhotos > ul > li")
@@ -90,43 +92,35 @@ internal static class DesktopAutoBgScrapers
 
         imageUrls.Add(bigImageUrl);
 
-        return imageUrls.Where(imageUrl => imageUrl != null).Distinct()!;
+        return imageUrls
+            .Where(imageUrl => imageUrl != null && imageUrl != VipImageUrl)
+            .Distinct()!;
     }
 
     internal static string? ScrapeTitle(IDocument document)
     {
         var title = document.QuerySelector("div.titleBig > h1")?.TextContent.Trim();
-
-        if (string.IsNullOrEmpty(title))
-        {
-            return null;
-        }
-
-        return title.Trim();
+        return !string.IsNullOrEmpty(title) ? title : null;
     }
 
     internal static string? ScrapeDescription(IDocument document)
     {
         var description = document.QuerySelector("div.moreInfo")?.TextContent.Trim();
-
-        if (string.IsNullOrEmpty(description))
-        {
-            return null;
-        }
-
-        return description.Trim();
+        return !string.IsNullOrEmpty(description) ? description : null;
     }
 
     internal static string? ScrapeRemoteId(IDocument document)
     {
-        var urlArgs = document.QuerySelector("title")?.TextContent.Split(Whitespace);
+        const int remoteIdIndex = 3;
+        var urlArgs = ScrapeUrlArguments(document);
+        return urlArgs.Length > remoteIdIndex ? urlArgs[remoteIdIndex] : null;
+    }
 
-        if (urlArgs == null || urlArgs.Length < 3)
-        {
-            return null;
-        }
-
-        return urlArgs[^3].Trim();
+    internal static string? ScrapeSlug(IDocument document)
+    {
+        const int slugIndex = 4;
+        var urlArgs = ScrapeUrlArguments(document);
+        return urlArgs.Length > slugIndex ? urlArgs[slugIndex] : null;
     }
 
     internal static void ScrapeEngine(IElement engineDomElement, ScrapedAdvert advert)
@@ -142,26 +136,26 @@ internal static class DesktopAutoBgScrapers
         }
     }
 
-    internal static void ScrapeKilometrage(IElement kilometrageDomElement, ScrapedAdvert advert)
+    internal static void ScrapeMileage(IElement mileageDomElement, ScrapedAdvert advert)
     {
-        string kilometrageAsText = kilometrageDomElement
+        string mileageAsText = mileageDomElement
             .TextContent
             .ToLower()
             .RemoveStrings(KilometersSuffix)
             .Trim();
 
-        advert.Kilometrage = ParseKilometrage(kilometrageAsText);
+        advert.Mileage = ParseMileage(mileageAsText);
     }
 
-    internal static void ScrapeHorsePowers(IElement horsePowersDomElement, ScrapedAdvert advert)
+    internal static void ScrapePower(IElement powerDomElement, ScrapedAdvert advert)
     {
-        string horsePowersAsText = horsePowersDomElement
+        string powerAsText = powerDomElement
             .TextContent
             .ToLower()
-            .RemoveStrings(HorsePowersSuffix)
+            .RemoveStrings(HorsepowersSuffix)
             .Trim();
 
-        advert.HorsePowers = ParseHorsePowers(horsePowersAsText);
+        advert.Power = ParsePower(powerAsText);
     }
 
     internal static void ScrapeManufacturedOnDate(IElement manufacturedOnDateDomElement, ScrapedAdvert advert)
@@ -180,10 +174,10 @@ internal static class DesktopAutoBgScrapers
         string priceAsText = priceDomElement.TextContent.ToLower();
 
         advert.Price = ParsePrice(priceAsText);
-        advert.Currency = ParseCurrency(priceAsText);
+        advert.CurrencyUnit = ParseCurrency(priceAsText);
     }
 
-    internal static SearchAdvertResult? ScrapeAdvertResult(IElement resultItem, DateTime todayDate)
+    internal static ScrapedSearchAdvertsResult? ScrapeAdvertResult(IElement resultItem, DateTime todayDate)
     {
         string urlQuery = ".text > .head > .link > a";
         string modifiedOnQuery = ".text > .info > .date";
@@ -222,23 +216,23 @@ internal static class DesktopAutoBgScrapers
             }
         }
 
-        return new SearchAdvertResult
+        return new ScrapedSearchAdvertsResult
         {
             Url = url,
             ModifiedOn = new DateTime(year, month, day, hour, minute, 0)
         };
     }
 
-    private static int? ParseKilometrage(string kilometrageAsText)
+    private static int? ParseMileage(string mileageAsText)
     {
-        bool isKilometrageValid = int.TryParse(kilometrageAsText, out int kilometrage);
-        return isKilometrageValid ? kilometrage : null;
+        bool isMileageValid = int.TryParse(mileageAsText, out int mileage);
+        return isMileageValid ? mileage : null;
     }
 
-    private static int? ParseHorsePowers(string horsePowersAsText)
+    private static int? ParsePower(string powerAsText)
     {
-        bool areHorsePowersValid = int.TryParse(horsePowersAsText, out int horsePowers);
-        return areHorsePowersValid ? horsePowers : null;
+        bool isPowerValid = int.TryParse(powerAsText, out int power);
+        return isPowerValid ? power : null;
     }
 
     private static DateTime? ParseManufacturedOnDate(string manufacturedOnDateAsText)
@@ -265,7 +259,7 @@ internal static class DesktopAutoBgScrapers
         return isPriceValid ? price : null;
     }
 
-    private static Currency? ParseCurrency(string priceAsText)
+    private static CurrencyUnit? ParseCurrency(string priceAsText)
     {
         var priceAsTextArgs = priceAsText.ToLower().Split(Whitespace);
 
@@ -274,12 +268,12 @@ internal static class DesktopAutoBgScrapers
             return null;
         }
 
-        string currencyAsText = priceAsTextArgs[^1];
+        string currencyUnitAsText = priceAsTextArgs[^1];
 
-        return currencyAsText switch
+        return currencyUnitAsText switch
         {
-            Bgn => Currency.Bgn,
-            Eur => Currency.Eur,
+            Bgn => CurrencyUnit.Bgn,
+            Eur => CurrencyUnit.Eur,
             _ => null
         };
     }
@@ -305,4 +299,11 @@ internal static class DesktopAutoBgScrapers
 
         return brandBuilder.ToString().Trim();
     }
+
+    private static string[] ScrapeUrlArguments(IDocument document)
+        => document.QuerySelector("meta[property='og:url']")?
+            .GetAttribute("content")?
+            .Split('/', StringSplitOptions.RemoveEmptyEntries)
+            .Select(arg => arg.Trim())
+            .ToArray() ?? Array.Empty<string>();
 }

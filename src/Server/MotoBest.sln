@@ -13,7 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MotoBest.Tests", "MotoBest.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MotoBest.Common", "MotoBest.Common\MotoBest.Common.csproj", "{38D97998-98AD-4C06-92FA-99286D15557E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sandbox", "Sandbox\Sandbox.csproj", "{801B128F-C081-44A2-9630-81138E7E9A78}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sandbox", "Sandbox\Sandbox.csproj", "{801B128F-C081-44A2-9630-81138E7E9A78}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MotoBest.WebApi.Models", "MotoBest.WebApi.Models\MotoBest.WebApi.Models.csproj", "{764F8F5E-97D7-4309-BC2D-5F1B0DE844B1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{801B128F-C081-44A2-9630-81138E7E9A78}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{801B128F-C081-44A2-9630-81138E7E9A78}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{801B128F-C081-44A2-9630-81138E7E9A78}.Release|Any CPU.Build.0 = Release|Any CPU
+		{764F8F5E-97D7-4309-BC2D-5F1B0DE844B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{764F8F5E-97D7-4309-BC2D-5F1B0DE844B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{764F8F5E-97D7-4309-BC2D-5F1B0DE844B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{764F8F5E-97D7-4309-BC2D-5F1B0DE844B1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

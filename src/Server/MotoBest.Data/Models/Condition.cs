@@ -1,5 +1,5 @@
 ﻿namespace MotoBest.Data.Models;
 
-public class Condition : AdvertFeature
+public class Condition : Feature
 {
 }

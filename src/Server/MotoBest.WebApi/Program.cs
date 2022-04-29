@@ -1,13 +1,16 @@
-using AngleSharp;
-
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 using MotoBest.Data.Repositories;
 
 using MotoBest.Services.Common;
-using MotoBest.Services.Data;
+using MotoBest.Services.Common.Units;
+using MotoBest.Services.Data.Features;
+using MotoBest.Services.Data.Adverts;
+using MotoBest.Services.Data.Adverts.Filtering;
+using MotoBest.Services.Mapping;
 using MotoBest.Services.Normalization;
+
 using MotoBest.Services.Scraping;
 using MotoBest.Services.Scraping.Common;
 using MotoBest.Services.Scraping.DesktopAutoBg;
@@ -20,6 +23,7 @@ string connectionString = builder.Configuration.GetConnectionString("DefaultConn
 var identityOptions = builder.Configuration.GetSection("IdentityOptions").Get<IdentityOptions>();
 
 builder.Services
+    .AddAutoMapper()
     .AddAppDbContext(connectionString)
     .AddAppIdentity(identityOptions);
 
@@ -27,9 +31,15 @@ builder.Services
     .AddTransient<ISiteScraper, DesktopAutoBgSiteScraper>()
     .AddSingleton<IDateTimeManager, DateTimeManager>()
     .AddScoped(typeof(IRepository<>), typeof(Repository<>))
+    .AddTransient(typeof(IFeatureService<>), typeof(FeatureService<>))
     .AddSingleton<ICurrencyCourseProvider, StaticCurrencyCourseProvider>()
     .AddTransient<ISiteDataNormalizer, SiteDataNormalizer>()
-    .AddTransient<IAdvertService, AdvertService>();
+    .AddTransient<IAdvertService, AdvertService>()
+    .AddTransient<IEuroStandardService, EuroStandardService>()
+    .AddTransient<IPopulatedPlaceService, PopulatedPlaceService>()
+    .AddTransient<ISearchFilterBuilder, SearchFilterOptionsBuilder>()
+    .AddTransient<IUnitsManager, UnitsManager>()
+    .AddTransient<AdvertMapper>();
 
 builder.Services.AddHostedService<ScrapingBackgroundService>();
 

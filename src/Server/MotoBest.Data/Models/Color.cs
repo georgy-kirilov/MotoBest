@@ -1,5 +1,5 @@
 ﻿namespace MotoBest.Data.Models;
 
-public class Color : AdvertFeature
+public class Color : Feature
 {
 }

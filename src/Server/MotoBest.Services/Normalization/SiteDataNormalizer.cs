@@ -1,19 +1,19 @@
-﻿using MotoBest.Common;
+﻿using MotoBest.Common.Extensions;
+using MotoBest.Common.Units;
 
 using MotoBest.Data.Models;
 using MotoBest.Data.Seeding.Constants;
 
-using MotoBest.Services.Common;
+using MotoBest.Services.Common.Units;
 using MotoBest.Services.Scraping.Models;
 
+using static MotoBest.Common.GlobalConstants;
 using static MotoBest.Services.Normalization.NormalizationConstants;
 
 namespace MotoBest.Services.Normalization;
 
 public class SiteDataNormalizer : ISiteDataNormalizer
 {
-    private readonly ICurrencyCourseProvider currencyCourseProvider;
-
     private static readonly Dictionary<string, string> engineVariations = new()
     {
         ["dizelov"] = EngineNames.Diesel,
@@ -27,45 +27,48 @@ public class SiteDataNormalizer : ISiteDataNormalizer
         ["Mercedes Benz"] = BrandNames.MercedesBenz
     };
 
-    public SiteDataNormalizer(ICurrencyCourseProvider currencyCourseProvider)
+    private readonly IUnitsManager unitsManager;
+
+    public SiteDataNormalizer(IUnitsManager unitsManager)
     {
-        this.currencyCourseProvider = currencyCourseProvider;
+        this.unitsManager = unitsManager;
     }
 
     public NormalizedAdvert NormalizeAdvert(ScrapedAdvert scrapedAdvert)
         => new()
         {
-            Title = scrapedAdvert.Title?.RemoveRepeatingWhiteSpaces(),
+            RemoteId = scrapedAdvert.RemoteId?.Trim(),
+            RemoteSlug = scrapedAdvert.RemoteSlug,
+            Title = NormalizeTitle(scrapedAdvert.Title),
             Description = scrapedAdvert.Description?.RemoveRepeatingWhiteSpaces(),
+            Engine = NormalizeEngine(scrapedAdvert.Engine),
             BodyStyle = scrapedAdvert.BodyStyle?.Trim().ToLower(),
+            Transmission = scrapedAdvert.Transmission?.Trim().ToLower(),
             Color = scrapedAdvert.Color?.Trim().ToLower(),
             Condition = scrapedAdvert.Condition?.Trim().ToLower(),
-            Engine = NormalizeEngine(scrapedAdvert.Engine),
-            HorsePowers = scrapedAdvert.HorsePowers,
-            Kilometrage = scrapedAdvert.Kilometrage,
+            PowerInHp = scrapedAdvert.Power,
+            MileageInKm = scrapedAdvert.Mileage,
             ManufacturedOn = scrapedAdvert.ManufacturedOn,
-            PopulatedPlace = NormalizePopulatedPlace(scrapedAdvert.PopulatedPlace),
             Region = NormalizeRegion(scrapedAdvert.Region),
-            Transmission = scrapedAdvert.Transmission?.Trim().ToLower(),
+            PopulatedPlace = NormalizePopulatedPlace(scrapedAdvert.PopulatedPlace),
             Brand = NormalizeBrand(scrapedAdvert.Brand),
             ModifiedOn = scrapedAdvert.ModifiedOn,
             PopulatedPlaceType = NormalizePopulatedPlaceType(scrapedAdvert.PopulatedPlace),
-            PriceBgn = NormalizePrice(scrapedAdvert.Price, scrapedAdvert.Currency),
-            ImageUrls = scrapedAdvert.ImageUrls,
+            PriceInBgn = NormalizePrice(scrapedAdvert.Price, scrapedAdvert.CurrencyUnit),
+            ImageUrls = scrapedAdvert.ImageUrls.ToList(),
             EuroStandard = scrapedAdvert.EuroStandard?.Trim().ToLower(),
-            RemoteId = scrapedAdvert.RemoteId?.Trim(),
             Model = scrapedAdvert.Model?.Trim(),
             Site = scrapedAdvert.Site,
         };
 
-    private decimal? NormalizePrice(decimal? price, Currency? currency)
+    private decimal? NormalizePrice(decimal? price, CurrencyUnit? currencyUnit)
     {
-        if (currency == null || price == null)
+        if (currencyUnit == null || price == null)
         {
             return price;
         }
         
-        return price * currencyCourseProvider.GetCourseToBgn(currency.Value);
+        return price * unitsManager.GetBgnCourse(currencyUnit.Value);
     }
 
     private static PopulatedPlaceType? NormalizePopulatedPlaceType(string? populatedPlace)
@@ -118,5 +121,21 @@ public class SiteDataNormalizer : ISiteDataNormalizer
         }
 
         return engineVariations.ContainsKey(engine) ? engineVariations[engine] : engine;
+    }
+
+    private static string? NormalizeTitle(string? title)
+    {
+        title = title?.RemoveRepeatingWhiteSpaces();
+
+        if (title == null)
+        {
+            return null;
+        }
+
+        string titleAndPriceInfoSeparator = $"{Whitespace}-{Whitespace}";
+        string priceInfo = title.Split(titleAndPriceInfoSeparator).TakeLast(1).FirstOrDefault() ?? string.Empty;
+        int startIndex = title.Length - priceInfo.Length - titleAndPriceInfoSeparator.Length;
+
+        return title.Remove(startIndex);
     }
 }

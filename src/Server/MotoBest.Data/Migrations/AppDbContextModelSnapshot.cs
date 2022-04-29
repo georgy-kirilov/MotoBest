@@ -154,17 +154,14 @@ namespace MotoBest.Data.Migrations
                     b.Property<int?>("EuroStandardId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("HorsePowers")
-                        .HasColumnType("int");
-
                     b.Property<bool>("IsEuroStandardApproximate")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("Kilometrage")
-                        .HasColumnType("int");
-
                     b.Property<DateTime?>("ManufacturedOn")
                         .HasColumnType("datetime2");
+
+                    b.Property<int?>("MileageInKm")
+                        .HasColumnType("int");
 
                     b.Property<int?>("ModelId")
                         .HasColumnType("int");
@@ -175,7 +172,10 @@ namespace MotoBest.Data.Migrations
                     b.Property<int?>("PopulatedPlaceId")
                         .HasColumnType("int");
 
-                    b.Property<decimal?>("PriceBgn")
+                    b.Property<int?>("PowerInHp")
+                        .HasColumnType("int");
+
+                    b.Property<decimal?>("PriceInBgn")
                         .HasPrecision(14, 2)
                         .HasColumnType("decimal(14,2)");
 
@@ -184,6 +184,9 @@ namespace MotoBest.Data.Migrations
 
                     b.Property<string>("RemoteId")
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("RemoteSlug")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("SiteId")
                         .HasColumnType("int");

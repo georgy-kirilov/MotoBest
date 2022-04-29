@@ -1,9 +1,12 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 using MotoBest.Data;
 using MotoBest.Data.Models.Identity;
 using MotoBest.Data.Seeding;
+using MotoBest.Services.Common.Units;
+using MotoBest.Services.Mapping;
 
 namespace MotoBest.WebApi;
 
@@ -15,6 +18,18 @@ public static class ServiceCollectionExtensions
             .AddDbContext<AppDbContext>(
                 options => options.UseLazyLoadingProxies().UseSqlServer(connectionString),
                 ServiceLifetime.Transient);
+
+    public static IServiceCollection AddAutoMapper(this IServiceCollection serviceCollection)
+    {
+        serviceCollection
+            .AddSingleton(provider => new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile(new AdvertProfile(provider.GetRequiredService<IUnitsManager>()));
+            })
+            .CreateMapper());
+
+        return serviceCollection;
+    }
 
     public static IdentityBuilder AddAppIdentity(
         this IServiceCollection serviceCollection, IdentityOptions identityOptions)

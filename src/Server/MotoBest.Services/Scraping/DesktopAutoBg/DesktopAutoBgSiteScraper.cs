@@ -20,8 +20,8 @@ public class DesktopAutoBgSiteScraper : ISiteScraper
         [TransmissionLabel] = ScrapeTransmission,
         [EngineLabel] = ScrapeEngine,
         [ConditionLabel] = ScrapeCondition,
-        [KilometrageLabel] = ScrapeKilometrage,
-        [HorsePowersLabel] = ScrapeHorsePowers,
+        [MileageLabel] = ScrapeMileage,
+        [PowerLabel] = ScrapePower,
         [ManufacturedOnDateLabel] = ScrapeManufacturedOnDate,
         [PriceLabel] = ScrapePriceAndCurrency,
         [ModelLabel] = ScrapeBrandAndModel,
@@ -43,9 +43,10 @@ public class DesktopAutoBgSiteScraper : ISiteScraper
             Region = region,
             PopulatedPlace = populatedPlace,
             RemoteId = ScrapeRemoteId(document),
+            RemoteSlug = ScrapeSlug(document),
             Title = ScrapeTitle(document),
             Description = ScrapeDescription(document),
-            ImageUrls = ScapeImageUrls(document),
+            ImageUrls = ScrapeImageUrls(document),
             Site = SiteNames.AutoBg,
         };
 
@@ -53,7 +54,7 @@ public class DesktopAutoBgSiteScraper : ISiteScraper
         return scrapedAdvert;
     }
 
-    public IEnumerable<SearchAdvertResult?> ScrapeSearchAdvertResults(IDocument document)
+    public IEnumerable<ScrapedSearchAdvertsResult?> ScrapeSearchAdvertsResults(IDocument document)
         => document
             .QuerySelectorAll("#resultsPage > ul > #rightColumn > .results > .resultItem")
             .Select(item => ScrapeAdvertResult(item, dateTimeManager.Today()));
@@ -72,7 +73,6 @@ public class DesktopAutoBgSiteScraper : ISiteScraper
             .Select(a => a.TextContent.Trim())
             .Distinct() ?? Array.Empty<string>();
     }
-            
 
     private static void ScrapeMainAdvertData(IDocument document, ScrapedAdvert scrapedAdvert)
     {

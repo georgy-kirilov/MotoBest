@@ -4,45 +4,47 @@ namespace MotoBest.Services.Normalization;
 
 public class NormalizedAdvert
 {
-    public string? RemoteId { get; set; }
+    public string? RemoteId { get; init; }
 
-    public string? Title { get; set; }
+    public string? RemoteSlug { get; init; }
 
-    public string? Description { get; set; }
+    public string? Title { get; init; }
 
-    public string? BodyStyle { get; set; }
+    public string? Description { get; init; }
 
-    public string? Transmission { get; set; }
+    public string? BodyStyle { get; init; }
 
-    public string? Engine { get; set; }
+    public string? Transmission { get; init; }
 
-    public string? Condition { get; set; }
+    public string? Engine { get; init; }
 
-    public int? Kilometrage { get; set; }
+    public string? Condition { get; init; }
 
-    public int? HorsePowers { get; set; }
+    public int? MileageInKm { get; init; }
 
-    public string? Color { get; set; }
+    public int? PowerInHp { get; init; }
 
-    public DateTime? ManufacturedOn { get; set; }
+    public string? Color { get; init; }
 
-    public decimal? PriceBgn { get; set; }
+    public DateTime? ManufacturedOn { get; init; }
 
-    public string? Brand { get; set; }
+    public decimal? PriceInBgn { get; init; }
 
-    public string? Model { get; set; }
+    public string? Brand { get; init; }
 
-    public string? PopulatedPlace { get; set; }
+    public string? Model { get; init; }
 
-    public string? EuroStandard { get; set; }
+    public string? PopulatedPlace { get; init; }
 
-    public string? Region { get; set; }
+    public string? EuroStandard { get; init; }
 
-    public string Site { get; set; } = "";
+    public string? Region { get; init; }
 
-    public DateTime? ModifiedOn { get; set; }
+    public string Site { get; init; } = string.Empty;
 
-    public PopulatedPlaceType? PopulatedPlaceType { get; set; }
+    public DateTime? ModifiedOn { get; init; }
 
-    public IEnumerable<string> ImageUrls { get; set; } = new List<string>();
+    public PopulatedPlaceType? PopulatedPlaceType { get; init; }
+
+    public IEnumerable<string> ImageUrls { get; init; } = new List<string>();
 }

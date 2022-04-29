@@ -5,10 +5,10 @@ using System.Text;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-using MotoBest.Services.Data;
 using MotoBest.Services.Normalization;
 using MotoBest.Services.Scraping.Common;
 using MotoBest.Data.Seeding.Constants;
+using MotoBest.Services.Data.Adverts;
 
 namespace MotoBest.Services.Scraping;
 
@@ -42,7 +42,7 @@ public class ScrapingBackgroundService : BackgroundService
 
             using var scope = serviceScopeFactory.CreateScope();
             var latestModifiedOnDate = scope.ServiceProvider.GetRequiredService<IAdvertService>()
-                .GetLatestAdvertModifiedOnDate(SiteNames.AutoBg) ?? DateTime.Now.Subtract(TimeSpan.FromHours(1));
+                .FindLatestAdvertModifiedOnDate(SiteNames.AutoBg) ?? DateTime.Now.Subtract(TimeSpan.FromHours(1));
 
             int resultsPageIndex = 1;
 
@@ -53,7 +53,7 @@ public class ScrapingBackgroundService : BackgroundService
                 var advertResultsPageDocument = await context.OpenAsync(advertResultsUrl, stoppingToken);
 
                 var advertResults = scraper
-                    .ScrapeSearchAdvertResults(advertResultsPageDocument)
+                    .ScrapeSearchAdvertsResults(advertResultsPageDocument)
                     .Where(res => res != null && res.ModifiedOn >= latestModifiedOnDate);
 
                 if (!advertResults.Any())
@@ -71,7 +71,7 @@ public class ScrapingBackgroundService : BackgroundService
                         var scrapedAdvert = scraper.ScrapeAdvert(fullAdvertDocument);
                         scrapedAdvert.ModifiedOn = advertResult.ModifiedOn;
                         var normalizedAdvert = normalizer.NormalizeAdvert(scrapedAdvert);
-                        await advertService.AddAsync(normalizedAdvert);
+                        await advertService.AddOrUpdate(normalizedAdvert);
                     }
 
                     var task = Task.Run(method, stoppingToken);

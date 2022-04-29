@@ -53,7 +53,7 @@ public class ScrapingBackgroundService : BackgroundService
                 var advertResultsPageDocument = await context.OpenAsync(advertResultsUrl, stoppingToken);
 
                 var advertResults = scraper
-                    .ScrapeAdvertSearchResults(advertResultsPageDocument)
+                    .ScrapeSearchAdvertsResults(advertResultsPageDocument)
                     .Where(res => res != null && res.ModifiedOn >= latestModifiedOnDate);
 
                 if (!advertResults.Any())

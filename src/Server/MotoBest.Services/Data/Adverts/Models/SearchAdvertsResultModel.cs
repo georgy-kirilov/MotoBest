@@ -3,7 +3,7 @@ using MotoBest.WebApi.Models.Adverts.SearchAdverts;
 
 namespace MotoBest.Services.Data.Adverts.Models;
 
-public class SearchAdvertsResultModel : SearchAdvertBaseModel, INormalizedUnitableModel
+public class SearchAdvertsResultModel : SearchAdvertsBaseModel, INormalizedUnitableModel
 {
     public decimal? PriceInBgn { get; set; }
 

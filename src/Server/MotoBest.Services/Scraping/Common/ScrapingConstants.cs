@@ -12,7 +12,6 @@ public static class ScrapingConstants
         public const string TodayDateAsText = "днес";
         public const string NegotiablePrice = "цена по договаряне";
         public const string VipImageUrl = "/images/ico/VIP.png";
-
         public const string BodyStyleLabel = "тип";
         public const string ColorLabel = "цвят";
         public const string TransmissionLabel = "скоростна кутия";

@@ -2,7 +2,7 @@
 
 namespace MotoBest.Services.Data.AdvertFeatures;
 
-public interface IEuroStandardService : IAdvertFeatureService<EuroStandard>
+public interface IEuroStandardService : IFeatureService<EuroStandard>
 {
     /// <summary>
     /// Creates an approximation for the EuroStandard of a car

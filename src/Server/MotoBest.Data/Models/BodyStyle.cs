@@ -1,5 +1,5 @@
 ﻿namespace MotoBest.Data.Models;
 
-public class BodyStyle : AdvertFeature
+public class BodyStyle : Feature
 {
 }

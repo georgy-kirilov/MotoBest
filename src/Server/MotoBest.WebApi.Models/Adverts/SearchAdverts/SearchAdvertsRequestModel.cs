@@ -2,7 +2,7 @@
 
 namespace MotoBest.WebApi.Models.Adverts.SearchAdverts;
 
-public class SearchAdvertsRequestModel : SearchAdvertsFilterBaseModel, IUnitableModel
+public class SearchAdvertsRequestModel : SearchAdvertsBaseFilter, IUnitableModel
 {
     public decimal? MinPrice { get; init; }
 

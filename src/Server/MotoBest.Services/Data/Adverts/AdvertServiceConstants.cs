@@ -4,6 +4,6 @@ public static class AdvertServiceConstants
 {
     public const string DefaultAdvertImageUrl = "default-advert-image.png";
 
-    public const int AdvertSearchResultsFirstPageIndex = 0;
-    public const int AdvertSearchResultsPerPageCount = 15;
+    public const int SearchResultsFirstPageIndex = 0;
+    public const int SearchResultsPerPageCount = 15;
 }

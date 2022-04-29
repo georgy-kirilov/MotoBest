@@ -54,7 +54,7 @@ public class DesktopAutoBgSiteScraper : ISiteScraper
         return scrapedAdvert;
     }
 
-    public IEnumerable<ScrapedSearchAdvertResult?> ScrapeAdvertSearchResults(IDocument document)
+    public IEnumerable<ScrapedSearchAdvertsResult?> ScrapeSearchAdvertsResults(IDocument document)
         => document
             .QuerySelectorAll("#resultsPage > ul > #rightColumn > .results > .resultItem")
             .Select(item => ScrapeAdvertResult(item, dateTimeManager.Today()));

@@ -1,6 +1,6 @@
 ﻿namespace MotoBest.Services.Scraping.Models;
 
-public class ScrapedSearchAdvertResult
+public class ScrapedSearchAdvertsResult
 {
     public string Url { get; init; } = string.Empty;
 
@@ -8,12 +8,12 @@ public class ScrapedSearchAdvertResult
 
     public override bool Equals(object? obj)
     {
-        if (obj == null || obj is not ScrapedSearchAdvertResult)
+        if (obj == null || obj is not ScrapedSearchAdvertsResult)
         {
             return false;
         }
 
-        var other = obj as ScrapedSearchAdvertResult;
+        var other = obj as ScrapedSearchAdvertsResult;
         return Url == other?.Url && ModifiedOn == other.ModifiedOn;
     }
 

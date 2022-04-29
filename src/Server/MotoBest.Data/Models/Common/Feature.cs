@@ -1,8 +1,8 @@
 ﻿namespace MotoBest.Data.Models.Common;
 
-public abstract class AdvertFeature : BaseModel<int>
+public abstract class Feature : BaseModel<int>
 {
-    protected AdvertFeature()
+    protected Feature()
     {
         Adverts = new HashSet<Advert>();
     }

@@ -11,8 +11,8 @@ public interface IAdvertService
 
     IEnumerable<SearchAdvertsResultModel> SearchAdverts(
         SearchAdvertsInputModel serviceModel,
-        int pageIndex = AdvertServiceConstants.AdvertSearchResultsFirstPageIndex,
-        int resultsPerPageCount = AdvertServiceConstants.AdvertSearchResultsPerPageCount);
+        int pageIndex = AdvertServiceConstants.SearchResultsFirstPageIndex,
+        int resultsPerPageCount = AdvertServiceConstants.SearchResultsPerPageCount);
 
     Task<GetFullAdvertResultModel?> GetFullAdvert(string id);
 }

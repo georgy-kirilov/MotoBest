@@ -1,6 +1,6 @@
 ﻿namespace MotoBest.Data.Models;
 
-public class EuroStandard : AdvertFeature
+public class EuroStandard : Feature
 {
     public DateTime FromDate { get; set; }
 }

@@ -5,7 +5,7 @@ using MotoBest.Data.Repositories;
 
 namespace MotoBest.Services.Data.AdvertFeatures;
 
-public class EuroStandardService : AdvertFeatureService<EuroStandard>, IEuroStandardService
+public class EuroStandardService : FeatureService<EuroStandard>, IEuroStandardService
 {
     public EuroStandardService(IRepository<EuroStandard> featureRepository)
         : base(featureRepository)

@@ -3,12 +3,12 @@ using MotoBest.Data.Repositories;
 
 namespace MotoBest.Services.Data.AdvertFeatures;
 
-public class AdvertFeatureService<TFeature> : IAdvertFeatureService<TFeature>
-    where TFeature : AdvertFeature, new()
+public class FeatureService<TFeature> : IFeatureService<TFeature>
+    where TFeature : Feature, new()
 {
     protected readonly IRepository<TFeature> featureRepository;
 
-    public AdvertFeatureService(IRepository<TFeature> featureRepository)
+    public FeatureService(IRepository<TFeature> featureRepository)
     {
         this.featureRepository = featureRepository;
     }

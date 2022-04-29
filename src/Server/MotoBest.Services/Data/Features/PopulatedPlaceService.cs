@@ -3,13 +3,13 @@ using MotoBest.Data.Repositories;
 
 namespace MotoBest.Services.Data.AdvertFeatures;
 
-public class PopulatedPlaceService : AdvertFeatureService<PopulatedPlace>, IPopulatedPlaceService
+public class PopulatedPlaceService : FeatureService<PopulatedPlace>, IPopulatedPlaceService
 {
-    private readonly IAdvertFeatureService<Region> regionService;
+    private readonly IFeatureService<Region> regionService;
 
     public PopulatedPlaceService(
         IRepository<PopulatedPlace> featureRepository,
-        IAdvertFeatureService<Region> regionService)
+        IFeatureService<Region> regionService)
         : base(featureRepository)
     {
         this.regionService = regionService;

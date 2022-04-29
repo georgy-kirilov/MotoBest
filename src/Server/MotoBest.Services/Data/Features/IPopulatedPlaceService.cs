@@ -2,7 +2,7 @@
 
 namespace MotoBest.Services.Data.AdvertFeatures;
 
-public interface IPopulatedPlaceService : IAdvertFeatureService<PopulatedPlace>
+public interface IPopulatedPlaceService : IFeatureService<PopulatedPlace>
 {
     PopulatedPlace? FindByRegion(
         string? regionName,

@@ -177,7 +177,7 @@ internal static class DesktopAutoBgScrapers
         advert.CurrencyUnit = ParseCurrency(priceAsText);
     }
 
-    internal static ScrapedSearchAdvertResult? ScrapeAdvertResult(IElement resultItem, DateTime todayDate)
+    internal static ScrapedSearchAdvertsResult? ScrapeAdvertResult(IElement resultItem, DateTime todayDate)
     {
         string urlQuery = ".text > .head > .link > a";
         string modifiedOnQuery = ".text > .info > .date";
@@ -216,7 +216,7 @@ internal static class DesktopAutoBgScrapers
             }
         }
 
-        return new ScrapedSearchAdvertResult
+        return new ScrapedSearchAdvertsResult
         {
             Url = url,
             ModifiedOn = new DateTime(year, month, day, hour, minute, 0)

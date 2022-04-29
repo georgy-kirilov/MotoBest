@@ -1,7 +1,7 @@
 ﻿namespace MotoBest.Data.Seeding.Common;
 
 public abstract class BaseAdvertFeatureSeeder<TFeature> : ISeeder
-    where TFeature : AdvertFeature, new()
+    where TFeature : Feature, new()
 {
     private readonly IEnumerable<TFeature> models;
 

@@ -1,6 +1,6 @@
 ﻿namespace MotoBest.WebApi.Models.Adverts.SearchAdverts;
 
-public class SearchAdvertsResponseModel : SearchAdvertBaseModel, ICustomUnitableModel
+public class SearchAdvertsResponseModel : SearchAdvertsBaseModel, ICustomUnitableModel
 {
     public int? Power { get; set; }
 

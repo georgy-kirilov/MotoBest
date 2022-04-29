@@ -52,16 +52,16 @@ public class DesktopAutoBgSiteScraperTests
     }
 
     [Theory]
-    [InlineData(nameof(DesktopAutoBgSearchAdvertResults.Test_001))]
-    [InlineData(nameof(DesktopAutoBgSearchAdvertResults.Test_002))]
-    [InlineData(nameof(DesktopAutoBgSearchAdvertResults.Test_003))]
+    [InlineData(nameof(DesktopAutoBgSearchAdvertsResults.Test_001))]
+    [InlineData(nameof(DesktopAutoBgSearchAdvertsResults.Test_002))]
+    [InlineData(nameof(DesktopAutoBgSearchAdvertsResults.Test_003))]
     public async Task ScrapeSearchAdvertResults_ShouldReturnCorrectResult(string advertResultTestName)
     {
-        var field = typeof(DesktopAutoBgSearchAdvertResults).GetField(advertResultTestName);
-        var document = await OpenDocumentFromFileSystemAsync("SearchAdvertResultsPages", advertResultTestName);
+        var field = typeof(DesktopAutoBgSearchAdvertsResults).GetField(advertResultTestName);
+        var document = await OpenDocumentFromFileSystemAsync("SearchAdvertsResultsPages", advertResultTestName);
 
-        var expectedAdvertResults = field?.GetValue(null) as ScrapedSearchAdvertResult[];
-        var actualAdvertResults = siteScraper.ScrapeAdvertSearchResults(document).ToArray();
+        var expectedAdvertResults = field?.GetValue(null) as ScrapedSearchAdvertsResult[];
+        var actualAdvertResults = siteScraper.ScrapeSearchAdvertsResults(document).ToArray();
 
         Assert.Equal(expectedAdvertResults, actualAdvertResults);
     }

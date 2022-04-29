@@ -3,8 +3,6 @@
 using System.Globalization;
 
 using MotoBest.Common;
-using MotoBest.Common.Units;
-
 using MotoBest.Data.Models;
 
 using MotoBest.Services.Data.Adverts;
@@ -18,11 +16,11 @@ namespace MotoBest.Services.Mapping;
 
 public class AdvertProfile : Profile
 {
-    private readonly IUnitsManager unitsManager;
-
     public AdvertProfile(IUnitsManager unitsManager)
     {
-        this.unitsManager = unitsManager;
+        CreateMap<GetFullAdvertResultModel, GetFullAdvertResponseModel>();
+
+        CreateMap<SearchAdvertsResultModel, SearchAdvertsResponseModel>();
 
         CreateMap<SearchAdvertsRequestModel, SearchAdvertsInputModel>()
             .ForMember(m => m.MinMileageInKm, cfg => cfg.MapFrom(a => unitsManager.ToKm(a.MileageUnit, a.MinMileage)))
@@ -32,103 +30,52 @@ public class AdvertProfile : Profile
             .ForMember(m => m.MinPowerInHp, cfg => cfg.MapFrom(a => unitsManager.ToHp(a.PowerUnit, a.MinPower)))
             .ForMember(m => m.MaxPowerInHp, cfg => cfg.MapFrom(a => unitsManager.ToHp(a.PowerUnit, a.MaxPower)));
 
-        CreateMap<GetFullAdvertResultModel, GetFullAdvertResponseModel>();
-        
-        CreateMap<SearchAdvertsResultModel, SearchAdvertsResponseModel>();
-
         CreateMap<Advert, SearchAdvertsResultModel>()
-            .ForMember(dest => dest.PriceInBgn,opt => opt.MapFrom(MapPrice))
-            .ForMember(
-                dest => dest.Engine,
-                opt => opt.MapFrom(MapEngine))
-            .ForMember(
-                dest => dest.Year,
-                opt => opt.MapFrom(MapYear))
-            .ForMember(
-                dest => dest.Transmission,
-                opt => opt.MapFrom(MapTransmission))
-            .ForMember(
-                dest => dest.MainImageUrl,
-                opt => opt.MapFrom(MapMainImageUrl))
-            .ForMember(
-                dest => dest.Month,
-                opt => opt.MapFrom(MapMonthName));
+            .ForMember(m => m.PriceInBgn, cfg => cfg.MapFrom(a => a.PriceInBgn))
+            .ForMember(m => m.Engine, cfg => cfg.MapFrom((x, y) => x.Engine?.Name))
+            .ForMember(m => m.Year, cfg => cfg.MapFrom((x, y) => x.ManufacturedOn?.Year))
+            .ForMember(m => m.Transmission, cfg => cfg.MapFrom((x, y) => x.Transmission?.Name))
+            .ForMember(m => m.MainImageUrl, cfg => cfg.MapFrom(MapMainImageUrl))
+            .ForMember(m => m.Month, cfg => cfg.MapFrom(MapMonth));
 
         CreateMap<Advert, GetFullAdvertResultModel>()
             .ForMember(m => m.PriceInBgn, cfg => cfg.MapFrom(a => a.PriceInBgn))
             .ForMember(m => m.Year, cfg => cfg.MapFrom((x, y) => x.ManufacturedOn?.Year))
-            .ForMember(
-                dest => dest.Month,
-                opt => opt.MapFrom(MapMonthName))
-            .ForMember(
-                dest => dest.Transmission,
-                opt => opt.MapFrom(MapTransmission))
-            .ForMember(
-                dest => dest.BodyStyle,
-                opt => opt.MapFrom(MapBodyStyle))
-            .ForMember(
-                dest => dest.Engine,
-                opt => opt.MapFrom(MapEngine))
-            .ForMember(
-                dest => dest.Brand,
-                opt => opt.MapFrom(MapBrand))
-            .ForMember(
-                dest => dest.Model,
-                opt => opt.MapFrom(MapModel))
-            .ForMember(
-                dest => dest.Color,
-                opt => opt.MapFrom(MapColor))
-            .ForMember(
-                dest => dest.Condition,
-                opt => opt.MapFrom(MapCondition))
-            .ForMember(
-                dest => dest.ImageUrls,
-                opt => opt.MapFrom(MapImageUrls))
-            .ForMember(m => m.OriginalAdvertUrl, cfg => cfg.MapFrom((x, y) => x.Site != null ? 
-                $"https://{x.Site.Name}{string.Format(x.Site.FullAdvertPagePathFormat, x.RemoteId, x.RemoteSlug)}" : null))
+            .ForMember(m => m.Month, cfg => cfg.MapFrom(MapMonth))
+            .ForMember(m => m.Transmission, cfg => cfg.MapFrom((x, y) => x.Transmission?.Name))
+            .ForMember(m => m.BodyStyle, cfg => cfg.MapFrom((x, y) => x.BodyStyle?.Name))
+            .ForMember(m => m.Engine, cfg => cfg.MapFrom((x, y) => x.Engine?.Name))
+            .ForMember(m => m.Brand, cfg => cfg.MapFrom((x, y) => x.Brand?.Name))
+            .ForMember(m => m.Model, cfg => cfg.MapFrom((x, y) => x.Model?.Name))
+            .ForMember(m => m.Color, cfg => cfg.MapFrom((x, y) => x.Color?.Name))
+            .ForMember(m => m.Condition, cfg => cfg.MapFrom((x, y) => x.Condition?.Name))
+            .ForMember(m => m.ImageUrls, cfg => cfg.MapFrom(MapImageUrls))
+            .ForMember(m => m.OriginalAdvertUrl, cfg => cfg.MapFrom(MapOriginalAdvertUrl))
             .ForMember(m => m.Region, cfg => cfg.MapFrom((x, y) => x.Region?.Name))
             .ForMember(m => m.PopulatedPlace, cfg => cfg.MapFrom((x, y) => x.PopulatedPlace?.Name));
     }
 
-    private string? MapBrand<T>(Advert source, T destination)
-        => source.Brand?.Name;
-
-    private string? MapModel<T>(Advert source, T destination)
-        => source.Model?.Name;
-
-    private string? MapCondition<T>(Advert source, T destination)
-        => source.Condition?.Name;
-
-    private string? MapColor<T>(Advert source, T destination)
-        => source.Color?.Name;
-
-    private IEnumerable<string> MapImageUrls<T>(Advert source, T destination)
+    static IEnumerable<string> MapImageUrls<T>(Advert source, T destination)
         => source.Images.Where(im => im.Url != null).Select(im => im.Url)!;
 
-    private string MapMainImageUrl<T>(Advert source, T destination)
+    static string MapMainImageUrl<T>(Advert source, T destination)
         => source.Images.FirstOrDefault()?.Url ?? AdvertServiceConstants.DefaultAdvertImageUrl;
 
-    private int? MapMileage<T>(SearchAdvertsRequestModel source, SearchAdvertsInputModel destination)
-        => ConvertMileageToKm(source.MileageUnit, source.MinMileage);
-
-    private int? ConvertMileageToKm(MileageUnit mileageUnit, int? mileage)
-        => (int) unitsManager.GetKmMultiplier(mileageUnit) * mileage;
-
-    private string? MapMonthName<T>(Advert source, T destination)
+    static string? MapMonth<T>(Advert source, T destination)
         => source.ManufacturedOn?.ToString("MMMM", new CultureInfo(GlobalConstants.BulgarianCultureInfo));
 
-    private int? MapYear<T>(Advert source, T destination)
-        => source.ManufacturedOn?.Year;
+    static string? MapOriginalAdvertUrl<T>(Advert source, T destination)
+    {
+        if (source.Site == null)
+        {
+            return null;
+        }
 
-    private decimal? MapPrice<T>(Advert source, T destination)
-        => source.PriceInBgn;
+        string route = string.Format(
+            source.Site.FullAdvertPagePathFormat,
+            source.RemoteId,
+            source.RemoteSlug);
 
-    private string? MapTransmission<T>(Advert source, T destination)
-        => source.Transmission?.Name;
-
-    private string? MapBodyStyle<T>(Advert source, T destination)
-        => source.BodyStyle?.Name;
-
-    private string? MapEngine<T>(Advert source, T destination)
-        => source.Engine?.Name;
+        return $"https://{source.Site.Name}{route}";
+    }
 }

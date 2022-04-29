@@ -31,13 +31,13 @@ builder.Services
     .AddTransient<ISiteScraper, DesktopAutoBgSiteScraper>()
     .AddSingleton<IDateTimeManager, DateTimeManager>()
     .AddScoped(typeof(IRepository<>), typeof(Repository<>))
-    .AddTransient(typeof(IAdvertFeatureService<>), typeof(AdvertFeatureService<>))
+    .AddTransient(typeof(IFeatureService<>), typeof(FeatureService<>))
     .AddSingleton<ICurrencyCourseProvider, StaticCurrencyCourseProvider>()
     .AddTransient<ISiteDataNormalizer, SiteDataNormalizer>()
     .AddTransient<IAdvertService, AdvertService>()
     .AddTransient<IEuroStandardService, EuroStandardService>()
     .AddTransient<IPopulatedPlaceService, PopulatedPlaceService>()
-    .AddTransient<IAdvertSearchFilterBuilder, AdvertSearchFilterOptionsBuilder>()
+    .AddTransient<ISearchFilterBuilder, SearchFilterOptionsBuilder>()
     .AddTransient<IUnitsManager, UnitsManager>()
     .AddTransient<AdvertMapper>();
 

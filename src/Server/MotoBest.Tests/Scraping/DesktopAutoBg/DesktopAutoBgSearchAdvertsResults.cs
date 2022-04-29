@@ -4,9 +4,9 @@ using MotoBest.Services.Scraping.Models;
 
 namespace MotoBest.Tests.Scraping.DesktopAutoBg;
 
-public static class DesktopAutoBgSearchAdvertResults
+public static class DesktopAutoBgSearchAdvertsResults
 {
-    public static readonly ScrapedSearchAdvertResult[] Test_001 = new ScrapedSearchAdvertResult[]
+    public static readonly ScrapedSearchAdvertsResult[] Test_001 = new ScrapedSearchAdvertsResult[]
     {
         new()
         {
@@ -105,7 +105,7 @@ public static class DesktopAutoBgSearchAdvertResults
         }
     };
 
-    public static readonly ScrapedSearchAdvertResult[] Test_002 = new ScrapedSearchAdvertResult[]
+    public static readonly ScrapedSearchAdvertsResult[] Test_002 = new ScrapedSearchAdvertsResult[]
     {
         new()
         {
@@ -204,7 +204,7 @@ public static class DesktopAutoBgSearchAdvertResults
         }
     };
 
-    public static readonly ScrapedSearchAdvertResult[] Test_003 = new ScrapedSearchAdvertResult[]
+    public static readonly ScrapedSearchAdvertsResult[] Test_003 = new ScrapedSearchAdvertsResult[]
     {
         new()
         {

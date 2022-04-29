@@ -22,17 +22,17 @@ public class AdvertService : IAdvertService
     private readonly IRepository<Advert> advertRepository;
     private readonly IRepository<Image> imageRepository;
 
-    private readonly IAdvertFeatureService<Transmission> transmissionService;
-    private readonly IAdvertFeatureService<BodyStyle> bodyStyleService;
+    private readonly IFeatureService<Transmission> transmissionService;
+    private readonly IFeatureService<BodyStyle> bodyStyleService;
 
-    private readonly IAdvertFeatureService<Engine> engineService;
-    private readonly IAdvertFeatureService<Condition> conditionService;
+    private readonly IFeatureService<Engine> engineService;
+    private readonly IFeatureService<Condition> conditionService;
 
-    private readonly IAdvertFeatureService<Color> colorService;
-    private readonly IAdvertFeatureService<Brand> brandService;
+    private readonly IFeatureService<Color> colorService;
+    private readonly IFeatureService<Brand> brandService;
 
-    private readonly IAdvertFeatureService<Site> siteService;
-    private readonly IAdvertSearchFilterBuilder advertSearchFilterBuilder;
+    private readonly IFeatureService<Site> siteService;
+    private readonly ISearchFilterBuilder searchFilterBuilder;
 
     public AdvertService(
         IMapper mapper,
@@ -40,14 +40,14 @@ public class AdvertService : IAdvertService
         IPopulatedPlaceService populatedPlaceService,
         IRepository<Advert> advertRepository,
         IRepository<Image> imageRepository,
-        IAdvertFeatureService<Transmission> transmissionService,
-        IAdvertFeatureService<BodyStyle> bodyStyleService,
-        IAdvertFeatureService<Engine> engineService,
-        IAdvertFeatureService<Condition> conditionService,
-        IAdvertFeatureService<Color> colorService,
-        IAdvertFeatureService<Brand> brandService,
-        IAdvertFeatureService<Site> siteService,
-        IAdvertSearchFilterBuilder advertSearchFilterBuilder)
+        IFeatureService<Transmission> transmissionService,
+        IFeatureService<BodyStyle> bodyStyleService,
+        IFeatureService<Engine> engineService,
+        IFeatureService<Condition> conditionService,
+        IFeatureService<Color> colorService,
+        IFeatureService<Brand> brandService,
+        IFeatureService<Site> siteService,
+        ISearchFilterBuilder advertSearchFilterBuilder)
     {
         this.mapper = mapper;
         this.advertRepository = advertRepository;
@@ -61,7 +61,7 @@ public class AdvertService : IAdvertService
         this.populatedPlaceService = populatedPlaceService;
         this.brandService = brandService;
         this.siteService = siteService;
-        this.advertSearchFilterBuilder = advertSearchFilterBuilder;
+        this.searchFilterBuilder = advertSearchFilterBuilder;
     }
 
     public async Task AddOrUpdate(NormalizedAdvert normalizedAdvert)
@@ -78,7 +78,7 @@ public class AdvertService : IAdvertService
         var brand = brandService.FindByName(normalizedAdvert.Brand);
         var model = brand?.Models.FirstOrDefault(m => m.Name == normalizedAdvert.Model);
 
-        var (euroStandard, isEuroStandardApproximate) = await FindEuroStandard(
+        var (euroStandard, isEuroStandardApproximate) = await FindOrApproximateEuroStandard(
             normalizedAdvert.EuroStandard,
             normalizedAdvert.ManufacturedOn);
 
@@ -157,14 +157,14 @@ public class AdvertService : IAdvertService
             .Select(mapper.Map<Advert, SearchAdvertsResultModel>);
 
     private IQueryable<Advert> FilterAdvertsBy(SearchAdvertsInputModel input)
-        => advertSearchFilterBuilder
+        => searchFilterBuilder
             .CreateFilterFor(advertRepository.All())
             .ByBodyStyle(input.BodyStyle)
-            .ByBrand(input.Brand)
+            .ByMaking(input.Brand, input.ModelId)
             .ByColor(input.Color)
             .ByCondition(input.Condition)
             .ByEngine(input.Engine)
-            .ByRegion(input.Region)
+            .ByLocation(input.Region, input.PopulatedPlaceId)
             .ByTransmission(input.Transmission)
             .ByPower(input.MinPowerInHp, input.MaxPowerInHp)
             .ByKilometrage(input.MinMileageInKm, input.MaxMileageInKm)
@@ -186,7 +186,7 @@ public class AdvertService : IAdvertService
         return (advert, doesAdvertExist);
     }
 
-    private async Task<(EuroStandard? euroStandard, bool isApproximate)> FindEuroStandard(
+    private async Task<(EuroStandard? euroStandard, bool isApproximate)> FindOrApproximateEuroStandard(
         string? euroStandardName,
         DateTime? manufacturedOn)
     {

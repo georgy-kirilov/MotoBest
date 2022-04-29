@@ -50,7 +50,7 @@ public class AppDbContext : IdentityDbContext<User, Role, string>
             .IsUnique();
 
         builder.AddUniqueConstraintTo(
-            nameof(AdvertFeature.Name),
+            nameof(Feature.Name),
             typeof(BodyStyle),
             typeof(Brand),
             typeof(Color),

@@ -1,5 +1,5 @@
 ﻿namespace MotoBest.Data.Models;
 
-public class Engine : AdvertFeature
+public class Engine : Feature
 {
 }

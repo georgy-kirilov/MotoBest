@@ -2,8 +2,8 @@
 
 namespace MotoBest.Services.Data.AdvertFeatures;
 
-public interface IAdvertFeatureService<TFeature>
-    where TFeature : AdvertFeature, new()
+public interface IFeatureService<TFeature>
+    where TFeature : Feature, new()
 {
     /// <summary>
     /// Returns the id of the model with the given name or null if such is not found

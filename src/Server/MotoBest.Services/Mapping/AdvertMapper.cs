@@ -26,6 +26,7 @@ public class AdvertMapper
         result.PowerUnit = unitable.PowerUnit.ToString().ToLower();
         result.CurrencyUnit = unitable.CurrencyUnit.ToString().ToLower();
         result.MileageUnit = unitable.MileageUnit.ToString().ToLower();
+
         result.Power = (int?)(modelToMapFrom.PowerInHp / unitsManager.GetHpMultiplier(unitable.PowerUnit));
         result.Price = (int?)(modelToMapFrom.PriceInBgn / unitsManager.GetBgnCourse(unitable.CurrencyUnit));
         result.Mileage = (int?)(modelToMapFrom.MileageInKm / unitsManager.GetKmMultiplier(unitable.MileageUnit));

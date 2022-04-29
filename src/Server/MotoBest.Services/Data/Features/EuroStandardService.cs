@@ -3,7 +3,7 @@
 using MotoBest.Data.Models;
 using MotoBest.Data.Repositories;
 
-namespace MotoBest.Services.Data.AdvertFeatures;
+namespace MotoBest.Services.Data.Features;
 
 public class EuroStandardService : FeatureService<EuroStandard>, IEuroStandardService
 {

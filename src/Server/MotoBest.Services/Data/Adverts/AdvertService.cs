@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using MotoBest.Data.Models;
 using MotoBest.Data.Repositories;
 
-using MotoBest.Services.Data.AdvertFeatures;
+using MotoBest.Services.Data.Features;
 using MotoBest.Services.Data.Adverts.Filtering;
 using MotoBest.Services.Data.Adverts.Models;
 

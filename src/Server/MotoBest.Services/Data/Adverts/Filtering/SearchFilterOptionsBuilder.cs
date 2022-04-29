@@ -1,5 +1,5 @@
 ﻿using MotoBest.Data.Models;
-using MotoBest.Services.Data.AdvertFeatures;
+using MotoBest.Services.Data.Features;
 
 namespace MotoBest.Services.Data.Adverts.Filtering;
 

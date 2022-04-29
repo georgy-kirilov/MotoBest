@@ -5,7 +5,7 @@ using MotoBest.Data.Repositories;
 
 using MotoBest.Services.Common;
 using MotoBest.Services.Common.Units;
-using MotoBest.Services.Data.AdvertFeatures;
+using MotoBest.Services.Data.Features;
 using MotoBest.Services.Data.Adverts;
 using MotoBest.Services.Data.Adverts.Filtering;
 using MotoBest.Services.Mapping;

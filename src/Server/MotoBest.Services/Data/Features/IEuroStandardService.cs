@@ -1,6 +1,6 @@
 ﻿using MotoBest.Data.Models;
 
-namespace MotoBest.Services.Data.AdvertFeatures;
+namespace MotoBest.Services.Data.Features;
 
 public interface IEuroStandardService : IFeatureService<EuroStandard>
 {

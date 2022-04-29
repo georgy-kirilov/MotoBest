@@ -1,6 +1,6 @@
 ﻿using MotoBest.Data.Models.Common;
 
-namespace MotoBest.Services.Data.AdvertFeatures;
+namespace MotoBest.Services.Data.Features;
 
 public interface IFeatureService<TFeature>
     where TFeature : Feature, new()
@@ -14,4 +14,9 @@ public interface IFeatureService<TFeature>
     /// Returns the model with the given name or null if such is not found
     /// </summary>
     TFeature? FindByName(string? name);
+
+    /// <summary>
+    /// Returns the name property values of all existing models
+    /// </summary>
+    IEnumerable<string> GetAllNames();
 }

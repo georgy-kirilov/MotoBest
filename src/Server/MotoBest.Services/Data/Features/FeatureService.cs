@@ -1,7 +1,7 @@
 ﻿using MotoBest.Data.Models.Common;
 using MotoBest.Data.Repositories;
 
-namespace MotoBest.Services.Data.AdvertFeatures;
+namespace MotoBest.Services.Data.Features;
 
 public class FeatureService<TFeature> : IFeatureService<TFeature>
     where TFeature : Feature, new()
@@ -17,4 +17,7 @@ public class FeatureService<TFeature> : IFeatureService<TFeature>
 
     public TFeature? FindByName(string? name)
         => featureRepository.All().FirstOrDefault(f => f.Name == name);
+
+    public IEnumerable<string> GetAllNames()
+        => featureRepository.All().Select(f => f.Name);
 }

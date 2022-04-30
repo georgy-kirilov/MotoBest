@@ -45,6 +45,11 @@ builder.Services.AddHostedService<ScrapingBackgroundService>();
 
 builder.Services.AddControllers();
 
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(policy => policy.WithOrigins("https://localhost:4200", "http://localhost:4200"));
+});
+
 builder.Services
     .AddEndpointsApiExplorer()
     .AddSwaggerGen();
@@ -60,6 +65,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors();
 
 app.UseAuthorization();
 

@@ -1,26 +1,198 @@
-<div class="col-10 align-items-center">
-    <div class="form-group my-3 align-items-center">
-        <label class="mb-2">Двигател</label>
-        <select [(ngModel)]="selectedEngine" class="form-select">
-            <option *ngFor="let engine of engines" [value]="engine">
-                {{format(engine)}}
-            </option>
-        </select>
-    </div>
-    <div class="form-group">
-        <label>Скоростна кутия</label>
-        <select [(ngModel)]="selectedTransmission" class="form-select">
-            <option *ngFor="let transmission of transmissions" [value]="transmission">
-                {{format(transmission)}}
-            </option>
-        </select>
-    </div>
-    <div class="form-group">
-        <label>Тип</label>
-        <select [(ngModel)]="selectedBodyStyle" class="form-select">
-            <option *ngFor="let bodyStyle of bodyStyles" [value]="bodyStyle">
-                {{format(bodyStyle)}}
-            </option>
-        </select>
+<div class="bg-dark text-white py-3 mx-auto">
+
+    <h3 class="text-center">Търсене на автомобили</h3>
+
+    <div class="col-11 mx-auto px-3 py-2">
+        <div class="row">
+            <div class="form-group my-2 col-6">
+                <label class="mb-2">Марка</label>
+                <select [(ngModel)]="input.brand" class="form-select">
+                    <option *ngFor="let brand of brands" [value]="brand">
+                        {{format(brand)}}
+                    </option>
+                </select>
+            </div>
+            <div class="form-group my-2 col-6">
+                <label class="mb-2">Модел</label>
+                <select [(ngModel)]="input.model" class="form-select">
+                    <option *ngFor="let model of models" [value]="model">
+                        {{format(model)}}
+                    </option>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group my-2 col-6">
+                <label class="mb-2">Тип</label>
+                <select [(ngModel)]="input.bodyStyle" class="form-select">
+                    <option *ngFor="let bodyStyle of bodyStyles" [value]="bodyStyle">
+                        {{format(bodyStyle)}}
+                    </option>
+                </select>
+            </div>
+            <div class="form-group my-2 col-6">
+                <label class="mb-2">Двигател</label>
+                <select [(ngModel)]="input.engine" class="form-select">
+                    <option *ngFor="let engine of engines" [value]="engine">
+                        {{format(engine)}}
+                    </option>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group my-2 col-6">
+                <label class="mb-2">Скоростна кутия</label>
+                <select [(ngModel)]="input.transmission" class="form-select">
+                    <option *ngFor="let transmission of transmissions" [value]="transmission">
+                        {{format(transmission)}}
+                    </option>
+                </select>
+            </div>
+            <div class="form-group my-2 col-6">
+                <label class="mb-2">Състояние</label>
+                <select [(ngModel)]="input.condition" class="form-select">
+                    <option *ngFor="let condition of conditions" [value]="condition">
+                        {{format(condition)}}
+                    </option>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group my-3 col-6">
+                <label class="mb-2">Цвят</label>
+                <select [(ngModel)]="input.color" class="form-select">
+                    <option *ngFor="let color of colors" [value]="color">
+                        {{format(color)}}
+                    </option>
+                </select>
+            </div>
+            <div class="form-group my-3 col-6">
+                <label class="mb-2">Евро стандарт</label>
+                <select [(ngModel)]="input.euroStandard" class="form-select">
+                    <option *ngFor="let euroStandard of euroStandards" [value]="euroStandard">
+                        {{format(euroStandard)}}
+                    </option>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group my-3 col-6">
+                <label class="mb-2">Регион</label>
+                <select [(ngModel)]="input.region" (change)="loadPopulatedPlacesByRegion()" class="form-select">
+                    <option *ngFor="let region of regions" [value]="region">
+                        {{format(region)}}
+                    </option>
+                </select>
+            </div>
+            <div class="form-group my-3 col-6">
+                <label class="mb-2">Населено място</label>
+                <select [(ngModel)]="input.populatedPlace" class="form-select">
+                    <option *ngFor="let populatedPlace of populatedPlaces" [value]="populatedPlace?.id">
+                        {{format(populatedPlace?.name)}}
+                    </option>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group my-2 col-6">
+                <label class="mb-2">Година от</label>
+                <select [(ngModel)]="input.minYear" class="form-select">
+                    <option *ngFor="let year of years" [value]="year">{{format(year)}}</option>
+                </select>
+            </div>
+            <div class="form-group my-2 col-6">
+                <label class="mb-2">Година до</label>
+                <select [(ngModel)]="input.maxYear" class="form-select">
+                    <option *ngFor="let year of years" [value]="year">{{format(year)}}</option>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group my-2 col-4">
+                <label class="mb-2">Цена от</label>
+                <input
+                    [(ngModel)]="input.minPrice"
+                    [placeholder]="anyOptionText"
+                    type="number"
+                    min="0"
+                    class="form-control"/>
+            </div>
+            <div class="form-group my-2 col-4">
+                <label class="mb-2">Цена до</label>
+                <input
+                    [(ngModel)]="input.maxPrice"
+                    [placeholder]="anyOptionText"
+                    type="number"
+                    min="0"
+                    class="form-control"/>
+            </div>
+            <div class="form-group my-2 col-4">
+                <label class="mb-2">Валута</label>
+                <select [(ngModel)]="input.currencyUnit" class="form-select">
+                    <option *ngFor="let currencyUnit of currencyUnits" [value]="currencyUnit.value">
+                        {{currencyUnit.name.toUpperCase()}}
+                    </option>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group my-2 col-4">
+                <label class="mb-2">Мощност от</label>
+                <input
+                    [(ngModel)]="input.minPower"
+                    [placeholder]="anyOptionText"
+                    type="number"
+                    min="1"
+                    class="form-control"/>
+            </div>
+            <div class="form-group my-2 col-4">
+                <label class="mb-2">Мощност до</label>
+                <input
+                    [(ngModel)]="input.maxPower"
+                    [placeholder]="anyOptionText"
+                    type="number"
+                    min="1"
+                    class="form-control"/>
+            </div>
+            <div class="form-group my-2 col-4">
+                <label class="mb-2">Единица</label>
+                <select [(ngModel)]="input.powerUnit" class="form-select">
+                    <option *ngFor="let powerUnit of powerUnits" [value]="powerUnit.value">
+                        {{powerUnit.name.toUpperCase()}}
+                    </option>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group my-2 col-4">
+                <label class="mb-2">Пробег от</label>
+                <input
+                    [(ngModel)]="input.minMileage"
+                    [placeholder]="anyOptionText"
+                    type="number"
+                    min="1"
+                    class="form-control"/>
+            </div>
+            <div class="form-group my-2 col-4">
+                <label class="mb-2">Пробег до</label>
+                <input
+                    [(ngModel)]="input.maxMileage"
+                    [placeholder]="anyOptionText"
+                    type="number"
+                    min="1"
+                    class="form-control"/>
+            </div>
+            <div class="form-group my-2 col-4">
+                <label class="mb-2">Единица</label>
+                <select [(ngModel)]="input.mileageUnit" class="form-select">
+                    <option *ngFor="let mileageUnit of mileageUnits" [value]="mileageUnit.value">
+                        {{mileageUnit.name.toUpperCase()}}
+                    </option>
+                </select>
+            </div>
+        </div>
+        <div class="my-4 text-center">
+            <button (click)="searchAdverts()" class="btn btn-primary col-6">Търсене</button>
+        </div>
     </div>
 </div>

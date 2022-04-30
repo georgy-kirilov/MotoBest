@@ -7,6 +7,9 @@ import { AppComponent } from './app.component';
 import { SearchAdvertsComponent } from './search-adverts/search-adverts.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
+import { ApiRoutes } from './common/api-routes';
+import { UnitService } from './services/unit-service';
+import { FeatureService } from './services/feature-service';
 
 @NgModule({
   declarations: [
@@ -20,7 +23,11 @@ import { FormsModule } from '@angular/forms';
     AppRoutingModule,
     NgbModule
   ],
-  providers: [],
+  providers: [
+    UnitService,
+    FeatureService,
+    ApiRoutes,
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

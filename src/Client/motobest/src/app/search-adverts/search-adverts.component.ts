@@ -1,7 +1,10 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { environment } from 'src/environments/environment';
+import { PopulatedPlaceResultModel } from '../models/populated-place-result-model';
+import { SearchAdvertsInputModel } from '../models/search-adverts-input-model';
+import { UnitInfo } from '../models/unit-info';
+import { FeatureService } from '../services/feature-service';
+import { UnitService } from '../services/unit-service';
 
 @Component({
   selector: 'app-search-adverts',
@@ -10,34 +13,91 @@ import { environment } from 'src/environments/environment';
 })
 export class SearchAdvertsComponent implements OnInit {
 
-  selectedEngine: string = '';
-  selectedTransmission: string = '';
-  selectedBodyStyle: string = '';
+  readonly anyOptionText = 'Няма';
+  readonly anySelectOptionText = 'Без значение';
 
-  engines: string[] = [];
-  transmissions: string[] = [];
-  bodyStyles: string[] = [];
+  input: SearchAdvertsInputModel = new SearchAdvertsInputModel();
 
-  constructor(private httpClient: HttpClient) { }
+  brands: Array<string | null> = [];
+  models: Array<string | null> = [];
+
+  engines: Array<string | null> = [];
+  transmissions: Array<string | null> = [];
+
+  bodyStyles: Array<string | null> = [];
+  conditions: Array<string | null> = [];
+
+  colors: (string | null)[] = [];
+  regions: (string | null)[] = [];
+
+  euroStandards: (string | null)[] = [];
+  populatedPlaces: (PopulatedPlaceResultModel | null)[] = [];
+
+  years: (number | null)[] = [];
+  currencyUnits: UnitInfo[] = [];
+
+  powerUnits: UnitInfo[] = [];
+  mileageUnits: UnitInfo[] = [];
+
+  constructor(
+    private unitService: UnitService,
+    private featureService: FeatureService) { }
 
   ngOnInit(): void {
-      this.getAllItems(this.engines, 'engines');
-      this.getAllItems(this.transmissions, 'transmissions');
-      this.getAllItems(this.bodyStyles, 'body-styles');
+
+    this.initializeYears();
+
+    this.unitService.getPowerUnits().subscribe(res => this.powerUnits = res);
+    this.unitService.getCurrencyUnits().subscribe(res => this.currencyUnits = res);
+    this.unitService.getMileageUnits().subscribe(res => this.mileageUnits = res);
+
+    const optionsListsEntries = [
+      { key: this.brands, value: this.featureService.getBrands() },
+      { key: this.engines, value: this.featureService.getEngines() },
+      { key: this.transmissions, value: this.featureService.getTransmissions() },
+      { key: this.bodyStyles, value: this.featureService.getBodyStyles() },
+      { key: this.conditions, value: this.featureService.getConditions() },
+      { key: this.colors, value: this.featureService.getColors() },
+      { key: this.regions, value: this.featureService.getRegions() },
+      { key: this.euroStandards, value: this.featureService.getEuroStandards() },
+    ];
+
+    optionsListsEntries.forEach(e => this.initializeOptionsList(e.key, e.value));
+
+    this.loadPopulatedPlacesByRegion();
   }
 
-  getAllItems(items: string[], route: string) {
-    this.httpClient
-        .get<string[]>(`${environment.BASE_URL}/Features/${route}`)
-        .subscribe(response => {
-          items.length = 0;
-          items.push('');
-          response.forEach(x => items.push(x));
-        });
+  searchAdverts() {
+    console.log(this.input);
   }
 
-  format(item: string): string {
-    return item == '' ? 'Без значение' : `${item.toUpperCase()[0]}${item.substring(1)}`;
+  format(option: any): string {
+    const optionAsString = option?.toString();
+    const formattedValue = `${optionAsString?.toUpperCase().charAt(0)}${optionAsString?.substring(1)}`;
+    return option == null ? this.anySelectOptionText : formattedValue;
   }
 
+  loadPopulatedPlacesByRegion() {
+    const observablesList = this.featureService.getPopulatedPlacesByRegion(this.input.region);
+    this.initializeOptionsList(this.populatedPlaces, observablesList);
+    console.log(this.populatedPlaces);
+  }
+
+  private initializeOptionsList<T>(optionsList: (T | null)[], observablesList: Observable<T[]>) {
+    optionsList.length = 0;
+    optionsList.push(null);
+    observablesList.subscribe(responseOptions => {
+      responseOptions.forEach(option => optionsList.push(option));
+    });
+  }
+
+  private initializeYears() {
+    const minYear = 1930;
+    const maxYear = new Date().getFullYear();
+    this.years = [];
+    this.years.push(null);
+    for (let year = maxYear; year >= minYear; year--) {
+      this.years.push(year);
+    }
+  }
 }

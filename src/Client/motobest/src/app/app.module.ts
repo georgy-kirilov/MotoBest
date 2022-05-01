@@ -10,6 +10,7 @@ import { FormsModule } from '@angular/forms';
 import { ApiRoutes } from './common/api-routes';
 import { UnitService } from './services/unit-service';
 import { FeatureService } from './services/feature-service';
+import { AdvertService } from './services/advert-service';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { FeatureService } from './services/feature-service';
   providers: [
     UnitService,
     FeatureService,
+    AdvertService,
     ApiRoutes,
   ],
   bootstrap: [AppComponent]

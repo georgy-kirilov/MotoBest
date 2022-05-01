@@ -53,6 +53,10 @@ export class ApiRoutes {
     get allModels(): string {
         return `${baseRoutes.features}/models`;
     }
+
+    get searchAdverts(): string {
+        return `${baseRoutes.adverts}/search`;
+    }
 }
 
 const baseRoutes = {

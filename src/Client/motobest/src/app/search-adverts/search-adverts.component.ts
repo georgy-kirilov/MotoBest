@@ -4,6 +4,7 @@ import { ModelResultModel } from '../models/model-result-model';
 import { PopulatedPlaceResultModel } from '../models/populated-place-result-model';
 import { SearchAdvertsInputModel } from '../models/search-adverts-input-model';
 import { UnitInfo } from '../models/unit-info';
+import { AdvertService } from '../services/advert-service';
 import { FeatureService } from '../services/feature-service';
 import { UnitService } from '../services/unit-service';
 
@@ -42,7 +43,8 @@ export class SearchAdvertsComponent implements OnInit {
 
   constructor(
     private unitService: UnitService,
-    private featureService: FeatureService) { }
+    private featureService: FeatureService,
+    private advertService: AdvertService) { }
 
   ngOnInit(): void {
 
@@ -70,7 +72,7 @@ export class SearchAdvertsComponent implements OnInit {
   }
 
   searchAdverts() {
-    console.log(this.input);
+    this.advertService.searchAdverts(this.input).subscribe(res => console.log(res));
   }
 
   format(option: any): string {

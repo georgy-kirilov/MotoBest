@@ -15,11 +15,11 @@ namespace MotoBest.Tests.Normalizing;
 
 public class SiteDataNormalizerTests
 {
-    private readonly IUnitsManager fakeUnitsManager;
+    private readonly IUnitManager fakeUnitManager;
 
     public SiteDataNormalizerTests()
     {
-        fakeUnitsManager = new FakeUnitsManager();
+        fakeUnitManager = new FakeUnitManager();
     }
 
     [Theory]
@@ -43,7 +43,7 @@ public class SiteDataNormalizerTests
             .GetField(normalizedAdvertTestName)?
             .GetValue(null) as ScrapedAdvert;
 
-        var actualNormalizedAdvert = new SiteDataNormalizer(fakeUnitsManager).NormalizeAdvert(scrapedAdvert!);
+        var actualNormalizedAdvert = new SiteDataNormalizer(fakeUnitManager).NormalizeAdvert(scrapedAdvert!);
         expectedNormalizedAdvert.AssertProperties(actualNormalizedAdvert);
     }
 }

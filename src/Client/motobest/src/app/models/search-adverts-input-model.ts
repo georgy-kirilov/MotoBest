@@ -1,13 +1,13 @@
 export class SearchAdvertsInputModel {
     brand: string | null = null;
-    model: string | null = null;
+    modelId: number | null = null;
     engine: string | null = null;
     transmission: string | null = null;
     bodyStyle: string | null = null;
     condition: string | null = null;
     color: string | null = null;
     region: string | null = null;
-    populatedPlace: string | null = null;
+    populatedPlaceId: number | null = null;
     euroStandard: string | null = null;
     minYear: number | null = null;
     maxYear: number | null = null;

@@ -27,11 +27,11 @@ public class SiteDataNormalizer : ISiteDataNormalizer
         ["Mercedes Benz"] = BrandNames.MercedesBenz
     };
 
-    private readonly IUnitsManager unitsManager;
+    private readonly IUnitManager unitManager;
 
-    public SiteDataNormalizer(IUnitsManager unitsManager)
+    public SiteDataNormalizer(IUnitManager unitManager)
     {
-        this.unitsManager = unitsManager;
+        this.unitManager = unitManager;
     }
 
     public NormalizedAdvert NormalizeAdvert(ScrapedAdvert scrapedAdvert)
@@ -68,7 +68,7 @@ public class SiteDataNormalizer : ISiteDataNormalizer
             return price;
         }
         
-        return price * unitsManager.GetBgnCourse(currencyUnit.Value);
+        return price * unitManager.GetBgnCourse(currencyUnit.Value);
     }
 
     private static PopulatedPlaceType? NormalizePopulatedPlaceType(string? populatedPlace)

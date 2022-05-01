@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
+import { ModelResultModel } from '../models/model-result-model';
 import { PopulatedPlaceResultModel } from '../models/populated-place-result-model';
 import { SearchAdvertsInputModel } from '../models/search-adverts-input-model';
 import { UnitInfo } from '../models/unit-info';
@@ -19,7 +20,7 @@ export class SearchAdvertsComponent implements OnInit {
   input: SearchAdvertsInputModel = new SearchAdvertsInputModel();
 
   brands: Array<string | null> = [];
-  models: Array<string | null> = [];
+  models: Array<ModelResultModel | null> = [];
 
   engines: Array<string | null> = [];
   transmissions: Array<string | null> = [];
@@ -64,6 +65,7 @@ export class SearchAdvertsComponent implements OnInit {
 
     optionsListsEntries.forEach(e => this.initializeOptionsList(e.key, e.value));
 
+    this.loadModelsByBrand();
     this.loadPopulatedPlacesByRegion();
   }
 
@@ -80,7 +82,11 @@ export class SearchAdvertsComponent implements OnInit {
   loadPopulatedPlacesByRegion() {
     const observablesList = this.featureService.getPopulatedPlacesByRegion(this.input.region);
     this.initializeOptionsList(this.populatedPlaces, observablesList);
-    console.log(this.populatedPlaces);
+  }
+
+  loadModelsByBrand() {
+    const observablesList = this.featureService.getModelsByBrand(this.input.brand);
+    this.initializeOptionsList(this.models, observablesList);
   }
 
   private initializeOptionsList<T>(optionsList: (T | null)[], observablesList: Observable<T[]>) {

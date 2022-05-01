@@ -3,9 +3,9 @@ using MotoBest.Services.Common.Units;
 
 namespace MotoBest.Tests.Mocks;
 
-public class FakeUnitsManager : UnitsManager
+public class FakeUnitManager : UnitManager
 {
-    public FakeUnitsManager() : base(default!)
+    public FakeUnitManager() : base(default!)
     {
     }
 

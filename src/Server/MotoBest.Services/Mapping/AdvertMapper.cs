@@ -8,12 +8,12 @@ namespace MotoBest.Services.Mapping;
 public class AdvertMapper
 {
     private readonly IMapper mapper;
-    private readonly IUnitsManager unitsManager;
+    private readonly IUnitManager unitManager;
 
-    public AdvertMapper(IMapper mapper, IUnitsManager unitsManager)
+    public AdvertMapper(IMapper mapper, IUnitManager unitManager)
     {
         this.mapper = mapper;
-        this.unitsManager = unitsManager;
+        this.unitManager = unitManager;
     }
 
     public TResult MapUnits<TResult>(
@@ -27,9 +27,9 @@ public class AdvertMapper
         result.CurrencyUnit = unitable.CurrencyUnit.ToString().ToLower();
         result.MileageUnit = unitable.MileageUnit.ToString().ToLower();
 
-        result.Power = (int?)(modelToMapFrom.PowerInHp / unitsManager.GetHpMultiplier(unitable.PowerUnit));
-        result.Price = (int?)(modelToMapFrom.PriceInBgn / unitsManager.GetBgnCourse(unitable.CurrencyUnit));
-        result.Mileage = (int?)(modelToMapFrom.MileageInKm / unitsManager.GetKmMultiplier(unitable.MileageUnit));
+        result.Power = (int?)(modelToMapFrom.PowerInHp / unitManager.GetHpMultiplier(unitable.PowerUnit));
+        result.Price = (int?)(modelToMapFrom.PriceInBgn / unitManager.GetBgnCourse(unitable.CurrencyUnit));
+        result.Mileage = (int?)(modelToMapFrom.MileageInKm / unitManager.GetKmMultiplier(unitable.MileageUnit));
 
         return result;
     }

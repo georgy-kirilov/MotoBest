@@ -2,6 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { ApiRoutes } from "../common/api-routes";
+import { ModelResultModel } from "../models/model-result-model";
 import { PopulatedPlaceResultModel } from "../models/populated-place-result-model";
 
 @Injectable()
@@ -45,6 +46,10 @@ export class FeatureService {
 
     getPopulatedPlacesByRegion(region: string | null): Observable<PopulatedPlaceResultModel[]> {
         return this.getFeatures(`${this.apiRoutes.allPopulatedPlaces}/${region}`);
+    }
+
+    getModelsByBrand(brand: string | null): Observable<ModelResultModel[]> {
+        return this.getFeatures(`${this.apiRoutes.allModels}/${brand}`);
     }
 
     private getFeatures<T>(url: string): Observable<T[]> {

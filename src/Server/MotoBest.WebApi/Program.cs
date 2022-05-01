@@ -5,9 +5,11 @@ using MotoBest.Data.Repositories;
 
 using MotoBest.Services.Common;
 using MotoBest.Services.Common.Units;
+
 using MotoBest.Services.Data.Features;
 using MotoBest.Services.Data.Adverts;
 using MotoBest.Services.Data.Adverts.Filtering;
+
 using MotoBest.Services.Mapping;
 using MotoBest.Services.Normalization;
 
@@ -37,8 +39,9 @@ builder.Services
     .AddTransient<IAdvertService, AdvertService>()
     .AddTransient<IEuroStandardService, EuroStandardService>()
     .AddTransient<IPopulatedPlaceService, PopulatedPlaceService>()
+    .AddTransient<IModelService, ModelService>()
     .AddTransient<ISearchFilterBuilder, SearchFilterOptionsBuilder>()
-    .AddTransient<IUnitsManager, UnitsManager>()
+    .AddTransient<IUnitManager, UnitManager>()
     .AddTransient<AdvertMapper>();
 
 builder.Services.AddHostedService<ScrapingBackgroundService>();

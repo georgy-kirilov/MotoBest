@@ -1,8 +1,9 @@
 ﻿using MotoBest.Common.Units;
+using MotoBest.WebApi.Models.Units;
 
 namespace MotoBest.Services.Common.Units;
 
-public interface IUnitsManager
+public interface IUnitManager
 {
     decimal GetBgnCourse(CurrencyUnit currencyUnit);
 
@@ -15,4 +16,6 @@ public interface IUnitsManager
     double GetKmMultiplier(MileageUnit mileageUnit);
 
     double? ToKm(MileageUnit mileageUnit, double? value);
+
+    IEnumerable<GetAllUnitsResultModel> GetAllUnits<TEnum>() where TEnum : struct, Enum;
 }

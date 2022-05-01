@@ -49,6 +49,10 @@ export class ApiRoutes {
     get allPopulatedPlaces(): string {
         return `${baseRoutes.features}/populated-places`;
     }
+
+    get allModels(): string {
+        return `${baseRoutes.features}/models`;
+    }
 }
 
 const baseRoutes = {

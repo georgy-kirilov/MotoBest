@@ -16,19 +16,19 @@ namespace MotoBest.Services.Mapping;
 
 public class AdvertProfile : Profile
 {
-    public AdvertProfile(IUnitsManager unitsManager)
+    public AdvertProfile(IUnitManager unitManager)
     {
         CreateMap<GetFullAdvertResultModel, GetFullAdvertResponseModel>();
 
         CreateMap<SearchAdvertsResultModel, SearchAdvertsResponseModel>();
 
         CreateMap<SearchAdvertsRequestModel, SearchAdvertsInputModel>()
-            .ForMember(m => m.MinMileageInKm, cfg => cfg.MapFrom(a => unitsManager.ToKm(a.MileageUnit, a.MinMileage)))
-            .ForMember(m => m.MaxMileageInKm, cfg => cfg.MapFrom(a => unitsManager.ToKm(a.MileageUnit, a.MaxMileage)))
-            .ForMember(m => m.MinPriceInBgn, cfg => cfg.MapFrom(a => unitsManager.ToBgn(a.CurrencyUnit, a.MinPrice)))
-            .ForMember(m => m.MaxPriceInBgn, cfg => cfg.MapFrom(a => unitsManager.ToBgn(a.CurrencyUnit, a.MaxPrice)))
-            .ForMember(m => m.MinPowerInHp, cfg => cfg.MapFrom(a => unitsManager.ToHp(a.PowerUnit, a.MinPower)))
-            .ForMember(m => m.MaxPowerInHp, cfg => cfg.MapFrom(a => unitsManager.ToHp(a.PowerUnit, a.MaxPower)));
+            .ForMember(m => m.MinMileageInKm, cfg => cfg.MapFrom(a => unitManager.ToKm(a.MileageUnit, a.MinMileage)))
+            .ForMember(m => m.MaxMileageInKm, cfg => cfg.MapFrom(a => unitManager.ToKm(a.MileageUnit, a.MaxMileage)))
+            .ForMember(m => m.MinPriceInBgn, cfg => cfg.MapFrom(a => unitManager.ToBgn(a.CurrencyUnit, a.MinPrice)))
+            .ForMember(m => m.MaxPriceInBgn, cfg => cfg.MapFrom(a => unitManager.ToBgn(a.CurrencyUnit, a.MaxPrice)))
+            .ForMember(m => m.MinPowerInHp, cfg => cfg.MapFrom(a => unitManager.ToHp(a.PowerUnit, a.MinPower)))
+            .ForMember(m => m.MaxPowerInHp, cfg => cfg.MapFrom(a => unitManager.ToHp(a.PowerUnit, a.MaxPower)));
 
         CreateMap<Advert, SearchAdvertsResultModel>()
             .ForMember(m => m.PriceInBgn, cfg => cfg.MapFrom(a => a.PriceInBgn))

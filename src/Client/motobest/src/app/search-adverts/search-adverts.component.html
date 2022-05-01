@@ -6,7 +6,7 @@
         <div class="row">
             <div class="form-group my-2 col-6">
                 <label class="mb-2">Марка</label>
-                <select [(ngModel)]="input.brand" class="form-select">
+                <select [(ngModel)]="input.brand" (change)="loadModelsByBrand()" class="form-select">
                     <option *ngFor="let brand of brands" [value]="brand">
                         {{format(brand)}}
                     </option>
@@ -14,9 +14,9 @@
             </div>
             <div class="form-group my-2 col-6">
                 <label class="mb-2">Модел</label>
-                <select [(ngModel)]="input.model" class="form-select">
-                    <option *ngFor="let model of models" [value]="model">
-                        {{format(model)}}
+                <select [(ngModel)]="input.modelId" class="form-select">
+                    <option *ngFor="let model of models" [value]="model?.id">
+                        {{format(model?.name)}}
                     </option>
                 </select>
             </div>
@@ -86,7 +86,7 @@
             </div>
             <div class="form-group my-3 col-6">
                 <label class="mb-2">Населено място</label>
-                <select [(ngModel)]="input.populatedPlace" class="form-select">
+                <select [(ngModel)]="input.populatedPlaceId" class="form-select">
                     <option *ngFor="let populatedPlace of populatedPlaces" [value]="populatedPlace?.id">
                         {{format(populatedPlace?.name)}}
                     </option>

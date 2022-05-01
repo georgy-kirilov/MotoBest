@@ -1,13 +1,15 @@
 ﻿using MotoBest.Common.Exceptions;
 using MotoBest.Common.Units;
 
+using MotoBest.WebApi.Models.Units;
+
 namespace MotoBest.Services.Common.Units;
 
-public class UnitsManager : IUnitsManager
+public class UnitManager : IUnitManager
 {
     private readonly ICurrencyCourseProvider currencyCourseProvider;
 
-    public UnitsManager(ICurrencyCourseProvider currencyCourseProvider)
+    public UnitManager(ICurrencyCourseProvider currencyCourseProvider)
     {
         this.currencyCourseProvider = currencyCourseProvider;
     }
@@ -40,4 +42,13 @@ public class UnitsManager : IUnitsManager
 
     public double? ToKm(MileageUnit mileageUnit, double? value)
         => GetKmMultiplier(mileageUnit) * value;
+
+    public IEnumerable<GetAllUnitsResultModel> GetAllUnits<TEnum>() where TEnum : struct, Enum
+        => Enum
+            .GetValues<TEnum>()
+            .Select(unit => new GetAllUnitsResultModel
+            {
+                Name = unit.ToString().ToLower(),
+                Value = Convert.ToInt32(unit)
+            });
 }

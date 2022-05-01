@@ -72,6 +72,7 @@ export class SearchAdvertsComponent implements OnInit {
   }
 
   searchAdverts() {
+    console.log(this.input);
     this.advertService.searchAdverts(this.input).subscribe(res => console.log(res));
   }
 

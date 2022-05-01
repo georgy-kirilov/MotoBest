@@ -12,12 +12,13 @@ export class AdvertService {
         private apiRoutes: ApiRoutes) { }
 
     searchAdverts(input: SearchAdvertsInputModel): Observable<any> {
-        const queryString = Object.entries(input)
-            .filter((entry: any) => entry.value != null)
-            .map((entry: any) => `${entry.key}=${entry.value}`)
+        const rawQueryString = Object.entries(input)
+            .filter((entry: any) => entry[1] != null && entry[0] != 'euroStandard')
+            .map((entry: any) => `${entry[0]}=${entry[1]}`)
             .join('&');
         
-        const url = `${this.apiRoutes.searchAdverts}?${queryString}`;
+        const encodedQueryString = encodeURI(rawQueryString);
+        const url = `${this.apiRoutes.searchAdverts}?${encodedQueryString}`;
         return this.httpClient.get(url);
     }
 }

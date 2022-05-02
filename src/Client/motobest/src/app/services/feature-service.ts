@@ -52,7 +52,7 @@ export class FeatureService {
         return this.getFeatures(`${this.apiRoutes.allModels}/${brand}`);
     }
 
-    private getFeatures<T>(url: string): Observable<T[]> {
+    getFeatures<T>(url: string): Observable<T[]> {
         return this.httpClient.get<T[]>(url);
     }
 }

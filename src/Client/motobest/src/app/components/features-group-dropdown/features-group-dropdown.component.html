@@ -1,0 +1,7 @@
+<label class="mb-2">{{title}}</label>
+<select [(ngModel)]="input" (change)="onChange()" class="form-select">
+    <option value="null" selected>{{messagesService.defaultDropdownListOption}}</option>
+    <optgroup *ngFor="let optionGroup of optionGroupsByLetter | keyvalue" [label]="optionGroup.key">
+        <option *ngFor="let option of optionGroup.value" [value]="option">{{option}}</option>
+    </optgroup>
+</select>

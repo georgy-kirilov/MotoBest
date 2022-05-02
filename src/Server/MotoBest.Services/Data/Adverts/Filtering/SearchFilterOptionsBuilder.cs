@@ -14,6 +14,7 @@ public class SearchFilterOptionsBuilder : ISearchFilterBuilder, ISearchFilterOpt
     private readonly IFeatureService<Condition> conditionService;
     private readonly IFeatureService<Brand> brandService;
     private readonly IFeatureService<Region> regionService;
+    private readonly IFeatureService<EuroStandard> euroStandardService;
 
     public SearchFilterOptionsBuilder(
         IFeatureService<Engine> engineService,
@@ -22,7 +23,8 @@ public class SearchFilterOptionsBuilder : ISearchFilterBuilder, ISearchFilterOpt
         IFeatureService<Color> colorService,
         IFeatureService<Condition> conditionService,
         IFeatureService<Brand> brandService,
-        IFeatureService<Region> regionService)
+        IFeatureService<Region> regionService,
+        IFeatureService<EuroStandard> euroStandardService)
     {
         query = new List<Advert>().AsQueryable();
 
@@ -33,6 +35,7 @@ public class SearchFilterOptionsBuilder : ISearchFilterBuilder, ISearchFilterOpt
         this.conditionService = conditionService;
         this.brandService = brandService;
         this.regionService = regionService;
+        this.euroStandardService = euroStandardService;
     }
 
     public ISearchFilterOptionsBuilder CreateFilterFor(IQueryable<Advert> adverts)
@@ -141,6 +144,13 @@ public class SearchFilterOptionsBuilder : ISearchFilterBuilder, ISearchFilterOpt
             query = query.Where(a => region == null || a.RegionId == regionId);
         }
 
+        return this;
+    }
+
+    public ISearchFilterOptionsBuilder ByEuroStandard(string? euroStandard)
+    {
+        var euroStandardId = euroStandardService.FindIdByName(euroStandard);
+        query = query.Where(es => euroStandard == null || es.EuroStandardId == euroStandardId);
         return this;
     }
 }

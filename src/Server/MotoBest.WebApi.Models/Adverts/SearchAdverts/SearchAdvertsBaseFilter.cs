@@ -14,6 +14,8 @@ public abstract class SearchAdvertsBaseFilter
 
     public string? Color { get; init; }
 
+    public string? EuroStandard { get; init; }
+
     public string? Condition { get; init; }
 
     public string? Region { get; init; }

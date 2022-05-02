@@ -1,19 +1,17 @@
 <div class="bg-dark text-white py-3 mx-auto">
-
     <h3 class="text-center">Търсене на автомобили</h3>
-
     <div class="col-11 mx-auto px-3 py-2">
         <div class="row">
             <div class="form-group my-2 col-6">
-                <label class="mb-2">Марка</label>
-                <select [(ngModel)]="input.brand" (change)="loadModelsByBrand()" class="form-select">
-                    <option *ngFor="let brand of brands" [value]="brand">
-                        {{format(brand)}}
-                    </option>
-                </select>
+                <app-features-group-dropdown
+                    [input]="input.brand"
+                    [title]="messagesService.brand"
+                    [observableOptionsList]="brands"
+                    (onChangeHandler)="loadModelsByBrand($event)">
+                </app-features-group-dropdown>
             </div>
             <div class="form-group my-2 col-6">
-                <label class="mb-2">Модел</label>
+                <label class="mb-2">{{messagesService.model}}</label>
                 <select [(ngModel)]="input.modelId" class="form-select">
                     <option *ngFor="let model of models" [value]="model?.id">
                         {{format(model?.name)}}
@@ -23,7 +21,7 @@
         </div>
         <div class="row">
             <div class="form-group my-2 col-6">
-                <label class="mb-2">Тип</label>
+                <label class="mb-2">{{messagesService.bodyStyle}}</label>
                 <select [(ngModel)]="input.bodyStyle" class="form-select">
                     <option *ngFor="let bodyStyle of bodyStyles" [value]="bodyStyle">
                         {{format(bodyStyle)}}
@@ -31,7 +29,7 @@
                 </select>
             </div>
             <div class="form-group my-2 col-6">
-                <label class="mb-2">Двигател</label>
+                <label class="mb-2">{{messagesService.engine}}</label>
                 <select [(ngModel)]="input.engine" class="form-select">
                     <option *ngFor="let engine of engines" [value]="engine">
                         {{format(engine)}}
@@ -41,7 +39,7 @@
         </div>
         <div class="row">
             <div class="form-group my-2 col-6">
-                <label class="mb-2">Скоростна кутия</label>
+                <label class="mb-2">{{messagesService.transmission}}</label>
                 <select [(ngModel)]="input.transmission" class="form-select">
                     <option *ngFor="let transmission of transmissions" [value]="transmission">
                         {{format(transmission)}}
@@ -49,7 +47,7 @@
                 </select>
             </div>
             <div class="form-group my-2 col-6">
-                <label class="mb-2">Състояние</label>
+                <label class="mb-2">{{messagesService.condition}}</label>
                 <select [(ngModel)]="input.condition" class="form-select">
                     <option *ngFor="let condition of conditions" [value]="condition">
                         {{format(condition)}}
@@ -59,33 +57,33 @@
         </div>
         <div class="row">
             <div class="form-group my-3 col-6">
-                <label class="mb-2">Цвят</label>
-                <select [(ngModel)]="input.color" class="form-select">
-                    <option *ngFor="let color of colors" [value]="color">
-                        {{format(color)}}
-                    </option>
-                </select>
-            </div>
-            <div class="form-group my-3 col-6">
-                <label class="mb-2">Евро стандарт</label>
+                <label class="mb-2">{{messagesService.euroStandard}}</label>
                 <select [(ngModel)]="input.euroStandard" class="form-select">
                     <option *ngFor="let euroStandard of euroStandards" [value]="euroStandard">
                         {{format(euroStandard)}}
                     </option>
                 </select>
             </div>
-        </div>
-        <div class="row">
             <div class="form-group my-3 col-6">
-                <label class="mb-2">Регион</label>
-                <select [(ngModel)]="input.region" (change)="loadPopulatedPlacesByRegion()" class="form-select">
-                    <option *ngFor="let region of regions" [value]="region">
-                        {{format(region)}}
+                <label class="mb-2">{{messagesService.color}}</label>
+                <select [(ngModel)]="input.color" class="form-select">
+                    <option *ngFor="let color of colors" [value]="color">
+                        {{format(color)}}
                     </option>
                 </select>
             </div>
+        </div>
+        <div class="row">
             <div class="form-group my-3 col-6">
-                <label class="mb-2">Населено място</label>
+                <app-features-group-dropdown
+                    [input]="input.region"
+                    [title]="messagesService.region"
+                    [observableOptionsList]="regions"
+                    (onChangeHandler)="loadPopulatedPlacesByRegion($event)">
+                </app-features-group-dropdown>
+            </div>
+            <div class="form-group my-3 col-6">
+                <label class="mb-2">{{messagesService.populatedPlace}}</label>
                 <select [(ngModel)]="input.populatedPlaceId" class="form-select">
                     <option *ngFor="let populatedPlace of populatedPlaces" [value]="populatedPlace?.id">
                         {{format(populatedPlace?.name)}}
@@ -112,7 +110,7 @@
                 <label class="mb-2">Цена от</label>
                 <input
                     [(ngModel)]="input.minPrice"
-                    [placeholder]="anyOptionText"
+                    [placeholder]="messagesService.defaultNumericInputListValue"
                     type="number"
                     min="0"
                     class="form-control"/>
@@ -121,7 +119,7 @@
                 <label class="mb-2">Цена до</label>
                 <input
                     [(ngModel)]="input.maxPrice"
-                    [placeholder]="anyOptionText"
+                    [placeholder]="messagesService.defaultNumericInputListValue"
                     type="number"
                     min="0"
                     class="form-control"/>
@@ -140,7 +138,7 @@
                 <label class="mb-2">Мощност от</label>
                 <input
                     [(ngModel)]="input.minPower"
-                    [placeholder]="anyOptionText"
+                    [placeholder]="messagesService.defaultNumericInputListValue"
                     type="number"
                     min="1"
                     class="form-control"/>
@@ -149,7 +147,7 @@
                 <label class="mb-2">Мощност до</label>
                 <input
                     [(ngModel)]="input.maxPower"
-                    [placeholder]="anyOptionText"
+                    [placeholder]="messagesService.defaultNumericInputListValue"
                     type="number"
                     min="1"
                     class="form-control"/>
@@ -168,7 +166,7 @@
                 <label class="mb-2">Пробег от</label>
                 <input
                     [(ngModel)]="input.minMileage"
-                    [placeholder]="anyOptionText"
+                    [placeholder]="messagesService.defaultNumericInputListValue"
                     type="number"
                     min="1"
                     class="form-control"/>
@@ -177,7 +175,7 @@
                 <label class="mb-2">Пробег до</label>
                 <input
                     [(ngModel)]="input.maxMileage"
-                    [placeholder]="anyOptionText"
+                    [placeholder]="messagesService.defaultNumericInputListValue"
                     type="number"
                     min="1"
                     class="form-control"/>

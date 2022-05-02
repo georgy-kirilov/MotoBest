@@ -27,4 +27,6 @@ public interface ISearchFilterOptionsBuilder
     ISearchFilterOptionsBuilder ByLocation(string? region, int? populatedPlace);
 
     ISearchFilterOptionsBuilder ByPrice(decimal? minPriceInBgn, decimal? maxPriceInBgn);
+
+    ISearchFilterOptionsBuilder ByEuroStandard(string? euroStandard);
 }

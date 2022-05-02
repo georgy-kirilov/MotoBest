@@ -163,6 +163,7 @@ public class AdvertService : IAdvertService
             .ByMaking(input.Brand, input.ModelId)
             .ByColor(input.Color)
             .ByCondition(input.Condition)
+            .ByEuroStandard(input.EuroStandard)
             .ByEngine(input.Engine)
             .ByLocation(input.Region, input.PopulatedPlaceId)
             .ByTransmission(input.Transmission)

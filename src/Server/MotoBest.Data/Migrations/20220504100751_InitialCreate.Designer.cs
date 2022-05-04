@@ -12,8 +12,8 @@ using MotoBest.Data;
 namespace MotoBest.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20220403200541_RenameTownsTableToPopulatedPlaces")]
-    partial class RenameTownsTableToPopulatedPlaces
+    [Migration("20220504100751_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -156,25 +156,31 @@ namespace MotoBest.Data.Migrations
                     b.Property<int?>("EuroStandardId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("HorsePowers")
-                        .HasColumnType("int");
-
                     b.Property<bool>("IsEuroStandardApproximate")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("Kilometrage")
-                        .HasColumnType("int");
+                    b.Property<string>("MainImageUrl")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("ManufacturedOn")
                         .HasColumnType("datetime2");
 
+                    b.Property<int?>("MileageInKm")
+                        .HasColumnType("int");
+
                     b.Property<int?>("ModelId")
                         .HasColumnType("int");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
 
                     b.Property<int?>("PopulatedPlaceId")
                         .HasColumnType("int");
 
-                    b.Property<decimal?>("PriceBgn")
+                    b.Property<int?>("PowerInHp")
+                        .HasColumnType("int");
+
+                    b.Property<decimal?>("PriceInBgn")
                         .HasPrecision(14, 2)
                         .HasColumnType("decimal(14,2)");
 
@@ -182,9 +188,12 @@ namespace MotoBest.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("RemoteId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("RemoteSlug")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("SiteId")
+                    b.Property<int?>("SiteId")
                         .HasColumnType("int");
 
                     b.Property<string>("Title")
@@ -212,6 +221,10 @@ namespace MotoBest.Data.Migrations
                     b.HasIndex("PopulatedPlaceId");
 
                     b.HasIndex("RegionId");
+
+                    b.HasIndex("RemoteId")
+                        .IsUnique()
+                        .HasFilter("[RemoteId] IS NOT NULL");
 
                     b.HasIndex("SiteId");
 
@@ -659,9 +672,7 @@ namespace MotoBest.Data.Migrations
 
                     b.HasOne("MotoBest.Data.Models.Site", "Site")
                         .WithMany("Adverts")
-                        .HasForeignKey("SiteId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("SiteId");
 
                     b.HasOne("MotoBest.Data.Models.Transmission", "Transmission")
                         .WithMany("Adverts")

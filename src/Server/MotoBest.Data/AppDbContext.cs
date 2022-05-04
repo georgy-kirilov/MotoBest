@@ -46,7 +46,7 @@ public class AppDbContext : IdentityDbContext<User, Role, string>
 
         builder
             .Entity<Advert>()
-            .HasIndex(a => a.RemoteId)
+            .HasIndex(adv => adv.RemoteId)
             .IsUnique();
 
         builder.AddUniqueConstraintTo(
@@ -60,6 +60,11 @@ public class AppDbContext : IdentityDbContext<User, Role, string>
             typeof(Region),
             typeof(Site),
             typeof(Transmission));
+
+        builder.Entity<Advert>()
+            .HasMany(adv => adv.Images)
+            .WithOne(img => img.Advert)
+            .HasForeignKey(img => img.AdvertId);
     }
 
     private static void ChangeDefaultIdentityColumnNames(ModelBuilder builder)

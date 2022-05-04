@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { ModelResultModel } from '../../models/model-result-model';
 import { PopulatedPlaceResultModel } from '../../models/populated-place-result-model';
@@ -40,7 +41,7 @@ export class SearchAdvertsComponent implements OnInit {
   constructor(
     private unitService: UnitService,
     private featureService: FeatureService,
-    private advertService: AdvertService,
+    private router: Router,
     public messagesService: DisplayMessagesService) { }
 
   ngOnInit(): void {
@@ -68,8 +69,14 @@ export class SearchAdvertsComponent implements OnInit {
   }
 
   searchAdverts() {
-    console.log(this.input);
-    this.advertService.searchAdverts(this.input).subscribe(res => console.log(res));
+    const queryInput = this.input;
+    const queryParameters = new Map<string, string | null>();
+    Object.entries(queryInput).forEach(entry => queryParameters.set(entry[0], entry[1]));
+    const obj = Object.fromEntries(queryParameters);
+    
+    this.router.navigate(['/search/results'], {
+      queryParams: obj
+    });
   }
 
   format(option: any): string {

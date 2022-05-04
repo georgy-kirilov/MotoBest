@@ -13,12 +13,16 @@ import { FeatureService } from './services/feature-service';
 import { AdvertService } from './services/advert-service';
 import { FeaturesGroupDropdownComponent } from './components/features-group-dropdown/features-group-dropdown.component';
 import { DisplayMessagesService } from './services/display-messages-service';
+import { SearchAdvertsCardComponent } from './components/search-adverts-card/search-adverts-card.component';
+import { SearchAdvertsResultsPageComponent } from './components/search-adverts-result-page/search-adverts-results-page.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SearchAdvertsComponent,
-    FeaturesGroupDropdownComponent
+    FeaturesGroupDropdownComponent,
+    SearchAdvertsCardComponent,
+    SearchAdvertsResultsPageComponent
   ],
   imports: [
     FormsModule,

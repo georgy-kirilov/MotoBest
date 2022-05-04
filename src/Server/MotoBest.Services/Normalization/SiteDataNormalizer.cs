@@ -55,7 +55,7 @@ public class SiteDataNormalizer : ISiteDataNormalizer
             ModifiedOn = scrapedAdvert.ModifiedOn,
             PopulatedPlaceType = NormalizePopulatedPlaceType(scrapedAdvert.PopulatedPlace),
             PriceInBgn = NormalizePrice(scrapedAdvert.Price, scrapedAdvert.CurrencyUnit),
-            ImageUrls = scrapedAdvert.ImageUrls.ToList(),
+            ImageUrls = NormalizeImageUrls(scrapedAdvert.ImageUrls),
             EuroStandard = scrapedAdvert.EuroStandard?.Trim().ToLower(),
             Model = scrapedAdvert.Model?.Trim(),
             Site = scrapedAdvert.Site,
@@ -92,6 +92,9 @@ public class SiteDataNormalizer : ISiteDataNormalizer
         
         return PopulatedPlaceType.Country;
     }
+
+    private static IEnumerable<string> NormalizeImageUrls(IEnumerable<string> imageUrls)
+        => imageUrls.Select(img => img.ReplaceFirst("med", "big"));
 
     private static string? NormalizeRegion(string? region)
         => region?.RemoveStrings(RegionPrefix).Trim();

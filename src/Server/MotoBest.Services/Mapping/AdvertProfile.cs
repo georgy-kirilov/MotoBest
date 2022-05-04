@@ -58,8 +58,8 @@ public class AdvertProfile : Profile
     static IEnumerable<string> MapImageUrls<T>(Advert source, T destination)
         => source.Images.Where(im => im.Url != null).Select(im => im.Url)!;
 
-    static string MapMainImageUrl<T>(Advert source, T destination)
-        => source.Images.FirstOrDefault()?.Url ?? AdvertServiceConstants.DefaultAdvertImageUrl;
+    static string? MapMainImageUrl<T>(Advert source, T destination)
+        => source.Images.LastOrDefault()?.Url;
 
     static string? MapMonth<T>(Advert source, T destination)
         => source.ManufacturedOn?.ToString("MMMM", new CultureInfo(GlobalConstants.BulgarianCultureInfo));

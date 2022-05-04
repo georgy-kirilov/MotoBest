@@ -8,7 +8,17 @@ public class ScrapedSearchAdvertsResult
 
     public override bool Equals(object? obj)
     {
-        if (obj == null || obj is not ScrapedSearchAdvertsResult)
+        if (obj == this)
+        {
+            return true;
+        }
+
+        if (obj == null)
+        {
+            return false;
+        }
+
+        if (obj is not ScrapedSearchAdvertsResult)
         {
             return false;
         }

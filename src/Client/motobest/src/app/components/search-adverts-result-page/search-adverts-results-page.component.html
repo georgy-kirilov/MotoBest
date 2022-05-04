@@ -1,0 +1,17 @@
+<h1>Резултати от търсенето</h1>
+
+<div class="row">
+<div *ngFor="let result of searchAdvertsResults" class="card col-lg-3">
+    <img class="card-img-top" src="{{result.mainImageUrl}}" onerror="this.src='assets/images/default-advert-image.png'" style="max-height: 400px" alt="Advert Image">
+    <div class="card-body">
+        <h4>{{result.title}} - {{result.price}} {{result.currencyUnit.toUpperCase()}}</h4>
+        <p class="card-text">
+            {{result.engine}} |
+            {{result.transmission}} |
+            {{result.month}} {{result.year}} |
+            {{result.power}} {{result.powerUnit}} |
+            {{result.mileage}} {{result.mileageUnit}}
+        </p>
+    </div>
+</div>
+</div>

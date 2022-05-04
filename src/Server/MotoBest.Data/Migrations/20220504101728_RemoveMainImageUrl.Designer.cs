@@ -12,8 +12,8 @@ using MotoBest.Data;
 namespace MotoBest.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20220424081427_RenameSlugToRemoteSlug")]
-    partial class RenameSlugToRemoteSlug
+    [Migration("20220504101728_RemoveMainImageUrl")]
+    partial class RemoveMainImageUrl
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

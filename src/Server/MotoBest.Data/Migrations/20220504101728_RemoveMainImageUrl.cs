@@ -4,22 +4,22 @@
 
 namespace MotoBest.Data.Migrations
 {
-    public partial class RenameSlugToRemoteSlug : Migration
+    public partial class RemoveMainImageUrl : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.RenameColumn(
-                name: "Slug",
-                table: "Adverts",
-                newName: "RemoteSlug");
+            migrationBuilder.DropColumn(
+                name: "MainImageUrl",
+                table: "Adverts");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.RenameColumn(
-                name: "RemoteSlug",
+            migrationBuilder.AddColumn<string>(
+                name: "MainImageUrl",
                 table: "Adverts",
-                newName: "Slug");
+                type: "nvarchar(max)",
+                nullable: true);
         }
     }
 }

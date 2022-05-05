@@ -339,8 +339,7 @@ namespace MotoBest.Data.Migrations
                     ColorId = table.Column<int>(type: "int", nullable: true),
                     RegionId = table.Column<int>(type: "int", nullable: true),
                     PopulatedPlaceId = table.Column<int>(type: "int", nullable: true),
-                    EuroStandardId = table.Column<int>(type: "int", nullable: true),
-                    MainImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    EuroStandardId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {

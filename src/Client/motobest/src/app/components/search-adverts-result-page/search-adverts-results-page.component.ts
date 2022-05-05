@@ -15,8 +15,8 @@ import { UnitService } from 'src/app/services/unit-service';
 export class SearchAdvertsResultsPageComponent implements OnInit {
 
   private input: GetFullAdvertInputModel = new GetFullAdvertInputModel();
-  
   searchAdvertsResults: SearchAdvertsResult[] = [];
+  boxShadowClasses: string[] = [];
 
   constructor(
     private advertService: AdvertService,
@@ -28,9 +28,12 @@ export class SearchAdvertsResultsPageComponent implements OnInit {
   ngOnInit(): void {
     this.route.queryParams
       .subscribe(input => {
-        this.advertService
-          .searchAdverts(input as SearchAdvertsInputModel)
-          .subscribe(responseResults => this.searchAdvertsResults = responseResults);
+        const result = this.advertService.searchAdverts(input as SearchAdvertsInputModel)
+        result.subscribe(responseResults => {
+          this.searchAdvertsResults = responseResults;
+          this.boxShadowClasses = new Array(this.searchAdvertsResults.length).fill('shadow');
+          console.log(this.boxShadowClasses)
+        });
       });
   }
 
@@ -43,5 +46,16 @@ export class SearchAdvertsResultsPageComponent implements OnInit {
     this.router.navigate(['adverts'], {
       queryParams: this.helpers.createQueryParamsForRouter(this.input)
     });
+  }
+
+  changeStyle($event: any, index: number) {
+    this.boxShadowClasses[index] = $event.type == 'mouseover' ? 'shadow-lg' : 'shadow';
+  }
+
+  formatModifiedOn(modifiedOn: Date | null): string {
+    if (modifiedOn == null) {
+      return '';
+    }
+    return modifiedOn.toString().split("T")[0];
   }
 }

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FullAdvertDetailsResponseModel } from 'src/app/models/full-advert-details-response-model';
 import { GetFullAdvertInputModel } from 'src/app/models/get-full-advert.input.model';

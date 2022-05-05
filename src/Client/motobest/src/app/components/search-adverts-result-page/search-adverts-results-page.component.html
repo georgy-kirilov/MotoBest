@@ -1,26 +1,34 @@
-<h1>Резултати от търсенето</h1>
-
 <div class="row align-items-center justify-content-center">
     <div
         *ngFor="let result of searchAdvertsResults; let i = index"
         (click)="viewFullAdvert(i)"
-        class="card col-lg-2 col-11 m-2 shadow stretched-link advert-result-card">
+        class="card col-lg-2 col-11 m-2 stretched-link advert-result-card"
+        [ngClass]="boxShadowClasses[i]" (mouseover)="changeStyle($event, i)" (mouseout)="changeStyle($event, i)">
         <img
+            style="height: 280px; object-fit: cover;"
             src="{{result.mainImageUrl}}"
             onerror="this.src='assets/images/default-advert-image.png'"
             alt="Advert Image"
             class="card-img-top">
         <div class="card-body">
-            <p class="text-muted" style="font-size: 1.2rem;">
-                {{result.title}} - {{result.price}} {{result.currencyUnit.toUpperCase()}}
+            <p class="text-muted advert-result-header" style="font-size: 1.1rem;">
+                {{result.title}}
             </p>
-            <p class="card-text">
+            <p style="font-size: 1.1rem;">
+                <span class="text-success">
+                    <span class="font-weight-italic float-start">{{formatModifiedOn(result.modifiedOn)}}</span>
+                    {{result.price?.toLocaleString()}} {{result.currencyUnit.toUpperCase()}}
+                </span>
+            </p>    
+            <hr>
+            <p class="card-text advert-result-desc">
                 {{result.engine}} -
                 {{result.transmission}} -
                 {{result.month}} {{result.year}} -
                 {{result.power}} {{result.powerUnit}} -
                 {{result.mileage}} {{result.mileageUnit}}
             </p>
+            <img src="assets/images/logos/auto-bg.png" class="col-2 float-end">
         </div>
     </div>
 </div>

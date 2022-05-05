@@ -12,8 +12,8 @@ using MotoBest.Data;
 namespace MotoBest.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20220504101728_RemoveMainImageUrl")]
-    partial class RemoveMainImageUrl
+    [Migration("20220505085431_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

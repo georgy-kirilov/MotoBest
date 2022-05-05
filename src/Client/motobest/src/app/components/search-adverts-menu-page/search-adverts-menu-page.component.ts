@@ -2,19 +2,19 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Helpers } from 'src/app/common/helpers';
-import { FeatureResponseModel } from 'src/app/models/feature-response-model';
-import { SearchAdvertsInputModel } from '../../models/search-adverts-input-model';
+import { FeatureResponseModel } from 'src/app/models/feature.response.model';
+import { SearchAdvertsInputModel } from '../../models/search-adverts.input.model';
 import { UnitInfo } from '../../models/unit-info';
-import { DisplayMessagesService } from '../../services/display-messages-service';
-import { FeatureService } from '../../services/feature-service';
-import { UnitService } from '../../services/unit-service';
+import { DisplayMessagesService } from '../../services/display-messages.service';
+import { FeatureService } from '../../services/feature.service';
+import { UnitService } from '../../services/unit.service';
 
 @Component({
   selector: 'app-search-adverts',
-  templateUrl: './search-adverts.component.html',
-  styleUrls: ['./search-adverts.component.css']
+  templateUrl: './search-adverts-menu-page.component.html',
+  styleUrls: ['./search-adverts-menu-page.component.css']
 })
-export class SearchAdvertsComponent implements OnInit {
+export class SearchAdvertsMenuPageComponent implements OnInit {
   
   input: SearchAdvertsInputModel = new SearchAdvertsInputModel();
   

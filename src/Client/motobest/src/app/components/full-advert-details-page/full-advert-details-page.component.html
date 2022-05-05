@@ -1,1 +1,16 @@
-<p>full-advert-details-page works!</p>
+<div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+    <div class="carousel-inner">
+      <div *ngFor="let imageUrl of advert.imageUrls; let i = index" [ngClass]="{'active' : i == 0}" class="carousel-item" >
+        <img class="d-block w-100" src="{{imageUrl}}" alt="First slide">
+      </div>
+    </div>
+    
+    <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev" onclick="$('#carouselExampleControls').carousel('prev')">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="sr-only" >Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next" onclick="$('#carouselExampleControls').carousel('next')">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="sr-only">Next</span>
+    </a>
+  </div>

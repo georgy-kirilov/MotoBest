@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { ApiRoutes } from "../network/api-routes";
-import { FeatureResponseModel } from "../models/feature-response-model";
+import { FeatureResponseModel } from "../models/feature.response.model";
 import { RequestService } from "../network/request.service";
 
 @Injectable()

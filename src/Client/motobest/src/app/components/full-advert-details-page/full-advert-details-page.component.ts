@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { FullAdvertDetailsResponseModel } from 'src/app/models/full-advert-details-response-model';
+import { FullAdvertDetailsResponseModel } from 'src/app/models/full-advert-details.response.model';
 import { GetFullAdvertInputModel } from 'src/app/models/get-full-advert.input.model';
 import { AdvertService } from 'src/app/services/advert.service';
 
@@ -11,7 +11,7 @@ import { AdvertService } from 'src/app/services/advert.service';
 })
 export class FullAdvertDetailsPageComponent implements OnInit {
 
-  private advert: FullAdvertDetailsResponseModel = new FullAdvertDetailsResponseModel();
+  advert: FullAdvertDetailsResponseModel = new FullAdvertDetailsResponseModel();
 
   constructor(
     private route: ActivatedRoute,

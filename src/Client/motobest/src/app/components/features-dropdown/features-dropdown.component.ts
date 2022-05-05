@@ -1,15 +1,15 @@
 import { Component, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { EventEmitter } from '@angular/core';
 import { Observable } from 'rxjs';
-import { FeatureResponseModel as FeatureResponseModel } from 'src/app/models/feature-response-model';
-import { DisplayMessagesService } from 'src/app/services/display-messages-service';
+import { FeatureResponseModel as FeatureResponseModel } from 'src/app/models/feature.response.model';
+import { DisplayMessagesService } from 'src/app/services/display-messages.service';
 
 @Component({
-  selector: 'app-features-group-dropdown',
-  templateUrl: './features-group-dropdown.component.html',
-  styleUrls: ['./features-group-dropdown.component.css']
+  selector: 'app-features-dropdown',
+  templateUrl: './features-dropdown.component.html',
+  styleUrls: ['./features-dropdown.component.css']
 })
-export class FeaturesGroupDropdownComponent implements OnInit, OnChanges {
+export class FeaturesDropdownComponent implements OnInit, OnChanges {
   
   @Input() title: string = '';
   @Input() propertyName: string = '';

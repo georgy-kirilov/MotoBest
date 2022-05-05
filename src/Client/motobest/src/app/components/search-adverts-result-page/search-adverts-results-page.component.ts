@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Helpers } from 'src/app/common/helpers';
 import { GetFullAdvertInputModel } from 'src/app/models/get-full-advert.input.model';
-import { SearchAdvertsInputModel } from 'src/app/models/search-adverts-input-model';
+import { SearchAdvertsInputModel } from 'src/app/models/search-adverts.input.model';
 import { SearchAdvertsResult } from 'src/app/models/search-adverts-result';
 import { AdvertService } from 'src/app/services/advert.service';
-import { UnitService } from 'src/app/services/unit-service';
+import { UnitService } from 'src/app/services/unit.service';
 
 @Component({
   selector: 'app-search-adverts-results-page',

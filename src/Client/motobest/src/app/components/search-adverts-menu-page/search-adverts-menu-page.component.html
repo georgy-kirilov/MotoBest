@@ -1,9 +1,9 @@
-<div class="bg-dark text-white py-3 mx-auto" style="height: 100vh;">
-    <h3 class="text-center">Търсене на автомобили</h3>
+<div class="py-3 mx-auto col-12 col-lg-9">
+    <h3 class="text-center my-lg-4">Критерии за търсене</h3>
     <div class="col-11 mx-auto px-3 py-2">
         <div class="row">
             <div class="form-group my-2 col-6 col-lg-2">
-                <app-features-group-dropdown
+                <app-features-dropdown
                     propertyName="brand"
                     [property]="input.brand"
                     [title]="messagesService.brand"
@@ -11,10 +11,10 @@
                     (onChangeHandler)="loadModelsByBrand($event)"
                     [dividedByGroups]="true"
                     [nameForValue]="true">
-                </app-features-group-dropdown>
+                </app-features-dropdown>
             </div>
             <div class="form-group my-2 col-6 col-lg-2">
-                <app-features-group-dropdown
+                <app-features-dropdown
                     propertyName="modelId"
                     [property]="input.modelId"
                     [title]="messagesService.model"
@@ -22,10 +22,10 @@
                     (onChangeHandler)="onFeaturesDropdownChange($event)"
                     [dividedByGroups]="true"
                     [nameForValue]="false">
-                </app-features-group-dropdown>
+                </app-features-dropdown>
             </div>
             <div class="form-group my-2 col-6 col-lg-2">
-                <app-features-group-dropdown
+                <app-features-dropdown
                     propertyName="bodyStyle"
                     [property]="input.bodyStyle"
                     [title]="messagesService.bodyStyle"
@@ -33,10 +33,10 @@
                     (onChangeHandler)="onFeaturesDropdownChange($event)"
                     [dividedByGroups]="false"
                     [nameForValue]="true">
-                </app-features-group-dropdown>
+                </app-features-dropdown>
             </div>
             <div class="form-group my-2 col-6 col-lg-2">
-                <app-features-group-dropdown
+                <app-features-dropdown
                     propertyName="engine"
                     [property]="input.engine"
                     [title]="messagesService.engine"
@@ -44,10 +44,10 @@
                     (onChangeHandler)="onFeaturesDropdownChange($event)"
                     [dividedByGroups]="false"
                     [nameForValue]="true">
-                </app-features-group-dropdown>
+                </app-features-dropdown>
             </div>
             <div class="form-group my-2 col-6 col-lg-2">
-                <app-features-group-dropdown
+                <app-features-dropdown
                     propertyName="transmission"
                     [property]="input.transmission"
                     [title]="messagesService.transmission"
@@ -55,10 +55,10 @@
                     (onChangeHandler)="onFeaturesDropdownChange($event)"
                     [dividedByGroups]="false"
                     [nameForValue]="true">
-                </app-features-group-dropdown>
+                </app-features-dropdown>
             </div>
             <div class="form-group my-2 col-6 col-lg-2">
-                <app-features-group-dropdown
+                <app-features-dropdown
                     propertyName="condition"
                     [property]="input.condition"
                     [title]="messagesService.condition"
@@ -66,10 +66,10 @@
                     (onChangeHandler)="onFeaturesDropdownChange($event)"
                     [dividedByGroups]="false"
                     [nameForValue]="true">
-                </app-features-group-dropdown>
+                </app-features-dropdown>
             </div>
             <div class="form-group my-2 col-6 col-lg-2">
-                <app-features-group-dropdown
+                <app-features-dropdown
                     propertyName="euroStandard"
                     [property]="input.euroStandard"
                     [title]="messagesService.euroStandard"
@@ -77,10 +77,10 @@
                     (onChangeHandler)="onFeaturesDropdownChange($event)"
                     [dividedByGroups]="false"
                     [nameForValue]="true">
-                </app-features-group-dropdown>
+                </app-features-dropdown>
             </div>
             <div class="form-group my-2 col-6 col-lg-2">
-                <app-features-group-dropdown
+                <app-features-dropdown
                     propertyName="color"
                     [property]="input.color"
                     [title]="messagesService.color"
@@ -88,10 +88,10 @@
                     (onChangeHandler)="onFeaturesDropdownChange($event)"
                     [dividedByGroups]="true"
                     [nameForValue]="true">
-                </app-features-group-dropdown>
+                </app-features-dropdown>
             </div>
             <div class="form-group my-2 col-6 col-lg-2">
-                <app-features-group-dropdown
+                <app-features-dropdown
                     propertyName="region"
                     [property]="input.region"
                     [title]="messagesService.region"
@@ -99,10 +99,10 @@
                     (onChangeHandler)="loadPopulatedPlacesByRegion($event)"
                     [dividedByGroups]="true"
                     [nameForValue]="true">
-                </app-features-group-dropdown>
+                </app-features-dropdown>
             </div>
             <div class="form-group my-2 col-6 col-lg-2">
-                <app-features-group-dropdown
+                <app-features-dropdown
                     propertyName="populatedPlaceId"
                     [property]="input.populatedPlaceId"
                     [title]="messagesService.populatedPlace"
@@ -110,17 +110,17 @@
                     (onChangeHandler)="onFeaturesDropdownChange($event)"
                     [dividedByGroups]="true"
                     [nameForValue]="true">
-                </app-features-group-dropdown>
+                </app-features-dropdown>
             </div>
             <div class="form-group my-2 col-6 col-lg-2">
                 <label class="mb-2">Година от</label>
-                <select [(ngModel)]="input.minYear" class="form-select">
+                <select [(ngModel)]="input.minYear" class="form-select shadow-sm">
                     <option *ngFor="let year of years" [value]="year">{{format(year)}}</option>
                 </select>
             </div>
             <div class="form-group my-2 col-6 col-lg-2">
                 <label class="mb-2">Година до</label>
-                <select [(ngModel)]="input.maxYear" class="form-select">
+                <select [(ngModel)]="input.maxYear" class="form-select shadow-sm">
                     <option *ngFor="let year of years" [value]="year">{{format(year)}}</option>
                 </select>
             </div>
@@ -131,7 +131,7 @@
                     [placeholder]="messagesService.defaultNumericInputListValue"
                     type="number"
                     min="0"
-                    class="form-control"/>
+                    class="form-control shadow-sm"/>
             </div>
             <div class="form-group my-2 col-4 col-lg-2">
                 <label class="mb-2">Цена до</label>
@@ -140,11 +140,11 @@
                     [placeholder]="messagesService.defaultNumericInputListValue"
                     type="number"
                     min="0"
-                    class="form-control"/>
+                    class="form-control shadow-sm"/>
             </div>
             <div class="form-group my-2 col-4 col-lg-2">
                 <label class="mb-2">Валута</label>
-                <select [(ngModel)]="input.currencyUnit" class="form-select">
+                <select [(ngModel)]="input.currencyUnit" class="form-select shadow-sm">
                     <option *ngFor="let currencyUnit of currencyUnits" [value]="currencyUnit.value">
                         {{currencyUnit.name.toUpperCase()}}
                     </option>
@@ -157,7 +157,7 @@
                     [placeholder]="messagesService.defaultNumericInputListValue"
                     type="number"
                     min="1"
-                    class="form-control"/>
+                    class="form-control shadow-sm"/>
             </div>
             <div class="form-group my-2 col-4 col-lg-2">
                 <label class="mb-2">Мощност до</label>
@@ -166,11 +166,11 @@
                     [placeholder]="messagesService.defaultNumericInputListValue"
                     type="number"
                     min="1"
-                    class="form-control"/>
+                    class="form-control shadow-sm"/>
             </div>
             <div class="form-group my-2 col-4 col-lg-2">
                 <label class="mb-2">Единица</label>
-                <select [(ngModel)]="input.powerUnit" class="form-select">
+                <select [(ngModel)]="input.powerUnit" class="form-select shadow-sm">
                     <option *ngFor="let powerUnit of powerUnits" [value]="powerUnit.value">
                         {{powerUnit.name.toUpperCase()}}
                     </option>
@@ -184,7 +184,7 @@
                     [placeholder]="messagesService.defaultNumericInputListValue"
                     type="number"
                     min="1"
-                    class="form-control"/>
+                    class="form-control shadow-sm"/>
             </div>
             <div class="form-group my-2 col-4 col-lg-2">
                 <label class="mb-2">Пробег до</label>
@@ -193,11 +193,11 @@
                     [placeholder]="messagesService.defaultNumericInputListValue"
                     type="number"
                     min="1"
-                    class="form-control"/>
+                    class="form-control shadow-sm"/>
             </div>
             <div class="form-group my-2 col-4 col-lg-2">
                 <label class="mb-2">Единица</label>
-                <select [(ngModel)]="input.mileageUnit" class="form-select">
+                <select [(ngModel)]="input.mileageUnit" class="form-select shadow-sm">
                     <option *ngFor="let mileageUnit of mileageUnits" [value]="mileageUnit.value">
                         {{mileageUnit.name.toUpperCase()}}
                     </option>
@@ -205,7 +205,11 @@
             </div>
         </div>
         <div class="my-4 text-center">
-            <button (click)="searchAdverts()" class="btn btn-primary col-6 col-lg-2">Търсене</button>
+            <button
+                (click)="searchAdverts()"
+                class="btn btn-danger col-8 col-lg-3 my-lg-3 my-2">
+                Търсене
+            </button>
         </div>
     </div>
 </div>

@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FeaturesGroupDropdownComponent } from './features-group-dropdown.component';
+import { FeaturesDropdownComponent } from './features-dropdown.component';
 
 describe('FeaturesDropdownComponent', () => {
-  let component: FeaturesGroupDropdownComponent;
-  let fixture: ComponentFixture<FeaturesGroupDropdownComponent>;
+  let component: FeaturesDropdownComponent;
+  let fixture: ComponentFixture<FeaturesDropdownComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ FeaturesGroupDropdownComponent ]
+      declarations: [ FeaturesDropdownComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(FeaturesGroupDropdownComponent);
+    fixture = TestBed.createComponent(FeaturesDropdownComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

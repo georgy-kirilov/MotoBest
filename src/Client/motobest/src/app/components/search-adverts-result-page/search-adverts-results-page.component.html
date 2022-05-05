@@ -14,11 +14,8 @@
             <p class="text-muted advert-result-header" style="font-size: 1.1rem;">
                 {{result.title}}
             </p>
-            <p style="font-size: 1.1rem;">
-                <span class="text-success">
-                    <span class="font-weight-italic float-start">{{formatModifiedOn(result.modifiedOn)}}</span>
-                    {{result.price?.toLocaleString()}} {{result.currencyUnit.toUpperCase()}}
-                </span>
+            <p style="font-size: 1.1rem;" class="text-success advert-result-header">
+                {{result.price?.toLocaleString()}} {{result.currencyUnit.toUpperCase()}}
             </p>    
             <hr>
             <p class="card-text advert-result-desc">
@@ -26,7 +23,8 @@
                 {{result.transmission}} -
                 {{result.month}} {{result.year}} -
                 {{result.power}} {{result.powerUnit}} -
-                {{result.mileage}} {{result.mileageUnit}}
+                {{result.mileage}} {{result.mileageUnit}} - 
+                {{formatModifiedOn(result.modifiedOn)}}
             </p>
             <img src="assets/images/logos/auto-bg.png" class="col-2 float-end">
         </div>

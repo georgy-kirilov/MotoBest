@@ -13,7 +13,7 @@ import { FeatureService } from './services/feature.service';
 import { AdvertService } from './services/advert.service';
 import { DisplayMessagesService } from './services/display-messages.service';
 import { SearchAdvertsCardComponent } from './components/search-adverts-card/search-adverts-card.component';
-import { SearchAdvertsResultsPageComponent } from './components/search-adverts-result-page/search-adverts-results-page.component';
+import { SearchAdvertsResultsPageComponent } from './components/search-adverts-results-page/search-adverts-results-page.component';
 import { FullAdvertDetailsPageComponent } from './components/full-advert-details-page/full-advert-details-page.component';
 import { RequestService } from './network/request.service';
 import { Helpers } from './common/helpers';

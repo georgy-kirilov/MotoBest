@@ -1,16 +1,36 @@
-<div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-    <div class="carousel-inner">
-      <div *ngFor="let imageUrl of advert.imageUrls; let i = index" [ngClass]="{'active' : i == 0}" class="carousel-item" >
-        <img class="d-block w-100" src="{{imageUrl}}" alt="First slide">
-      </div>
-    </div>
-    
-    <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev" onclick="$('#carouselExampleControls').carousel('prev')">
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="sr-only" >Previous</span>
-    </a>
-    <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next" onclick="$('#carouselExampleControls').carousel('next')">
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="sr-only">Next</span>
-    </a>
+<div class="d-flex justify-content-center">
+  <div class="">
+    <img src="{{advert.imageUrls[0]}}">
   </div>
+  <div class="col-3 p-3 align-self-center">
+    <diV><h5>{{advert.title}}</h5></diV>
+    <div class="bg-dark text-white p-2 rounded-top px-3">
+      {{displayMessagesService.brand}}
+      <span class="float-end">{{advert.brand}}</span>
+    </div>
+    <div class="bg-secondary text-white p-2 px-3">
+      {{displayMessagesService.model}}
+      <span class="float-end">{{advert.model}}</span>
+    </div>
+    <div class="bg-dark text-white p-2 px-3">
+      {{displayMessagesService.engine}}
+      <span class="float-end">{{advert.engine}}</span>
+    </div>
+    <div class="bg-secondary text-white p-2 px-3">
+      {{displayMessagesService.bodyStyle}}
+      <span class="float-end">{{advert.bodyStyle}}</span>
+    </div>
+    <div class="bg-dark text-white p-2 px-3">
+      {{displayMessagesService.transmission}}
+      <span class="float-end">{{advert.transmission}}</span>
+    </div>
+    <div class="bg-secondary text-white p-2 px-3">
+      {{displayMessagesService.color}}
+      <span class="float-end">{{advert.color}}</span>
+    </div>
+    <div class="bg-dark text-white p-2 px-3 rounded-bottom">
+      {{displayMessagesService.condition}}
+      <span class="float-end">{{advert.condition}}</span>
+    </div>
+  </div>
+</div>

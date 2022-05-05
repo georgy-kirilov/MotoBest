@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { FullAdvertDetailsResponseModel } from 'src/app/models/full-advert-details.response.model';
 import { GetFullAdvertInputModel } from 'src/app/models/get-full-advert.input.model';
 import { AdvertService } from 'src/app/services/advert.service';
+import { DisplayMessagesService } from 'src/app/services/display-messages.service';
 
 @Component({
   selector: 'app-full-advert-details-page',
@@ -15,14 +16,15 @@ export class FullAdvertDetailsPageComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private advertService: AdvertService) { }
+    private advertService: AdvertService,
+    public displayMessagesService: DisplayMessagesService) { }
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(input => {
       this.advertService
         .getFullAdvert(input as GetFullAdvertInputModel)
         .subscribe(responseModel => {
-          this.advert = responseModel
+          this.advert = responseModel;
           console.log(this.advert);
         });
     });

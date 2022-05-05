@@ -1,5 +1,12 @@
 import { environment } from "src/environments/environment"
 
+
+const baseRoutes = {
+    units: `Units`,
+    features: `Features`,
+    adverts: `Adverts`,
+}
+
 export class ApiRoutes {
 
     get allCurrencyUnits(): string {
@@ -57,10 +64,8 @@ export class ApiRoutes {
     get searchAdverts(): string {
         return `${baseRoutes.adverts}/search`;
     }
-}
 
-const baseRoutes = {
-    units: `${environment.BASE_URL}/Units`,
-    features: `${environment.BASE_URL}/Features`,
-    adverts: `${environment.BASE_URL}/Adverts`,
+    get fullAdvertDetails(): string {
+        return `${baseRoutes.adverts}`;
+    }
 }

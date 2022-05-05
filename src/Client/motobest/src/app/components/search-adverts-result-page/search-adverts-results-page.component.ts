@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Helpers } from 'src/app/common/helpers';
+import { GetFullAdvertInputModel } from 'src/app/models/get-full-advert.input.model';
 import { SearchAdvertsInputModel } from 'src/app/models/search-adverts-input-model';
 import { SearchAdvertsResult } from 'src/app/models/search-adverts-result';
-import { AdvertService } from 'src/app/services/advert-service';
+import { AdvertService } from 'src/app/services/advert.service';
+import { UnitService } from 'src/app/services/unit-service';
 
 @Component({
   selector: 'app-search-adverts-results-page',
@@ -11,20 +14,34 @@ import { AdvertService } from 'src/app/services/advert-service';
 })
 export class SearchAdvertsResultsPageComponent implements OnInit {
 
-  searchAdvertsResults: SearchAdvertsResult[] = []; 
+  private input: GetFullAdvertInputModel = new GetFullAdvertInputModel();
+  
+  searchAdvertsResults: SearchAdvertsResult[] = [];
 
-  constructor(private advertService: AdvertService, private route: ActivatedRoute) { }
+  constructor(
+    private advertService: AdvertService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private helpers: Helpers,
+    private unitService: UnitService) { }
 
   ngOnInit(): void {
     this.route.queryParams
       .subscribe(input => {
         this.advertService
           .searchAdverts(input as SearchAdvertsInputModel)
-          .subscribe(resultsResponse => this.searchAdvertsResults = resultsResponse);
+          .subscribe(responseResults => this.searchAdvertsResults = responseResults);
       });
   }
 
-  formatImageUrl(imageUrl: string | null): string {
-    return imageUrl != null ? imageUrl : '/assets/img/default-advert-image.png';
+  viewFullAdvert(selectedAdvertIndex: number) {
+    const selectedAdvert = this.searchAdvertsResults[selectedAdvertIndex];
+    this.input.id = selectedAdvert.id;
+    this.input.currencyUnit = this.unitService.fromName(selectedAdvert.currencyUnit);
+    this.input.powerUnit = this.unitService.fromName(selectedAdvert.powerUnit);
+    this.input.mileageUnit = this.unitService.fromName(selectedAdvert.mileageUnit);
+    this.router.navigate(['adverts'], {
+      queryParams: this.helpers.createQueryParamsForRouter(this.input)
+    });
   }
 }

@@ -1,112 +1,130 @@
-<div class="bg-dark text-white py-3 mx-auto">
+<div class="bg-dark text-white py-3 mx-auto" style="height: 100vh;">
     <h3 class="text-center">Търсене на автомобили</h3>
     <div class="col-11 mx-auto px-3 py-2">
         <div class="row">
-            <div class="form-group my-2 col-6">
+            <div class="form-group my-2 col-6 col-lg-2">
                 <app-features-group-dropdown
-                    [input]="input.brand"
+                    propertyName="brand"
+                    [property]="input.brand"
                     [title]="messagesService.brand"
-                    [observableOptionsList]="brands"
-                    (onChangeHandler)="loadModelsByBrand($event)">
+                    [observablesList]="brands"
+                    (onChangeHandler)="loadModelsByBrand($event)"
+                    [dividedByGroups]="true"
+                    [nameForValue]="true">
                 </app-features-group-dropdown>
             </div>
-            <div class="form-group my-2 col-6">
-                <label class="mb-2">{{messagesService.model}}</label>
-                <select [(ngModel)]="input.modelId" class="form-select">
-                    <option *ngFor="let model of models" [value]="model?.id">
-                        {{format(model?.name)}}
-                    </option>
-                </select>
-            </div>
-        </div>
-        <div class="row">
-            <div class="form-group my-2 col-6">
-                <label class="mb-2">{{messagesService.bodyStyle}}</label>
-                <select [(ngModel)]="input.bodyStyle" class="form-select">
-                    <option *ngFor="let bodyStyle of bodyStyles" [value]="bodyStyle">
-                        {{format(bodyStyle)}}
-                    </option>
-                </select>
-            </div>
-            <div class="form-group my-2 col-6">
-                <label class="mb-2">{{messagesService.engine}}</label>
-                <select [(ngModel)]="input.engine" class="form-select">
-                    <option *ngFor="let engine of engines" [value]="engine">
-                        {{format(engine)}}
-                    </option>
-                </select>
-            </div>
-        </div>
-        <div class="row">
-            <div class="form-group my-2 col-6">
-                <label class="mb-2">{{messagesService.transmission}}</label>
-                <select [(ngModel)]="input.transmission" class="form-select">
-                    <option *ngFor="let transmission of transmissions" [value]="transmission">
-                        {{format(transmission)}}
-                    </option>
-                </select>
-            </div>
-            <div class="form-group my-2 col-6">
-                <label class="mb-2">{{messagesService.condition}}</label>
-                <select [(ngModel)]="input.condition" class="form-select">
-                    <option *ngFor="let condition of conditions" [value]="condition">
-                        {{format(condition)}}
-                    </option>
-                </select>
-            </div>
-        </div>
-        <div class="row">
-            <div class="form-group my-3 col-6">
-                <label class="mb-2">{{messagesService.euroStandard}}</label>
-                <select [(ngModel)]="input.euroStandard" class="form-select">
-                    <option *ngFor="let euroStandard of euroStandards" [value]="euroStandard">
-                        {{format(euroStandard)}}
-                    </option>
-                </select>
-            </div>
-            <div class="form-group my-3 col-6">
-                <label class="mb-2">{{messagesService.color}}</label>
-                <select [(ngModel)]="input.color" class="form-select">
-                    <option *ngFor="let color of colors" [value]="color">
-                        {{format(color)}}
-                    </option>
-                </select>
-            </div>
-        </div>
-        <div class="row">
-            <div class="form-group my-3 col-6">
+            <div class="form-group my-2 col-6 col-lg-2">
                 <app-features-group-dropdown
-                    [input]="input.region"
-                    [title]="messagesService.region"
-                    [observableOptionsList]="regions"
-                    (onChangeHandler)="loadPopulatedPlacesByRegion($event)">
+                    propertyName="modelId"
+                    [property]="input.modelId"
+                    [title]="messagesService.model"
+                    [observablesList]="models"
+                    (onChangeHandler)="onFeaturesDropdownChange($event)"
+                    [dividedByGroups]="true"
+                    [nameForValue]="false">
                 </app-features-group-dropdown>
             </div>
-            <div class="form-group my-3 col-6">
-                <label class="mb-2">{{messagesService.populatedPlace}}</label>
-                <select [(ngModel)]="input.populatedPlaceId" class="form-select">
-                    <option *ngFor="let populatedPlace of populatedPlaces" [value]="populatedPlace?.id">
-                        {{format(populatedPlace?.name)}}
-                    </option>
-                </select>
+            <div class="form-group my-2 col-6 col-lg-2">
+                <app-features-group-dropdown
+                    propertyName="bodyStyle"
+                    [property]="input.bodyStyle"
+                    [title]="messagesService.bodyStyle"
+                    [observablesList]="bodyStyles"
+                    (onChangeHandler)="onFeaturesDropdownChange($event)"
+                    [dividedByGroups]="false"
+                    [nameForValue]="true">
+                </app-features-group-dropdown>
             </div>
-        </div>
-        <div class="row">
-            <div class="form-group my-2 col-6">
+            <div class="form-group my-2 col-6 col-lg-2">
+                <app-features-group-dropdown
+                    propertyName="engine"
+                    [property]="input.engine"
+                    [title]="messagesService.engine"
+                    [observablesList]="engines"
+                    (onChangeHandler)="onFeaturesDropdownChange($event)"
+                    [dividedByGroups]="false"
+                    [nameForValue]="true">
+                </app-features-group-dropdown>
+            </div>
+            <div class="form-group my-2 col-6 col-lg-2">
+                <app-features-group-dropdown
+                    propertyName="transmission"
+                    [property]="input.transmission"
+                    [title]="messagesService.transmission"
+                    [observablesList]="transmissions"
+                    (onChangeHandler)="onFeaturesDropdownChange($event)"
+                    [dividedByGroups]="false"
+                    [nameForValue]="true">
+                </app-features-group-dropdown>
+            </div>
+            <div class="form-group my-2 col-6 col-lg-2">
+                <app-features-group-dropdown
+                    propertyName="condition"
+                    [property]="input.condition"
+                    [title]="messagesService.condition"
+                    [observablesList]="conditions"
+                    (onChangeHandler)="onFeaturesDropdownChange($event)"
+                    [dividedByGroups]="false"
+                    [nameForValue]="true">
+                </app-features-group-dropdown>
+            </div>
+            <div class="form-group my-2 col-6 col-lg-2">
+                <app-features-group-dropdown
+                    propertyName="euroStandard"
+                    [property]="input.euroStandard"
+                    [title]="messagesService.euroStandard"
+                    [observablesList]="euroStandards"
+                    (onChangeHandler)="onFeaturesDropdownChange($event)"
+                    [dividedByGroups]="false"
+                    [nameForValue]="true">
+                </app-features-group-dropdown>
+            </div>
+            <div class="form-group my-2 col-6 col-lg-2">
+                <app-features-group-dropdown
+                    propertyName="color"
+                    [property]="input.color"
+                    [title]="messagesService.color"
+                    [observablesList]="colors"
+                    (onChangeHandler)="onFeaturesDropdownChange($event)"
+                    [dividedByGroups]="true"
+                    [nameForValue]="true">
+                </app-features-group-dropdown>
+            </div>
+            <div class="form-group my-2 col-6 col-lg-2">
+                <app-features-group-dropdown
+                    propertyName="region"
+                    [property]="input.region"
+                    [title]="messagesService.region"
+                    [observablesList]="regions"
+                    (onChangeHandler)="loadPopulatedPlacesByRegion($event)"
+                    [dividedByGroups]="true"
+                    [nameForValue]="true">
+                </app-features-group-dropdown>
+            </div>
+            <div class="form-group my-2 col-6 col-lg-2">
+                <app-features-group-dropdown
+                    propertyName="populatedPlaceId"
+                    [property]="input.populatedPlaceId"
+                    [title]="messagesService.populatedPlace"
+                    [observablesList]="populatedPlaces"
+                    (onChangeHandler)="onFeaturesDropdownChange($event)"
+                    [dividedByGroups]="true"
+                    [nameForValue]="true">
+                </app-features-group-dropdown>
+            </div>
+            <div class="form-group my-2 col-6 col-lg-2">
                 <label class="mb-2">Година от</label>
                 <select [(ngModel)]="input.minYear" class="form-select">
                     <option *ngFor="let year of years" [value]="year">{{format(year)}}</option>
                 </select>
             </div>
-            <div class="form-group my-2 col-6">
+            <div class="form-group my-2 col-6 col-lg-2">
                 <label class="mb-2">Година до</label>
                 <select [(ngModel)]="input.maxYear" class="form-select">
                     <option *ngFor="let year of years" [value]="year">{{format(year)}}</option>
                 </select>
             </div>
-        </div>
-        <div class="row">
-            <div class="form-group my-2 col-4">
+            <div class="form-group my-2 col-4 col-lg-2">
                 <label class="mb-2">Цена от</label>
                 <input
                     [(ngModel)]="input.minPrice"
@@ -115,7 +133,7 @@
                     min="0"
                     class="form-control"/>
             </div>
-            <div class="form-group my-2 col-4">
+            <div class="form-group my-2 col-4 col-lg-2">
                 <label class="mb-2">Цена до</label>
                 <input
                     [(ngModel)]="input.maxPrice"
@@ -124,7 +142,7 @@
                     min="0"
                     class="form-control"/>
             </div>
-            <div class="form-group my-2 col-4">
+            <div class="form-group my-2 col-4 col-lg-2">
                 <label class="mb-2">Валута</label>
                 <select [(ngModel)]="input.currencyUnit" class="form-select">
                     <option *ngFor="let currencyUnit of currencyUnits" [value]="currencyUnit.value">
@@ -132,9 +150,7 @@
                     </option>
                 </select>
             </div>
-        </div>
-        <div class="row">
-            <div class="form-group my-2 col-4">
+            <div class="form-group my-2 col-4 col-lg-2">
                 <label class="mb-2">Мощност от</label>
                 <input
                     [(ngModel)]="input.minPower"
@@ -143,7 +159,7 @@
                     min="1"
                     class="form-control"/>
             </div>
-            <div class="form-group my-2 col-4">
+            <div class="form-group my-2 col-4 col-lg-2">
                 <label class="mb-2">Мощност до</label>
                 <input
                     [(ngModel)]="input.maxPower"
@@ -152,7 +168,7 @@
                     min="1"
                     class="form-control"/>
             </div>
-            <div class="form-group my-2 col-4">
+            <div class="form-group my-2 col-4 col-lg-2">
                 <label class="mb-2">Единица</label>
                 <select [(ngModel)]="input.powerUnit" class="form-select">
                     <option *ngFor="let powerUnit of powerUnits" [value]="powerUnit.value">
@@ -160,9 +176,8 @@
                     </option>
                 </select>
             </div>
-        </div>
-        <div class="row">
-            <div class="form-group my-2 col-4">
+        
+            <div class="form-group my-2 col-4 col-lg-2">
                 <label class="mb-2">Пробег от</label>
                 <input
                     [(ngModel)]="input.minMileage"
@@ -171,7 +186,7 @@
                     min="1"
                     class="form-control"/>
             </div>
-            <div class="form-group my-2 col-4">
+            <div class="form-group my-2 col-4 col-lg-2">
                 <label class="mb-2">Пробег до</label>
                 <input
                     [(ngModel)]="input.maxMileage"
@@ -180,7 +195,7 @@
                     min="1"
                     class="form-control"/>
             </div>
-            <div class="form-group my-2 col-4">
+            <div class="form-group my-2 col-4 col-lg-2">
                 <label class="mb-2">Единица</label>
                 <select [(ngModel)]="input.mileageUnit" class="form-select">
                     <option *ngFor="let mileageUnit of mileageUnits" [value]="mileageUnit.value">
@@ -190,7 +205,7 @@
             </div>
         </div>
         <div class="my-4 text-center">
-            <button (click)="searchAdverts()" class="btn btn-primary col-6">Търсене</button>
+            <button (click)="searchAdverts()" class="btn btn-primary col-6 col-lg-2">Търсене</button>
         </div>
     </div>
 </div>

@@ -1,6 +1,7 @@
-import { Component, Input, OnInit, Output } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { EventEmitter } from '@angular/core';
 import { Observable } from 'rxjs';
+import { FeatureResponseModel as FeatureResponseModel } from 'src/app/models/feature-response-model';
 import { DisplayMessagesService } from 'src/app/services/display-messages-service';
 
 @Component({
@@ -8,36 +9,46 @@ import { DisplayMessagesService } from 'src/app/services/display-messages-servic
   templateUrl: './features-group-dropdown.component.html',
   styleUrls: ['./features-group-dropdown.component.css']
 })
-export class FeaturesGroupDropdownComponent implements OnInit {
+export class FeaturesGroupDropdownComponent implements OnInit, OnChanges {
   
   @Input() title: string = '';
-  @Input() input: string | null = null;
-
-  @Input() observableOptionsList: Observable<(string | null)[]> = new Observable();
-  @Output() onChangeHandler = new EventEmitter<string | null>();
+  @Input() propertyName: string = '';
+  @Input() property: any | null = null;
+  @Input() nameForValue: boolean = false;
+  @Input() dividedByGroups: boolean = false;
+  @Input() observablesList: Observable<FeatureResponseModel[]> = new Observable();
+  @Output() onChangeHandler = new EventEmitter();
   
-  optionGroupsByLetter: Map<string, string[]> = new Map();
+  optionsList: FeatureResponseModel[] = [];
+  groupsByLetter: Map<string, FeatureResponseModel[]> = new Map();
 
   constructor(public messagesService: DisplayMessagesService) { }
 
   ngOnInit(): void {
-    this.observableOptionsList.subscribe(res => {
-      const filteredOptionsList = res.filter((option): option is string => option !== null)
-      this.createOptionsGroupMap(this.optionGroupsByLetter, filteredOptionsList);
+    this.observablesList.subscribe(responseOptions => {
+      this.optionsList = responseOptions.filter((option): option is FeatureResponseModel => option !== null)
+      this.createGroupMap(this.groupsByLetter);
     });
   }
 
-  onChange() {
-    this.onChangeHandler?.emit(this.input);
+  ngOnChanges(changes: SimpleChanges): void {
+    this.ngOnInit();
   }
 
-  createOptionsGroupMap(optionsGroupMap: Map<string, string[]>, optionsSourceList: string[]) {
-    optionsGroupMap.clear();
-    const uniqueLetters = new Set(optionsSourceList.map(option => option?.charAt(0)));
-    uniqueLetters.forEach(letter => optionsGroupMap.set(letter, []));
-    optionsSourceList.forEach(option => {
-      let letter = option.charAt(0);
-      optionsGroupMap.get(letter)?.push(option);
+  onChange() {
+    this.onChangeHandler?.emit({
+      propertyName: this.propertyName,
+      option: this.property
+    });
+  }
+
+  private createGroupMap(optionsByGroups: Map<string, FeatureResponseModel[]>) {
+    optionsByGroups.clear();
+    const uniqueLetters = new Set(this.optionsList.map(option => option.name.charAt(0)));
+    uniqueLetters.forEach(letter => optionsByGroups.set(letter, []));
+    this.optionsList.forEach(option => {
+      let letter = option.name.charAt(0);
+      optionsByGroups.get(letter)?.push(option);
     });
   }
 }

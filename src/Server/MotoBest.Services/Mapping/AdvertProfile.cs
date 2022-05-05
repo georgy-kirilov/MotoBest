@@ -5,7 +5,6 @@ using System.Globalization;
 using MotoBest.Common;
 using MotoBest.Data.Models;
 
-using MotoBest.Services.Data.Adverts;
 using MotoBest.Services.Data.Adverts.Models;
 using MotoBest.Services.Common.Units;
 

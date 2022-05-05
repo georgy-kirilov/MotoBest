@@ -125,6 +125,7 @@ public class AdvertService : IAdvertService
         advert.ModelId = model?.Id;
 
         advert.EuroStandardId = euroStandard?.Id;
+        Console.WriteLine(advert.EuroStandardId);
         advert.IsEuroStandardApproximate = isEuroStandardApproximate;
 
         if (!doesAdvertExist)

@@ -1,58 +1,57 @@
-import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
-import { ApiRoutes } from "../common/api-routes";
-import { ModelResultModel } from "../models/model-result-model";
-import { PopulatedPlaceResultModel } from "../models/populated-place-result-model";
+import { ApiRoutes } from "../network/api-routes";
+import { FeatureResponseModel } from "../models/feature-response-model";
+import { RequestService } from "../network/request.service";
 
 @Injectable()
 export class FeatureService {
 
     constructor(
-        private httpClient: HttpClient,
+        private requestService: RequestService,
         private apiRoutes: ApiRoutes) { }
 
-    getBrands(): Observable<string[]> {
+    getBrands(): Observable<FeatureResponseModel[]> {
         return this.getFeatures(this.apiRoutes.allBrands);
     }
 
-    getEngines(): Observable<string[]> {
+    getEngines(): Observable<FeatureResponseModel[]> {
         return this.getFeatures(this.apiRoutes.allEngines);
     }
 
-    getTransmissions(): Observable<string[]> {
+    getTransmissions(): Observable<FeatureResponseModel[]> {
         return this.getFeatures(this.apiRoutes.allTransmissions);
     }
 
-    getBodyStyles(): Observable<string[]> {
+    getBodyStyles(): Observable<FeatureResponseModel[]> {
         return this.getFeatures(this.apiRoutes.allBodyStyles);
     }
 
-    getConditions(): Observable<string[]> {
+    getConditions(): Observable<FeatureResponseModel[]> {
         return this.getFeatures(this.apiRoutes.allConditions);
     }
 
-    getColors(): Observable<string[]> {
+    getColors(): Observable<FeatureResponseModel[]> {
         return this.getFeatures(this.apiRoutes.allColors);
     }
 
-    getRegions(): Observable<string[]> {
+    getRegions(): Observable<FeatureResponseModel[]> {
         return this.getFeatures(this.apiRoutes.allRegions);
     }
 
-    getEuroStandards(): Observable<string[]> {
+    getEuroStandards(): Observable<FeatureResponseModel[]> {
         return this.getFeatures(this.apiRoutes.allEuroStandards);
     }
 
-    getPopulatedPlacesByRegion(region: string | null): Observable<PopulatedPlaceResultModel[]> {
+    getPopulatedPlacesByRegion(region: string | null): Observable<FeatureResponseModel[]> {
         return this.getFeatures(`${this.apiRoutes.allPopulatedPlaces}/${region}`);
     }
 
-    getModelsByBrand(brand: string | null): Observable<ModelResultModel[]> {
+    getModelsByBrand(brand: string | null): Observable<FeatureResponseModel[]> {
         return this.getFeatures(`${this.apiRoutes.allModels}/${brand}`);
     }
 
-    getFeatures<T>(url: string): Observable<T[]> {
-        return this.httpClient.get<T[]>(url);
+    private getFeatures<T>(url: string): Observable<T> {
+        return this.requestService.get(url);
     }
 }

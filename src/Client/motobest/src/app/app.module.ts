@@ -7,14 +7,17 @@ import { AppComponent } from './app.component';
 import { SearchAdvertsComponent } from './components/search-adverts/search-adverts.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
-import { ApiRoutes } from './common/api-routes';
+import { ApiRoutes } from './network/api-routes';
 import { UnitService } from './services/unit-service';
 import { FeatureService } from './services/feature-service';
-import { AdvertService } from './services/advert-service';
+import { AdvertService } from './services/advert.service';
 import { FeaturesGroupDropdownComponent } from './components/features-group-dropdown/features-group-dropdown.component';
 import { DisplayMessagesService } from './services/display-messages-service';
 import { SearchAdvertsCardComponent } from './components/search-adverts-card/search-adverts-card.component';
 import { SearchAdvertsResultsPageComponent } from './components/search-adverts-result-page/search-adverts-results-page.component';
+import { FullAdvertDetailsPageComponent } from './components/full-advert-details-page/full-advert-details-page.component';
+import { RequestService } from './network/request.service';
+import { Helpers } from './common/helpers';
 
 @NgModule({
   declarations: [
@@ -22,7 +25,8 @@ import { SearchAdvertsResultsPageComponent } from './components/search-adverts-r
     SearchAdvertsComponent,
     FeaturesGroupDropdownComponent,
     SearchAdvertsCardComponent,
-    SearchAdvertsResultsPageComponent
+    SearchAdvertsResultsPageComponent,
+    FullAdvertDetailsPageComponent
   ],
   imports: [
     FormsModule,
@@ -36,7 +40,9 @@ import { SearchAdvertsResultsPageComponent } from './components/search-adverts-r
     FeatureService,
     AdvertService,
     DisplayMessagesService,
-    ApiRoutes
+    RequestService,
+    ApiRoutes,
+    Helpers,
   ],
   bootstrap: [AppComponent]
 })

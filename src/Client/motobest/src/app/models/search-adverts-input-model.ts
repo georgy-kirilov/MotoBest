@@ -1,4 +1,5 @@
 export class SearchAdvertsInputModel {
+    [name: string]: any;
     brand: string | null = null;
     modelId: number | null = null;
     engine: string | null = null;

@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { ModelResultModel } from '../../models/model-result-model';
-import { PopulatedPlaceResultModel } from '../../models/populated-place-result-model';
+import { Helpers } from 'src/app/common/helpers';
+import { FeatureResponseModel } from 'src/app/models/feature-response-model';
 import { SearchAdvertsInputModel } from '../../models/search-adverts-input-model';
 import { UnitInfo } from '../../models/unit-info';
-import { AdvertService } from '../../services/advert-service';
 import { DisplayMessagesService } from '../../services/display-messages-service';
 import { FeatureService } from '../../services/feature-service';
 import { UnitService } from '../../services/unit-service';
@@ -18,21 +17,22 @@ import { UnitService } from '../../services/unit-service';
 export class SearchAdvertsComponent implements OnInit {
   
   input: SearchAdvertsInputModel = new SearchAdvertsInputModel();
-
+  
   years: (number | null)[] = [];
 
-  regions: Observable<string[]> = new Observable();
-  brands: Observable<string[]> = new Observable();
+  regions: Observable<FeatureResponseModel[]> = new Observable();
+  brands: Observable<FeatureResponseModel[]> = new Observable();
+  colors: Observable<FeatureResponseModel[]> = new Observable();
 
-  models: (ModelResultModel | null)[] = [];
-  populatedPlaces: (PopulatedPlaceResultModel | null)[] = [];
+  models: Observable<FeatureResponseModel[]> = new Observable();
+  populatedPlaces: Observable<FeatureResponseModel[]> = new Observable();
   
-  engines: (string | null)[] = [];
-  transmissions: (string | null)[] = [];
-  bodyStyles: (string | null)[] = [];
-  conditions: (string | null)[] = [];
-  colors: (string | null)[] = [];
-  euroStandards: (string | null)[] = [];
+  engines: Observable<FeatureResponseModel[]> = new Observable();
+  transmissions: Observable<FeatureResponseModel[]> = new Observable();
+  bodyStyles: Observable<FeatureResponseModel[]> = new Observable();
+
+  conditions: Observable<FeatureResponseModel[]> = new Observable();
+  euroStandards: Observable<FeatureResponseModel[]> = new Observable();
 
   powerUnits: UnitInfo[] = [];
   currencyUnits: UnitInfo[] = [];
@@ -42,41 +42,41 @@ export class SearchAdvertsComponent implements OnInit {
     private unitService: UnitService,
     private featureService: FeatureService,
     private router: Router,
+    private helpers: Helpers,
     public messagesService: DisplayMessagesService) { }
 
   ngOnInit(): void {
 
     this.initializeYears();
 
-    this.brands = this.featureService.getBrands();
-    this.regions = this.featureService.getRegions();
-
     this.unitService.getPowerUnits().subscribe(res => this.powerUnits = res);
     this.unitService.getCurrencyUnits().subscribe(res => this.currencyUnits = res);
     this.unitService.getMileageUnits().subscribe(res => this.mileageUnits = res);
 
-    this.featureService.getEngines().subscribe(res => this.reset(this.engines, res));
-    this.featureService.getEuroStandards().subscribe(res => this.reset(this.euroStandards, res));
+    this.brands = this.featureService.getBrands();
+    this.regions = this.featureService.getRegions();
 
-    this.featureService.getTransmissions().subscribe(res => this.reset(this.transmissions, res));
-    this.featureService.getColors().subscribe(res => this.reset(this.colors, res));
+    this.colors = this.featureService.getColors();
+    this.engines = this.featureService.getEngines();
 
-    this.featureService.getConditions().subscribe(res => this.reset(this.conditions, res));
-    this.featureService.getBodyStyles().subscribe(res => this.reset(this.bodyStyles, res));
+    this.euroStandards = this.featureService.getEuroStandards();
+    this.transmissions = this.featureService.getTransmissions();
 
-    this.loadModelsByBrand(null);
-    this.loadPopulatedPlacesByRegion(null);
+    this.conditions = this.featureService.getConditions();
+    this.bodyStyles = this.featureService.getBodyStyles();
+
+    this.loadModelsByBrand();
+    this.loadPopulatedPlacesByRegion();
   }
 
   searchAdverts() {
-    const queryInput = this.input;
-    const queryParameters = new Map<string, string | null>();
-    Object.entries(queryInput).forEach(entry => queryParameters.set(entry[0], entry[1]));
-    const obj = Object.fromEntries(queryParameters);
-    
     this.router.navigate(['/search/results'], {
-      queryParams: obj
+      queryParams: this.helpers.createQueryParamsForRouter(this.input)
     });
+  }
+
+  onFeaturesDropdownChange($event: any) {
+    this.input[$event.propertyName] = $event.option;
   }
 
   format(option: any): string {
@@ -85,44 +85,25 @@ export class SearchAdvertsComponent implements OnInit {
     return option == null ? this.messagesService.defaultDropdownListOption : formattedValue;
   }
 
-  loadPopulatedPlacesByRegion(region: string | null) {
-    this.input.region = region;
+  loadPopulatedPlacesByRegion($event?: any | null) {
     this.input.populatedPlaceId = null;
-    this.featureService
-      .getPopulatedPlacesByRegion(this.input.region)
-      .subscribe(res => this.reset(this.populatedPlaces, res.sort(this.orderByName)));
+    this.input.region = $event != null ? $event.option : null;
+    this.populatedPlaces = this.featureService.getPopulatedPlacesByRegion(this.input.region);
   }
 
-  loadModelsByBrand(brand: string | null) {
-    this.input.brand = brand;
+  loadModelsByBrand($event?: any | null) {
     this.input.modelId = null;
-    if (brand == null) {
-      this.reset(this.models, []);
-      return;
-    }
-    this.featureService
-      .getModelsByBrand(this.input.brand)
-      .subscribe(res => this.reset(this.models, res.sort(this.orderByName)));
+    this.input.brand = $event != null ? $event.option : null;
+    this.models = this.featureService.getModelsByBrand(this.input.brand);
   }
 
   private initializeYears() {
     const minYear = 1930;
     const maxYear = new Date().getFullYear();
-    this.reset(this.years, []);
+    this.years.length = 0;
+    this.years.push(null);
     for (let year = maxYear; year >= minYear; year--) {
       this.years.push(year);
     }
-  }
-
-  private reset<T>(destination: (T | null)[], source: T[]) {
-    destination.length = 0;
-    destination.push(null);
-    source.forEach(element => {
-      destination.push(element);
-    });
-  }
-
-  private orderByName(a: any, b: any) {
-    return a?.name > b?.name ? 1 : -1;
   }
 }

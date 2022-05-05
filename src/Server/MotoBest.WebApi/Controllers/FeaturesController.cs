@@ -44,34 +44,34 @@ public class FeaturesController : ApiController
     }
 
     [HttpGet("transmissions")]
-    public IEnumerable<string> GetAllTransmissions() => transmissionService.GetAllNames();
+    public IEnumerable<FeatureResultModel> GetAllTransmissions() => transmissionService.GetAll();
 
     [HttpGet("engines")]
-    public IEnumerable<string> GetAllEngines() => engineService.GetAllNames();
+    public IEnumerable<FeatureResultModel> GetAllEngines() => engineService.GetAll();
 
     [HttpGet("body-styles")]
-    public IEnumerable<string> GetAllBodyStyles() => bodyStyleService.GetAllNames();
+    public IEnumerable<FeatureResultModel> GetAllBodyStyles() => bodyStyleService.GetAll();
 
     [HttpGet("brands")]
-    public IEnumerable<string> GetAllBrands() => brandService.GetAllNames();
+    public IEnumerable<FeatureResultModel> GetAllBrands() => brandService.GetAll();
 
     [HttpGet("regions")]
-    public IEnumerable<string> GetAllRegions() => regionService.GetAllNames();
+    public IEnumerable<FeatureResultModel> GetAllRegions() => regionService.GetAll();
 
     [HttpGet("colors")]
-    public IEnumerable<string> GetAllColors() => colorService.GetAllNames();
+    public IEnumerable<FeatureResultModel> GetAllColors() => colorService.GetAll();
 
     [HttpGet("conditions")]
-    public IEnumerable<string> GetAllConditions() => conditionService.GetAllNames();
+    public IEnumerable<FeatureResultModel> GetAllConditions() => conditionService.GetAll();
 
     [HttpGet("euro-standards")]
-    public IEnumerable<string> GetAllEuroStandards() => euroStandardService.GetAllNames();
+    public IEnumerable<FeatureResultModel> GetAllEuroStandards() => euroStandardService.GetAll();
 
     [HttpGet("populated-places/{region?}")]
-    public IEnumerable<GetAllPopulatedPlacesByRegionResultModel> GetAllPopulatedPlacesByRegion(string? region)
+    public IEnumerable<FeatureResultModel> GetAllPopulatedPlacesByRegion(string? region)
         => populatedPlaceService.FindAllByRegion(region);
 
     [HttpGet("models/{brand?}")]
-    public IEnumerable<GetAllModelsByBrandResultModel> GetAllModelsByBrand(string? brand)
+    public IEnumerable<FeatureResultModel> GetAllModelsByBrand(string? brand)
         => modelService.FindAllByBrand(brand);
 }

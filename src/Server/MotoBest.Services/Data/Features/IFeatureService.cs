@@ -16,5 +16,7 @@ public interface IFeatureService<TFeature>
     /// </summary>
     TFeature? FindByName(string? name);
 
+    Task<TFeature?> FindById(int? id);
+
     IEnumerable<FeatureResultModel> GetAll();
 }

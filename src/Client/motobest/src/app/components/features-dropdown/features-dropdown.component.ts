@@ -14,7 +14,6 @@ export class FeaturesDropdownComponent implements OnInit, OnChanges {
   @Input() title: string = '';
   @Input() propertyName: string = '';
   @Input() property: any | null = null;
-  @Input() nameForValue: boolean = false;
   @Input() dividedByGroups: boolean = false;
   @Input() observablesList: Observable<FeatureResponseModel[]> = new Observable();
   @Output() onChangeHandler = new EventEmitter();

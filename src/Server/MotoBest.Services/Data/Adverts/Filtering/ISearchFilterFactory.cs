@@ -2,7 +2,7 @@
 
 namespace MotoBest.Services.Data.Adverts.Filtering;
 
-public interface ISearchFilterBuilder
+public interface ISearchFilterFactory
 {
     ISearchFilterOptionsBuilder CreateFilterFor(IQueryable<Advert> adverts);
 }

@@ -43,12 +43,12 @@ export class FeatureService {
         return this.getFeatures(this.apiRoutes.allEuroStandards);
     }
 
-    getPopulatedPlacesByRegion(region: string | null): Observable<FeatureResponseModel[]> {
-        return this.getFeatures(`${this.apiRoutes.allPopulatedPlaces}/${region}`);
+    getPopulatedPlacesByRegion(regionId: number | null): Observable<FeatureResponseModel[]> {
+        return this.getFeatures(`${this.apiRoutes.allPopulatedPlaces}/${regionId}`);
     }
 
-    getModelsByBrand(brand: string | null): Observable<FeatureResponseModel[]> {
-        return this.getFeatures(`${this.apiRoutes.allModels}/${brand}`);
+    getModelsByBrand(brandId: number | null): Observable<FeatureResponseModel[]> {
+        return this.getFeatures(`${this.apiRoutes.allModels}/${brandId}`);
     }
 
     private getFeatures<T>(url: string): Observable<T> {

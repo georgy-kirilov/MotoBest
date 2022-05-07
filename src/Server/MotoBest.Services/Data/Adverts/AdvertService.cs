@@ -16,79 +16,80 @@ public class AdvertService : IAdvertService
 {
     private readonly IMapper mapper;
 
-    private readonly IEuroStandardService euroStandardService;
-    private readonly IPopulatedPlaceService populatedPlaceService;
+    private readonly IEuroStandardService euroStandards;
+    private readonly IPopulatedPlaceService populatedPlaces;
 
-    private readonly IRepository<Advert> advertRepository;
-    private readonly IRepository<Image> imageRepository;
+    private readonly IRepository<Advert> adverts;
+    private readonly IRepository<Image> images;
 
-    private readonly IFeatureService<Transmission> transmissionService;
-    private readonly IFeatureService<BodyStyle> bodyStyleService;
+    private readonly IFeatureService<Transmission> transmissions;
+    private readonly IFeatureService<BodyStyle> bodyStyles;
 
-    private readonly IFeatureService<Engine> engineService;
-    private readonly IFeatureService<Condition> conditionService;
+    private readonly IFeatureService<Engine> engines;
+    private readonly IFeatureService<Condition> conditions;
 
-    private readonly IFeatureService<Color> colorService;
-    private readonly IFeatureService<Brand> brandService;
+    private readonly IFeatureService<Color> colors;
+    private readonly IFeatureService<Brand> brands;
 
-    private readonly IFeatureService<Site> siteService;
-    private readonly ISearchFilterBuilder searchFilterBuilder;
+    private readonly IFeatureService<Site> sites;
+    private readonly ISearchFilterFactory searchFilter;
 
     public AdvertService(
         IMapper mapper,
-        IEuroStandardService euroStandardService,
-        IPopulatedPlaceService populatedPlaceService,
-        IRepository<Advert> advertRepository,
-        IRepository<Image> imageRepository,
-        IFeatureService<Transmission> transmissionService,
-        IFeatureService<BodyStyle> bodyStyleService,
-        IFeatureService<Engine> engineService,
-        IFeatureService<Condition> conditionService,
-        IFeatureService<Color> colorService,
-        IFeatureService<Brand> brandService,
-        IFeatureService<Site> siteService,
-        ISearchFilterBuilder advertSearchFilterBuilder)
+        IEuroStandardService euroStandards,
+        IPopulatedPlaceService populatedPlaces,
+        IRepository<Advert> adverts,
+        IRepository<Image> images,
+        IFeatureService<Transmission> transmissions,
+        IFeatureService<BodyStyle> bodyStyles,
+        IFeatureService<Engine> engines,
+        IFeatureService<Condition> conditions,
+        IFeatureService<Color> colors,
+        IFeatureService<Brand> brands,
+        IFeatureService<Site> sites,
+        ISearchFilterFactory searchFilter)
     {
         this.mapper = mapper;
-        this.advertRepository = advertRepository;
-        this.imageRepository = imageRepository;
-        this.transmissionService = transmissionService;
-        this.bodyStyleService = bodyStyleService;
-        this.engineService = engineService;
-        this.conditionService = conditionService;
-        this.colorService = colorService;
-        this.euroStandardService = euroStandardService;
-        this.populatedPlaceService = populatedPlaceService;
-        this.brandService = brandService;
-        this.siteService = siteService;
-        this.searchFilterBuilder = advertSearchFilterBuilder;
+        this.adverts = adverts;
+        this.images = images;
+        this.transmissions = transmissions;
+        this.bodyStyles = bodyStyles;
+        this.engines = engines;
+        this.conditions = conditions;
+        this.colors = colors;
+        this.euroStandards = euroStandards;
+        this.populatedPlaces = populatedPlaces;
+        this.brands = brands;
+        this.sites = sites;
+        this.searchFilter = searchFilter;
     }
 
     public async Task AddOrUpdate(NormalizedAdvert normalizedAdvert)
     {
-        var siteId = siteService.FindIdByName(normalizedAdvert.Site);
-        var transmissionId = transmissionService.FindIdByName(normalizedAdvert.Transmission);
+        var siteId = sites.FindIdByName(normalizedAdvert.Site);
+        var transmissionId = transmissions.FindIdByName(normalizedAdvert.Transmission);
 
-        var engineId = engineService.FindIdByName(normalizedAdvert.Engine);
-        var bodyStyleId = bodyStyleService.FindIdByName(normalizedAdvert.BodyStyle);
+        var engineId = engines.FindIdByName(normalizedAdvert.Engine);
+        var bodyStyleId = bodyStyles.FindIdByName(normalizedAdvert.BodyStyle);
 
-        var colorId = colorService.FindIdByName(normalizedAdvert.Color);
-        var conditionId = conditionService.FindIdByName(normalizedAdvert.Condition);
+        var colorId = colors.FindIdByName(normalizedAdvert.Color);
+        var conditionId = conditions.FindIdByName(normalizedAdvert.Condition);
 
-        var brand = brandService.FindByName(normalizedAdvert.Brand);
+        var brand = brands.FindByName(normalizedAdvert.Brand);
         var model = brand?.Models.FirstOrDefault(m => m.Name == normalizedAdvert.Model);
 
         var (euroStandard, isEuroStandardApproximate) = await FindOrApproximateEuroStandard(
             normalizedAdvert.EuroStandard,
             normalizedAdvert.ManufacturedOn);
 
-        var populatedPlace = populatedPlaceService.FindByRegion(
+        var populatedPlace = populatedPlaces.FindByRegion(
             normalizedAdvert.Region,
             normalizedAdvert.PopulatedPlace,
             normalizedAdvert.PopulatedPlaceType);
 
         var images = normalizedAdvert.ImageUrls
-            .Select(url => new Image { Url = url }).ToList();
+            .Select(url => new Image { Url = url })
+            .ToList();
 
         var (advert, doesAdvertExist) = await FindAdvertBySiteInfo(normalizedAdvert.RemoteId, siteId);
 
@@ -125,64 +126,63 @@ public class AdvertService : IAdvertService
         advert.ModelId = model?.Id;
 
         advert.EuroStandardId = euroStandard?.Id;
-        Console.WriteLine(advert.EuroStandardId);
         advert.IsEuroStandardApproximate = isEuroStandardApproximate;
 
         if (!doesAdvertExist)
         {
-            await advertRepository.AddAsync(advert);
+            await adverts.AddAsync(advert);
         }
 
-        await advertRepository.SaveChangesAsync();
+        await adverts.SaveChangesAsync();
     }
 
     public async Task<GetFullAdvertResultModel?> GetFullAdvert(string id)
     {
-        var advert = await advertRepository.All().FirstOrDefaultAsync(a => a.Id == id);
+        var advert = await adverts.All().FirstOrDefaultAsync(a => a.Id == id);
         return mapper.Map<GetFullAdvertResultModel>(advert);
     }
 
     public DateTime? FindLatestAdvertModifiedOnDate(string site)
-        => FindAdvertsBySiteId(siteService.FindIdByName(site))
+        => FindAdvertsBySiteId(sites.FindIdByName(site))
             .FirstOrDefault()?
             .ModifiedOn;
 
     public IEnumerable<SearchAdvertsResultModel> SearchAdverts(
-        SearchAdvertsInputModel serviceModel,
+        SearchAdvertsInputModel input,
         int pageIndex,
         int resultsPerPageCount)
-        => FilterAdvertsBy(serviceModel)
+        => FilterAdvertsBy(input)
             .Skip(count: pageIndex * resultsPerPageCount)
             .Take(resultsPerPageCount)
             .ToList()
             .Select(mapper.Map<Advert, SearchAdvertsResultModel>);
 
     private IQueryable<Advert> FilterAdvertsBy(SearchAdvertsInputModel input)
-        => searchFilterBuilder
-            .CreateFilterFor(advertRepository.All())
-            .ByBodyStyle(input.BodyStyle)
-            .ByMaking(input.Brand, input.ModelId)
-            .ByColor(input.Color)
-            .ByCondition(input.Condition)
-            .ByEuroStandard(input.EuroStandard)
-            .ByEngine(input.Engine)
-            .ByLocation(input.Region, input.PopulatedPlaceId)
-            .ByTransmission(input.Transmission)
+        => searchFilter
+            .CreateFilterFor(adverts.All())
+            .ByBodyStyle(input.BodyStyleId)
+            .ByMaking(input.BrandId, input.ModelId)
+            .ByColor(input.ColorId)
+            .ByCondition(input.ConditionId)
+            .ByEuroStandard(input.EuroStandardId)
+            .ByEngine(input.EngineId)
+            .ByLocation(input.RegionId, input.PopulatedPlaceId)
+            .ByTransmission(input.TransmissionId)
             .ByPower(input.MinPowerInHp, input.MaxPowerInHp)
-            .ByKilometrage(input.MinMileageInKm, input.MaxMileageInKm)
+            .ByMileage(input.MinMileageInKm, input.MaxMileageInKm)
             .ByYear(input.MinYear, input.MaxYear)
             .ByPrice(input.MinPriceInBgn, input.MaxPriceInBgn)
             .ApplyFilter();
 
     private IQueryable<Advert> FindAdvertsBySiteId(int? siteId)
-        => advertRepository.All().Where(a => a.SiteId == siteId);
+        => adverts.All().Where(a => a.SiteId == siteId);
 
     private async Task<(Advert advert, bool doesAdvertExist)> FindAdvertBySiteInfo(string? remoteId, int? siteId)
     {
-        var advert = await advertRepository.All()
+        var advert = await adverts.All()
             .FirstOrDefaultAsync(a => a.RemoteId == remoteId && a.SiteId == siteId) ?? new Advert();
 
-        bool doesAdvertExist = advertRepository.All()
+        bool doesAdvertExist = adverts.All()
             .Any(a => a.RemoteId == remoteId && a.SiteId == siteId);
 
         return (advert, doesAdvertExist);
@@ -193,12 +193,12 @@ public class AdvertService : IAdvertService
         DateTime? manufacturedOn)
     {
         bool isApproximate = false;
-        var euroStandard = euroStandardService.FindByName(euroStandardName);
+        var euroStandard = euroStandards.FindByName(euroStandardName);
 
         if (euroStandard == null)
         {
             isApproximate = true;
-            euroStandard = await euroStandardService.Approximate(manufacturedOn);
+            euroStandard = await euroStandards.Approximate(manufacturedOn);
         }
 
         return (euroStandard, isApproximate);
@@ -208,7 +208,7 @@ public class AdvertService : IAdvertService
     {
         foreach (var imageToDelete in imagesToDelete)
         {
-            imageRepository.Delete(imageToDelete);
+            images.Delete(imageToDelete);
         }
     }
 }

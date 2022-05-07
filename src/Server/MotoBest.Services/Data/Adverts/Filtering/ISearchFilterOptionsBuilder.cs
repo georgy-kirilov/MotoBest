@@ -6,27 +6,27 @@ public interface ISearchFilterOptionsBuilder
 {
     IQueryable<Advert> ApplyFilter();
 
-    ISearchFilterOptionsBuilder ByBodyStyle(string? bodyStyle);
+    ISearchFilterOptionsBuilder ByMaking(int? brandId, int? modelId);
 
-    ISearchFilterOptionsBuilder ByColor(string? color);
+    ISearchFilterOptionsBuilder ByBodyStyle(int? bodyStyleId);
 
-    ISearchFilterOptionsBuilder ByCondition(string? condition);
+    ISearchFilterOptionsBuilder ByColor(int? colorId);
 
-    ISearchFilterOptionsBuilder ByEngine(string? engine);
+    ISearchFilterOptionsBuilder ByCondition(int? conditionId);
 
-    ISearchFilterOptionsBuilder ByTransmission(string? transmission);
+    ISearchFilterOptionsBuilder ByEngine(int? engineId);
+
+    ISearchFilterOptionsBuilder ByTransmission(int? transmissionId);
+
+    ISearchFilterOptionsBuilder ByEuroStandard(int? euroStandardId);
 
     ISearchFilterOptionsBuilder ByPower(int? minPowerInHp, int? maxPowerInHp);
 
-    ISearchFilterOptionsBuilder ByKilometrage(int? minMileageInKm, int? maxMileageInKm);
+    ISearchFilterOptionsBuilder ByMileage(int? minMileageInKm, int? maxMileageInKm);
 
     ISearchFilterOptionsBuilder ByYear(int? minYear, int? maxYear);
 
-    ISearchFilterOptionsBuilder ByMaking(string? brand, int? model);
-
-    ISearchFilterOptionsBuilder ByLocation(string? region, int? populatedPlace);
+    ISearchFilterOptionsBuilder ByLocation(int? regionId, int? populatedPlaceId);
 
     ISearchFilterOptionsBuilder ByPrice(decimal? minPriceInBgn, decimal? maxPriceInBgn);
-
-    ISearchFilterOptionsBuilder ByEuroStandard(string? euroStandard);
 }

@@ -10,7 +10,7 @@
         <optgroup *ngFor="let optionGroup of groupsByLetter | keyvalue" [label]="optionGroup.key">
             <option
                 *ngFor="let option of optionGroup.value"
-                [value]="nameForValue ? option.name : option.id">
+                [value]="option.id">
                 {{option.name}}
             </option>
         </optgroup>

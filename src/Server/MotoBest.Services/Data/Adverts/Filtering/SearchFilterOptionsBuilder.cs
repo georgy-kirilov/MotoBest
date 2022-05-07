@@ -1,42 +1,12 @@
 ﻿using MotoBest.Data.Models;
-using MotoBest.Services.Data.Features;
 
 namespace MotoBest.Services.Data.Adverts.Filtering;
 
-public class SearchFilterOptionsBuilder : ISearchFilterBuilder, ISearchFilterOptionsBuilder
+public class SearchFilterOptionsBuilder : ISearchFilterFactory, ISearchFilterOptionsBuilder
 {
-    private IQueryable<Advert> query;
+    private IQueryable<Advert> query = new List<Advert>().AsQueryable();
 
-    private readonly IFeatureService<Engine> engineService;
-    private readonly IFeatureService<Transmission> transmissionService;
-    private readonly IFeatureService<BodyStyle> bodyStyleService;
-    private readonly IFeatureService<Color> colorService;
-    private readonly IFeatureService<Condition> conditionService;
-    private readonly IFeatureService<Brand> brandService;
-    private readonly IFeatureService<Region> regionService;
-    private readonly IFeatureService<EuroStandard> euroStandardService;
-
-    public SearchFilterOptionsBuilder(
-        IFeatureService<Engine> engineService,
-        IFeatureService<Transmission> transmissionService,
-        IFeatureService<BodyStyle> bodyStyleService,
-        IFeatureService<Color> colorService,
-        IFeatureService<Condition> conditionService,
-        IFeatureService<Brand> brandService,
-        IFeatureService<Region> regionService,
-        IFeatureService<EuroStandard> euroStandardService)
-    {
-        query = new List<Advert>().AsQueryable();
-
-        this.engineService = engineService;
-        this.transmissionService = transmissionService;
-        this.bodyStyleService = bodyStyleService;
-        this.colorService = colorService;
-        this.conditionService = conditionService;
-        this.brandService = brandService;
-        this.regionService = regionService;
-        this.euroStandardService = euroStandardService;
-    }
+    public IQueryable<Advert> ApplyFilter() => query;
 
     public ISearchFilterOptionsBuilder CreateFilterFor(IQueryable<Advert> adverts)
     {
@@ -44,113 +14,95 @@ public class SearchFilterOptionsBuilder : ISearchFilterBuilder, ISearchFilterOpt
         return this;
     }
 
-    public IQueryable<Advert> ApplyFilter() => query;
-
-    public ISearchFilterOptionsBuilder ByBodyStyle(string? bodyStyle)
+    public ISearchFilterOptionsBuilder ByMaking(int? brandId, int? modelId)
     {
-        var bodyStyleId = bodyStyleService.FindIdByName(bodyStyle);
-        query = query.Where(a => bodyStyle == null || a.BodyStyleId == bodyStyleId);
+        if (modelId != null)
+        {
+            query = query.Where(adv => adv.ModelId == modelId);
+        }
+        else
+        {
+            query = query.Where(adv => brandId == null || adv.BrandId == brandId);
+        }
+
         return this;
     }
 
-    public ISearchFilterOptionsBuilder ByColor(string? color)
+    public ISearchFilterOptionsBuilder ByBodyStyle(int? bodyStyleId)
     {
-        var colorId = colorService.FindIdByName(color);
-        query = query.Where(a => color == null || a.ColorId == colorId);
+        query = query.Where(adv => bodyStyleId == null || adv.BodyStyleId == bodyStyleId);
         return this;
     }
 
-    public ISearchFilterOptionsBuilder ByCondition(string? condition)
+    public ISearchFilterOptionsBuilder ByEngine(int? engineId)
     {
-        var conditionId = conditionService.FindIdByName(condition);
-        query = query.Where(a => condition == null || a.ConditionId == conditionId);
+        query = query.Where(adv => engineId == null || adv.EngineId == engineId);
         return this;
     }
 
-    public ISearchFilterOptionsBuilder ByEngine(string? engine)
+    public ISearchFilterOptionsBuilder ByTransmission(int? transmissionId)
     {
-        var engineId = engineService.FindIdByName(engine);
-        query = query.Where(a => engine == null || a.EngineId == engineId);
+        query = query.Where(adv => transmissionId == null || adv.TransmissionId == transmissionId);
         return this;
     }
 
-    public ISearchFilterOptionsBuilder ByTransmission(string? transmission)
+    public ISearchFilterOptionsBuilder ByCondition(int? conditionId)
     {
-        var transmissionId = transmissionService.FindIdByName(transmission);
-        query = query.Where(a => transmission == null || a.TransmissionId == transmissionId);
+        query = query.Where(adv => conditionId == null || adv.ConditionId == conditionId);
+        return this;
+    }
+
+    public ISearchFilterOptionsBuilder ByColor(int? colorId)
+    {
+        query = query.Where(adv => colorId == null || adv.ColorId == colorId);
+        return this;
+    }
+
+    public ISearchFilterOptionsBuilder ByEuroStandard(int? euroStandardId)
+    {
+        query = query.Where(adv => euroStandardId == null || adv.EuroStandardId == euroStandardId);
+        return this;
+    }
+
+    public ISearchFilterOptionsBuilder ByLocation(int? regionId, int? populatedPlaceId)
+    {
+        if (populatedPlaceId != null)
+        {
+            query = query.Where(adv => adv.PopulatedPlaceId == populatedPlaceId);
+        }
+        else
+        {
+            query = query.Where(adv => regionId == null || adv.RegionId == regionId);
+        }
+
         return this;
     }
 
     public ISearchFilterOptionsBuilder ByPower(int? minPowerInHp, int? maxPowerInHp)
     {
-        query = query.Where(a =>
-            (minPowerInHp == null || a.PowerInHp >= minPowerInHp)
-            && (maxPowerInHp == null || a.PowerInHp <= maxPowerInHp));
-
+        query = query.Where(adv => minPowerInHp == null || adv.PowerInHp >= minPowerInHp);
+        query = query.Where(adv => maxPowerInHp == null || adv.PowerInHp <= maxPowerInHp);
         return this;
     }
 
-    public ISearchFilterOptionsBuilder ByKilometrage(int? minMileageInKm, int? maxMileageInKm)
+    public ISearchFilterOptionsBuilder ByMileage(int? minMileageInKm, int? maxMileageInKm)
     {
-        query = query.Where(a =>
-            (minMileageInKm == null || a.MileageInKm >= minMileageInKm)
-            && (maxMileageInKm == null || a.MileageInKm <= maxMileageInKm));
-
+        query = query.Where(adv => minMileageInKm == null || adv.MileageInKm >= minMileageInKm);
+        query = query.Where(adv => maxMileageInKm == null || adv.MileageInKm <= maxMileageInKm);
         return this;
     }
 
     public ISearchFilterOptionsBuilder ByYear(int? minYear, int? maxYear)
     {
-        query = query.Where(a =>
-            (minYear == null || (a.ManufacturedOn != null && a.ManufacturedOn.Value.Year >= minYear))
-            && (maxYear == null || (a.ManufacturedOn != null && a.ManufacturedOn!.Value.Year <= maxYear)));
-
+        query = query.Where(adv => minYear == null || (adv.ManufacturedOn != null && adv.ManufacturedOn.Value.Year >= minYear));
+        query = query.Where(adv => maxYear == null || (adv.ManufacturedOn != null && adv.ManufacturedOn.Value.Year <= maxYear));
         return this;
     }
 
     public ISearchFilterOptionsBuilder ByPrice(decimal? minPriceInBgn, decimal? maxPriceInBgn)
     {
-        query = query.Where(a =>
-            (minPriceInBgn == null || a.PriceInBgn >= minPriceInBgn)
-            && (maxPriceInBgn == null || a.PriceInBgn <= maxPriceInBgn));
-
-        return this;
-    }
-
-    public ISearchFilterOptionsBuilder ByMaking(string? brand, int? modelId)
-    {
-        if (modelId != null)
-        {
-            query = query.Where(a => a.ModelId == modelId);
-        }
-        else
-        {
-            var brandId = brandService.FindByName(brand)?.Id;
-            query = query.Where(a => brand == null || a.BrandId == brandId);
-        }
-        
-        return this;
-    }
-
-    public ISearchFilterOptionsBuilder ByLocation(string? region, int? populatedPlaceId)
-    {
-        if (populatedPlaceId != null)
-        {
-            query = query.Where(a => a.PopulatedPlaceId == populatedPlaceId);
-        }
-        else
-        {
-            var regionId = regionService.FindByName(region)?.Id;
-            query = query.Where(a => region == null || a.RegionId == regionId);
-        }
-
-        return this;
-    }
-
-    public ISearchFilterOptionsBuilder ByEuroStandard(string? euroStandard)
-    {
-        var euroStandardId = euroStandardService.FindIdByName(euroStandard);
-        query = query.Where(es => euroStandard == null || es.EuroStandardId == euroStandardId);
+        query = query.Where(adv => minPriceInBgn == null || adv.PriceInBgn >= minPriceInBgn);
+        query = query.Where(adv => maxPriceInBgn == null || adv.PriceInBgn <= maxPriceInBgn);
         return this;
     }
 }

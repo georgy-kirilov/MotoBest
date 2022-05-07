@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-
+using Microsoft.EntityFrameworkCore;
 using MotoBest.Data.Models.Common;
 using MotoBest.Data.Repositories;
 
@@ -22,8 +22,18 @@ public class FeatureService<TFeature> : IFeatureService<TFeature>
     public int? FindIdByName(string? name) => FindByName(name)?.Id;
 
     public TFeature? FindByName(string? name)
-        => featureRepository.All().FirstOrDefault(feat => feat.Name == name);
+        => featureRepository
+        .All()
+        .FirstOrDefault(feat => feat.Name == name);
 
     public IEnumerable<FeatureResultModel> GetAll()
-        => featureRepository.All().ToList().Select(mapper.Map<FeatureResultModel>);
+        => featureRepository
+        .All()
+        .ToList()
+        .Select(mapper.Map<FeatureResultModel>);
+
+    public async Task<TFeature?> FindById(int? id)
+        => await featureRepository
+        .All()
+        .FirstOrDefaultAsync(feat => feat.Id == id);
 }

@@ -10,5 +10,5 @@ public interface IPopulatedPlaceService : IFeatureService<PopulatedPlace>
         string? populatedPlaceName,
         PopulatedPlaceType? populatedPlaceType);
 
-    IEnumerable<FeatureResultModel> FindAllByRegion(string? regionName);
+    Task<IEnumerable<FeatureResultModel>> GetAllByRegion(int? regionId);
 }

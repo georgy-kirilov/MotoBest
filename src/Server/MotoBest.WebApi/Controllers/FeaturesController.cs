@@ -67,11 +67,11 @@ public class FeaturesController : ApiController
     [HttpGet("euro-standards")]
     public IEnumerable<FeatureResultModel> GetAllEuroStandards() => euroStandardService.GetAll();
 
-    [HttpGet("populated-places/{region?}")]
-    public IEnumerable<FeatureResultModel> GetAllPopulatedPlacesByRegion(string? region)
-        => populatedPlaceService.FindAllByRegion(region);
+    [HttpGet("populated-places/{regionId?}")]
+    public async Task<IEnumerable<FeatureResultModel>> GetAllPopulatedPlacesByRegion(int? regionId)
+        => await populatedPlaceService.GetAllByRegion(regionId);
 
-    [HttpGet("models/{brand?}")]
-    public IEnumerable<FeatureResultModel> GetAllModelsByBrand(string? brand)
-        => modelService.FindAllByBrand(brand);
+    [HttpGet("models/{brandId?}")]
+    public async Task<IEnumerable<FeatureResultModel>> GetAllModelsByBrand(int? brandId)
+        => await modelService.GetAllByBrand(brandId);
 }

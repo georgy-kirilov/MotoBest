@@ -21,3 +21,10 @@
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
 }
+
+@media (min-width: 960px) and (orientation: landscape) {
+    img {
+        height: 220px;
+    }
+
+}

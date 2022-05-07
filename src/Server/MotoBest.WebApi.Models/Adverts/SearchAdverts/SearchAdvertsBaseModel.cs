@@ -6,9 +6,9 @@ public abstract class SearchAdvertsBaseModel
 
     public string? Title { get; init; }
 
-    public string? Month { get; init; }
-
     public int? Year { get; init; }
+
+    public string? Month { get; init; }
 
     public string? Transmission { get; init; }
 

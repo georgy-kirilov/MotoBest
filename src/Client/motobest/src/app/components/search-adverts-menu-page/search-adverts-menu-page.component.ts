@@ -87,14 +87,18 @@ export class SearchAdvertsMenuPageComponent implements OnInit {
 
   loadPopulatedPlacesByRegion($event?: any | null) {
     this.input.populatedPlaceId = null;
-    this.input.region = $event != null ? $event.option : null;
-    this.populatedPlaces = this.featureService.getPopulatedPlacesByRegion(this.input.region);
+    this.input.regionId = $event != null ? $event.option : null;
+    if ($event) {
+      this.populatedPlaces = this.featureService.getPopulatedPlacesByRegion(this.input.regionId);
+    }
   }
 
   loadModelsByBrand($event?: any | null) {
     this.input.modelId = null;
-    this.input.brand = $event != null ? $event.option : null;
-    this.models = this.featureService.getModelsByBrand(this.input.brand);
+    this.input.brandId = $event != null ? $event.option : null;
+    if ($event) {
+      this.models = this.featureService.getModelsByBrand(this.input.brandId);
+    }
   }
 
   private initializeYears() {

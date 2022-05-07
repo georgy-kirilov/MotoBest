@@ -5,5 +5,5 @@ namespace MotoBest.Services.Data.Features;
 
 public interface IModelService : IFeatureService<Model>
 {
-    IEnumerable<FeatureResultModel> FindAllByBrand(string? brand);
+    Task<IEnumerable<FeatureResultModel>> GetAllByBrand(int? brandId);
 }

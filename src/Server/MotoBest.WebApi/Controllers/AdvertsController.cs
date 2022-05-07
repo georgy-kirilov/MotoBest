@@ -41,6 +41,7 @@ public class AdvertsController : ApiController
         }
 
         var response = advertMapper.MapUnits<GetFullAdvertResponseModel>(result, request);
+
         return Ok(response);
     }
 }

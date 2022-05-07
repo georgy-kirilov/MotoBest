@@ -20,13 +20,10 @@ public class ModelService : FeatureService<Model>, IModelService
         this.brandService = brandService;
     }
 
-    public IEnumerable<FeatureResultModel> FindAllByBrand(string? brand)
+    public async Task<IEnumerable<FeatureResultModel>> GetAllByBrand(int? brandId)
     {
-        var models = brandService
-            .FindByName(brand)?
-            .Models
-            .Select(mapper.Map<FeatureResultModel>);
-
+        var brand = await brandService.FindById(brandId);
+        var models = brand?.Models.Select(mapper.Map<FeatureResultModel>);
         return models ?? new List<FeatureResultModel>();
     }
 }

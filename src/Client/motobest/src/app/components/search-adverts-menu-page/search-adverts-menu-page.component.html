@@ -3,13 +3,12 @@
     <div class="col-11 mx-auto px-3 py-2 row align-items-center">
         <div class="form-group my-2 col-6 col-lg-2">
             <app-features-dropdown
-                propertyName="brand"
-                [property]="input.brand"
+                propertyName="brandId"
+                [property]="input.brandId"
                 [title]="messagesService.brand"
                 [observablesList]="brands"
                 (onChangeHandler)="loadModelsByBrand($event)"
-                [dividedByGroups]="true"
-                [nameForValue]="true">
+                [dividedByGroups]="true">
             </app-features-dropdown>
         </div>
         <div class="form-group my-2 col-6 col-lg-2">
@@ -19,85 +18,77 @@
                 [title]="messagesService.model"
                 [observablesList]="models"
                 (onChangeHandler)="onFeaturesDropdownChange($event)"
-                [dividedByGroups]="true"
-                [nameForValue]="false">
+                [dividedByGroups]="true">
             </app-features-dropdown>
         </div>
         <div class="form-group my-2 col-6 col-lg-2">
             <app-features-dropdown
-                propertyName="bodyStyle"
-                [property]="input.bodyStyle"
+                propertyName="bodyStyleId"
+                [property]="input.bodyStyleId"
                 [title]="messagesService.bodyStyle"
                 [observablesList]="bodyStyles"
                 (onChangeHandler)="onFeaturesDropdownChange($event)"
-                [dividedByGroups]="false"
-                [nameForValue]="true">
+                [dividedByGroups]="false">
             </app-features-dropdown>
         </div>
         <div class="form-group my-2 col-6 col-lg-2">
             <app-features-dropdown
-                propertyName="engine"
-                [property]="input.engine"
+                propertyName="engineId"
+                [property]="input.engineId"
                 [title]="messagesService.engine"
                 [observablesList]="engines"
                 (onChangeHandler)="onFeaturesDropdownChange($event)"
-                [dividedByGroups]="false"
-                [nameForValue]="true">
+                [dividedByGroups]="false">
             </app-features-dropdown>
         </div>
         <div class="form-group my-2 col-6 col-lg-2">
             <app-features-dropdown
-                propertyName="transmission"
-                [property]="input.transmission"
+                propertyName="transmissionId"
+                [property]="input.transmissionId"
                 [title]="messagesService.transmission"
                 [observablesList]="transmissions"
                 (onChangeHandler)="onFeaturesDropdownChange($event)"
-                [dividedByGroups]="false"
-                [nameForValue]="true">
+                [dividedByGroups]="false">
             </app-features-dropdown>
         </div>
         <div class="form-group my-2 col-6 col-lg-2">
             <app-features-dropdown
-                propertyName="condition"
-                [property]="input.condition"
+                propertyName="conditionId"
+                [property]="input.conditionId"
                 [title]="messagesService.condition"
                 [observablesList]="conditions"
                 (onChangeHandler)="onFeaturesDropdownChange($event)"
-                [dividedByGroups]="false"
-                [nameForValue]="true">
+                [dividedByGroups]="false">
             </app-features-dropdown>
         </div>
         <div class="form-group my-2 col-6 col-lg-2">
             <app-features-dropdown
-                propertyName="euroStandard"
-                [property]="input.euroStandard"
+                propertyName="euroStandardId"
+                [property]="input.euroStandardId"
                 [title]="messagesService.euroStandard"
                 [observablesList]="euroStandards"
                 (onChangeHandler)="onFeaturesDropdownChange($event)"
-                [dividedByGroups]="false"
-                [nameForValue]="true">
+                [dividedByGroups]="false">
             </app-features-dropdown>
         </div>
         <div class="form-group my-2 col-6 col-lg-2">
             <app-features-dropdown
-                propertyName="color"
-                [property]="input.color"
+                propertyName="colorId"
+                [property]="input.colorId"
                 [title]="messagesService.color"
                 [observablesList]="colors"
                 (onChangeHandler)="onFeaturesDropdownChange($event)"
-                [dividedByGroups]="true"
-                [nameForValue]="true">
+                [dividedByGroups]="true">
             </app-features-dropdown>
         </div>
         <div class="form-group my-2 col-6 col-lg-2">
             <app-features-dropdown
-                propertyName="region"
-                [property]="input.region"
+                propertyName="regionId"
+                [property]="input.regionId"
                 [title]="messagesService.region"
                 [observablesList]="regions"
                 (onChangeHandler)="loadPopulatedPlacesByRegion($event)"
-                [dividedByGroups]="true"
-                [nameForValue]="true">
+                [dividedByGroups]="true">
             </app-features-dropdown>
         </div>
         <div class="form-group my-2 col-6 col-lg-2">
@@ -107,8 +98,7 @@
                 [title]="messagesService.populatedPlace"
                 [observablesList]="populatedPlaces"
                 (onChangeHandler)="onFeaturesDropdownChange($event)"
-                [dividedByGroups]="true"
-                [nameForValue]="true">
+                [dividedByGroups]="true">
             </app-features-dropdown>
         </div>
         <div class="form-group my-2 col-6 col-lg-2">

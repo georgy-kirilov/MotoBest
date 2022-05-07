@@ -2,10 +2,10 @@
     <div
         *ngFor="let result of searchAdvertsResults; let i = index"
         (click)="viewFullAdvert(i)"
-        class="card col-lg-2 col-11 m-2 stretched-link advert-result-card"
+        class="card col-xl-2 col-lg-3 col-sm-6 col-md-4 col-11 m-2 stretched-link advert-result-card"
         [ngClass]="boxShadowClasses[i]" (mouseover)="changeStyle($event, i)" (mouseout)="changeStyle($event, i)">
         <img
-            style="height: 280px; object-fit: cover;"
+            style="object-fit: cover;"
             src="{{result.mainImageUrl}}"
             onerror="this.src='assets/images/default-advert-image.png'"
             alt="Advert Image"

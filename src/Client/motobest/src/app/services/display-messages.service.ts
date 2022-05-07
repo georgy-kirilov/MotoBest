@@ -20,6 +20,12 @@ export class DisplayMessagesService {
 
     get populatedPlace() { return 'Населено място '};
 
+    get mileage() { return 'Пробег' };
+
+    get power() { return 'Мощност' };
+
+    get manufacturedOn() { return 'Произведено' };
+
     get defaultDropdownListOption() { return 'Без значение' }
 
     get defaultNumericInputListValue() { return 'Няма' }

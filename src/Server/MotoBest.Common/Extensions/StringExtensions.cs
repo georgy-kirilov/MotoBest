@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using System.Text.RegularExpressions;
 
 namespace MotoBest.Common.Extensions;
 
@@ -7,8 +8,9 @@ public static class StringExtensions
     public static string RemoveRepeatingWhiteSpaces(this string text)
     {
         var stringBuilder = new StringBuilder();
+        var words = text.Split(new[] { ' ', '\n', '\t' }, StringSplitOptions.RemoveEmptyEntries);
 
-        foreach (string word in text.Split(' ', StringSplitOptions.RemoveEmptyEntries))
+        foreach (string word in words)
         {
             stringBuilder.Append(word);
             stringBuilder.Append(' ');
@@ -17,11 +19,14 @@ public static class StringExtensions
         return stringBuilder.ToString().Trim();
     }
 
+    public static string ReplaceFirst(this string text, string oldValue, string newValue)
+        => new Regex(Regex.Escape(oldValue)).Replace(text, newValue, 1);
+
     public static string RemoveStrings(this string text, params string[] stringsToSanitize)
-        => text.ReplaceMany(newValue: string.Empty, stringsToSanitize);
+        => text.ReplaceWith(newValue: string.Empty, stringsToSanitize);
 
 
-    public static string ReplaceMany(this string text, string newValue, params string[] oldValues)
+    public static string ReplaceWith(this string text, string newValue, params string[] oldValues)
     {
         var stringBuilder = new StringBuilder(text);
 

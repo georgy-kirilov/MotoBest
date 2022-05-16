@@ -1,0 +1,203 @@
+<div class="py-3 mx-auto align-middle col-12 col-lg-9">
+    <h3 class="text-center my-lg-4">Критерии за търсене</h3>
+    <div class="col-11 mx-auto px-3 py-2 row align-items-center">
+        <div class="form-group my-2 col-6 col-lg-2">
+            <app-features-dropdown
+                propertyName="brandId"
+                [property]="input.brandId"
+                [title]="messagesService.brand"
+                [observablesList]="brands"
+                (onChangeHandler)="loadModelsByBrand($event)"
+                [dividedByGroups]="true">
+            </app-features-dropdown>
+        </div>
+        <div class="form-group my-2 col-6 col-lg-2">
+            <app-features-dropdown
+                propertyName="modelId"
+                [property]="input.modelId"
+                [title]="messagesService.model"
+                [observablesList]="models"
+                (onChangeHandler)="onFeaturesDropdownChange($event)"
+                [dividedByGroups]="true">
+            </app-features-dropdown>
+        </div>
+        <div class="form-group my-2 col-6 col-lg-2">
+            <app-features-dropdown
+                propertyName="bodyStyleId"
+                [property]="input.bodyStyleId"
+                [title]="messagesService.bodyStyle"
+                [observablesList]="bodyStyles"
+                (onChangeHandler)="onFeaturesDropdownChange($event)"
+                [dividedByGroups]="false">
+            </app-features-dropdown>
+        </div>
+        <div class="form-group my-2 col-6 col-lg-2">
+            <app-features-dropdown
+                propertyName="engineId"
+                [property]="input.engineId"
+                [title]="messagesService.engine"
+                [observablesList]="engines"
+                (onChangeHandler)="onFeaturesDropdownChange($event)"
+                [dividedByGroups]="false">
+            </app-features-dropdown>
+        </div>
+        <div class="form-group my-2 col-6 col-lg-2">
+            <app-features-dropdown
+                propertyName="transmissionId"
+                [property]="input.transmissionId"
+                [title]="messagesService.transmission"
+                [observablesList]="transmissions"
+                (onChangeHandler)="onFeaturesDropdownChange($event)"
+                [dividedByGroups]="false">
+            </app-features-dropdown>
+        </div>
+        <div class="form-group my-2 col-6 col-lg-2">
+            <app-features-dropdown
+                propertyName="conditionId"
+                [property]="input.conditionId"
+                [title]="messagesService.condition"
+                [observablesList]="conditions"
+                (onChangeHandler)="onFeaturesDropdownChange($event)"
+                [dividedByGroups]="false">
+            </app-features-dropdown>
+        </div>
+        <div class="form-group my-2 col-6 col-lg-2">
+            <app-features-dropdown
+                propertyName="euroStandardId"
+                [property]="input.euroStandardId"
+                [title]="messagesService.euroStandard"
+                [observablesList]="euroStandards"
+                (onChangeHandler)="onFeaturesDropdownChange($event)"
+                [dividedByGroups]="false">
+            </app-features-dropdown>
+        </div>
+        <div class="form-group my-2 col-6 col-lg-2">
+            <app-features-dropdown
+                propertyName="colorId"
+                [property]="input.colorId"
+                [title]="messagesService.color"
+                [observablesList]="colors"
+                (onChangeHandler)="onFeaturesDropdownChange($event)"
+                [dividedByGroups]="true">
+            </app-features-dropdown>
+        </div>
+        <div class="form-group my-2 col-6 col-lg-2">
+            <app-features-dropdown
+                propertyName="regionId"
+                [property]="input.regionId"
+                [title]="messagesService.region"
+                [observablesList]="regions"
+                (onChangeHandler)="loadPopulatedPlacesByRegion($event)"
+                [dividedByGroups]="true">
+            </app-features-dropdown>
+        </div>
+        <div class="form-group my-2 col-6 col-lg-2">
+            <app-features-dropdown
+                propertyName="populatedPlaceId"
+                [property]="input.populatedPlaceId"
+                [title]="messagesService.populatedPlace"
+                [observablesList]="populatedPlaces"
+                (onChangeHandler)="onFeaturesDropdownChange($event)"
+                [dividedByGroups]="true">
+            </app-features-dropdown>
+        </div>
+        <div class="form-group my-2 col-6 col-lg-2">
+            <label class="mb-2">Година от</label>
+            <select [(ngModel)]="input.minYear" class="form-select shadow-sm">
+                <option *ngFor="let year of years" [value]="year">{{format(year)}}</option>
+            </select>
+        </div>
+        <div class="form-group my-2 col-6 col-lg-2">
+            <label class="mb-2">Година до</label>
+            <select [(ngModel)]="input.maxYear" class="form-select shadow-sm">
+                <option *ngFor="let year of years" [value]="year">{{format(year)}}</option>
+            </select>
+        </div>
+        <div class="form-group my-2 col-4 col-lg-2">
+            <label class="mb-2">Цена от</label>
+            <input
+                [(ngModel)]="input.minPrice"
+                [placeholder]="messagesService.defaultNumericInputListValue"
+                type="number"
+                min="0"
+                class="form-control shadow-sm"/>
+        </div>
+        <div class="form-group my-2 col-4 col-lg-2">
+            <label class="mb-2">Цена до</label>
+            <input
+                [(ngModel)]="input.maxPrice"
+                [placeholder]="messagesService.defaultNumericInputListValue"
+                type="number"
+                min="0"
+                class="form-control shadow-sm"/>
+        </div>
+        <div class="form-group my-2 col-4 col-lg-2">
+            <label class="mb-2">Валута</label>
+            <select [(ngModel)]="input.currencyUnit" class="form-select shadow-sm">
+                <option *ngFor="let currencyUnit of currencyUnits" [value]="currencyUnit.value">
+                    {{currencyUnit.name.toUpperCase()}}
+                </option>
+            </select>
+        </div>
+        <div class="form-group my-2 col-4 col-lg-2">
+            <label class="mb-2">Мощност от</label>
+            <input
+                [(ngModel)]="input.minPower"
+                [placeholder]="messagesService.defaultNumericInputListValue"
+                type="number"
+                min="1"
+                class="form-control shadow-sm"/>
+        </div>
+        <div class="form-group my-2 col-4 col-lg-2">
+            <label class="mb-2">Мощност до</label>
+            <input
+                [(ngModel)]="input.maxPower"
+                [placeholder]="messagesService.defaultNumericInputListValue"
+                type="number"
+                min="1"
+                class="form-control shadow-sm"/>
+        </div>
+        <div class="form-group my-2 col-4 col-lg-2">
+            <label class="mb-2">Единица</label>
+            <select [(ngModel)]="input.powerUnit" class="form-select shadow-sm">
+                <option *ngFor="let powerUnit of powerUnits" [value]="powerUnit.value">
+                    {{powerUnit.name.toUpperCase()}}
+                </option>
+            </select>
+        </div>
+    
+        <div class="form-group my-2 col-4 col-lg-2">
+            <label class="mb-2">Пробег от</label>
+            <input
+                [(ngModel)]="input.minMileage"
+                [placeholder]="messagesService.defaultNumericInputListValue"
+                type="number"
+                min="1"
+                class="form-control shadow-sm"/>
+        </div>
+        <div class="form-group my-2 col-4 col-lg-2">
+            <label class="mb-2">Пробег до</label>
+            <input
+                [(ngModel)]="input.maxMileage"
+                [placeholder]="messagesService.defaultNumericInputListValue"
+                type="number"
+                min="1"
+                class="form-control shadow-sm"/>
+        </div>
+        <div class="form-group my-2 col-4 col-lg-2">
+            <label class="mb-2">Единица</label>
+            <select [(ngModel)]="input.mileageUnit" class="form-select shadow-sm">
+                <option *ngFor="let mileageUnit of mileageUnits" [value]="mileageUnit.value">
+                    {{mileageUnit.name.toUpperCase()}}
+                </option>
+            </select>
+        </div>
+    </div>
+    <div class="my-4 text-center">
+        <button
+            (click)="searchAdverts()"
+            class="btn btn-danger col-8 col-lg-3 my-lg-3 my-2">
+            Търсене
+        </button>
+    </div>
+</div>

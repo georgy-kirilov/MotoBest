@@ -1,0 +1,18 @@
+<label class="mb-2">{{title}}</label>
+<select [(ngModel)]="property" (change)="onChange()" class="form-select shadow-sm">
+    <option value="null" selected>{{messagesService.defaultDropdownListOption}}</option>
+    <ng-container *ngIf="!dividedByGroups; else dividedByOptGroups">
+        <option *ngFor="let option of optionsList" [value]="option.name">
+            {{option.name}}
+        </option>
+    </ng-container>
+    <ng-template #dividedByOptGroups>
+        <optgroup *ngFor="let optionGroup of groupsByLetter | keyvalue" [label]="optionGroup.key">
+            <option
+                *ngFor="let option of optionGroup.value"
+                [value]="option.id">
+                {{option.name}}
+            </option>
+        </optgroup>
+    </ng-template>
+</select>

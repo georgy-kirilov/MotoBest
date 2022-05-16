@@ -2,6 +2,7 @@
 
 using MotoBest.Data.Models;
 using MotoBest.Services.Data.Features;
+using MotoBest.WebApi.Models.Features;
 
 namespace MotoBest.WebApi.Controllers;
 
@@ -14,6 +15,9 @@ public class FeaturesController : ApiController
     private readonly IFeatureService<Region> regionService;
     private readonly IFeatureService<Color> colorService;
     private readonly IFeatureService<Condition> conditionService;
+    private readonly IFeatureService<EuroStandard> euroStandardService;
+    private readonly IPopulatedPlaceService populatedPlaceService;
+    private readonly IModelService modelService;
 
     public FeaturesController(
         IFeatureService<Transmission> transmissionService,
@@ -22,7 +26,10 @@ public class FeaturesController : ApiController
         IFeatureService<Brand> brandService,
         IFeatureService<Region> regionService,
         IFeatureService<Color> colorService,
-        IFeatureService<Condition> conditionService)
+        IFeatureService<Condition> conditionService,
+        IFeatureService<EuroStandard> euroStandardService,
+        IPopulatedPlaceService populatedPlaceService,
+        IModelService modelService)
     {
         this.transmissionService = transmissionService;
         this.engineService = engineService;
@@ -31,26 +38,40 @@ public class FeaturesController : ApiController
         this.regionService = regionService;
         this.colorService = colorService;
         this.conditionService = conditionService;
+        this.euroStandardService = euroStandardService;
+        this.populatedPlaceService = populatedPlaceService;
+        this.modelService = modelService;
     }
 
     [HttpGet("transmissions")]
-    public IEnumerable<string> GetAllTransmissions() => transmissionService.GetAllNames();
+    public IEnumerable<FeatureResultModel> GetAllTransmissions() => transmissionService.GetAll();
 
     [HttpGet("engines")]
-    public IEnumerable<string> GetAllEngines() => engineService.GetAllNames();
+    public IEnumerable<FeatureResultModel> GetAllEngines() => engineService.GetAll();
 
     [HttpGet("body-styles")]
-    public IEnumerable<string> GetAllBodyStyles() => bodyStyleService.GetAllNames();
+    public IEnumerable<FeatureResultModel> GetAllBodyStyles() => bodyStyleService.GetAll();
 
     [HttpGet("brands")]
-    public IEnumerable<string> GetAllBrands() => brandService.GetAllNames();
+    public IEnumerable<FeatureResultModel> GetAllBrands() => brandService.GetAll();
 
     [HttpGet("regions")]
-    public IEnumerable<string> GetAllRegions() => regionService.GetAllNames();
+    public IEnumerable<FeatureResultModel> GetAllRegions() => regionService.GetAll();
 
     [HttpGet("colors")]
-    public IEnumerable<string> GetAllColors() => colorService.GetAllNames();
+    public IEnumerable<FeatureResultModel> GetAllColors() => colorService.GetAll();
 
     [HttpGet("conditions")]
-    public IEnumerable<string> GetAllConditions() => conditionService.GetAllNames();
+    public IEnumerable<FeatureResultModel> GetAllConditions() => conditionService.GetAll();
+
+    [HttpGet("euro-standards")]
+    public IEnumerable<FeatureResultModel> GetAllEuroStandards() => euroStandardService.GetAll();
+
+    [HttpGet("populated-places/{regionId?}")]
+    public async Task<IEnumerable<FeatureResultModel>> GetAllPopulatedPlacesByRegion(int? regionId)
+        => await populatedPlaceService.GetAllByRegion(regionId);
+
+    [HttpGet("models/{brandId?}")]
+    public async Task<IEnumerable<FeatureResultModel>> GetAllModelsByBrand(int? brandId)
+        => await modelService.GetAllByBrand(brandId);
 }

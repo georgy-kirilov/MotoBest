@@ -27,11 +27,11 @@ public class SiteDataNormalizer : ISiteDataNormalizer
         ["Mercedes Benz"] = BrandNames.MercedesBenz
     };
 
-    private readonly IUnitsManager unitsManager;
+    private readonly IUnitManager unitManager;
 
-    public SiteDataNormalizer(IUnitsManager unitsManager)
+    public SiteDataNormalizer(IUnitManager unitManager)
     {
-        this.unitsManager = unitsManager;
+        this.unitManager = unitManager;
     }
 
     public NormalizedAdvert NormalizeAdvert(ScrapedAdvert scrapedAdvert)
@@ -55,7 +55,7 @@ public class SiteDataNormalizer : ISiteDataNormalizer
             ModifiedOn = scrapedAdvert.ModifiedOn,
             PopulatedPlaceType = NormalizePopulatedPlaceType(scrapedAdvert.PopulatedPlace),
             PriceInBgn = NormalizePrice(scrapedAdvert.Price, scrapedAdvert.CurrencyUnit),
-            ImageUrls = scrapedAdvert.ImageUrls.ToList(),
+            ImageUrls = NormalizeImageUrls(scrapedAdvert.ImageUrls),
             EuroStandard = scrapedAdvert.EuroStandard?.Trim().ToLower(),
             Model = scrapedAdvert.Model?.Trim(),
             Site = scrapedAdvert.Site,
@@ -68,7 +68,7 @@ public class SiteDataNormalizer : ISiteDataNormalizer
             return price;
         }
         
-        return price * unitsManager.GetBgnCourse(currencyUnit.Value);
+        return price * unitManager.GetBgnCourse(currencyUnit.Value);
     }
 
     private static PopulatedPlaceType? NormalizePopulatedPlaceType(string? populatedPlace)
@@ -92,6 +92,9 @@ public class SiteDataNormalizer : ISiteDataNormalizer
         
         return PopulatedPlaceType.Country;
     }
+
+    private static IEnumerable<string> NormalizeImageUrls(IEnumerable<string> imageUrls)
+        => imageUrls.Select(img => img.ReplaceFirst("med", "big"));
 
     private static string? NormalizeRegion(string? region)
         => region?.RemoveStrings(RegionPrefix).Trim();

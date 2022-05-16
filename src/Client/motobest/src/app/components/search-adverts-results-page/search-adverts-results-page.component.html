@@ -1,0 +1,32 @@
+<div class="row justify-content-center">
+    <div
+        *ngFor="let result of searchAdvertsResults; let i = index"
+        (click)="viewFullAdvert(i)"
+        class="card col-xl-2 col-lg-3 col-sm-6 col-md-4 col-11 m-2 stretched-link advert-result-card"
+        [ngClass]="boxShadowClasses[i]" (mouseover)="changeStyle($event, i)" (mouseout)="changeStyle($event, i)">
+        <img
+            style="object-fit: cover;"
+            src="{{result.mainImageUrl}}"
+            onerror="this.src='assets/images/default-advert-image.png'"
+            alt="Advert Image"
+            class="card-img-top card-image-main">
+        <div class="card-body">
+            <p class="text-muted advert-result-header" style="font-size: 1.1rem;">
+                {{result.title}}
+            </p>
+            <p style="font-size: 1.1rem;" class="text-success advert-result-header">
+                {{result.price?.toLocaleString()}} {{result.currencyUnit.toUpperCase()}}
+            </p>    
+            <hr>
+            <p class="card-text advert-result-desc">
+                {{result.engine}} -
+                {{result.transmission}} -
+                {{result.month}} {{result.year}} -
+                {{result.power}} {{result.powerUnit}} -
+                {{result.mileage}} {{result.mileageUnit}} - 
+                {{formatModifiedOn(result.modifiedOn)}}
+            </p>
+            <img src="assets/images/logos/auto-bg.png" class="col-2 float-end">
+        </div>
+    </div>
+</div>

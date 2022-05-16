@@ -1,0 +1,16 @@
+.bg-light-gray {
+    background-color: #F2F2F2;
+}
+
+.adv-property-label {
+    font-weight: bold;
+}
+
+.carousel-inner img {
+    margin: auto;
+  }
+
+  .carousel-control-next,
+.carousel-control-prev /*, .carousel-indicators */ {
+    filter: invert(100%);
+}

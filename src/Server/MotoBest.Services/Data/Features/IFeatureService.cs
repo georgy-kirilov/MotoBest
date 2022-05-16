@@ -1,4 +1,5 @@
 ﻿using MotoBest.Data.Models.Common;
+using MotoBest.WebApi.Models.Features;
 
 namespace MotoBest.Services.Data.Features;
 
@@ -15,8 +16,7 @@ public interface IFeatureService<TFeature>
     /// </summary>
     TFeature? FindByName(string? name);
 
-    /// <summary>
-    /// Returns the name property values of all existing models
-    /// </summary>
-    IEnumerable<string> GetAllNames();
+    Task<TFeature?> FindById(int? id);
+
+    IEnumerable<FeatureResultModel> GetAll();
 }

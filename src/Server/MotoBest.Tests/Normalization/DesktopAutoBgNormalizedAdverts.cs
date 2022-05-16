@@ -35,15 +35,15 @@ public static class DesktopAutoBgNormalizedAdverts
         Site = SiteNames.AutoBg,
         ImageUrls = new[]
         {
-            "//cdn2.focus.bg/mobile/photosorg/570/2/med/21647687287424570_JI.jpg",
-            "//cdn2.focus.bg/mobile/photosorg/570/2/med/21647687287424570_gd.jpg",
-            "//cdn2.focus.bg/mobile/photosorg/570/2/med/21647687287424570_N4.jpg",
-            "//cdn2.focus.bg/mobile/photosorg/570/2/med/21647687287424570_16.jpg",
-            "//cdn2.focus.bg/mobile/photosorg/570/2/med/21647687287424570_Uj.jpg",
-            "//cdn2.focus.bg/mobile/photosorg/570/2/med/21647687287424570_CD.jpg",
-            "//cdn2.focus.bg/mobile/photosorg/570/2/med/21647687287424570_iV.jpg",
-            "//cdn2.focus.bg/mobile/photosorg/570/2/med/21647687287424570_LQ.jpg",
-            "//cdn2.focus.bg/mobile/photosorg/570/2/med/21647687287424570_rU.jpg",
+            "//cdn2.focus.bg/mobile/photosorg/570/2/big/21647687287424570_JI.jpg",
+            "//cdn2.focus.bg/mobile/photosorg/570/2/big/21647687287424570_gd.jpg",
+            "//cdn2.focus.bg/mobile/photosorg/570/2/big/21647687287424570_N4.jpg",
+            "//cdn2.focus.bg/mobile/photosorg/570/2/big/21647687287424570_16.jpg",
+            "//cdn2.focus.bg/mobile/photosorg/570/2/big/21647687287424570_Uj.jpg",
+            "//cdn2.focus.bg/mobile/photosorg/570/2/big/21647687287424570_CD.jpg",
+            "//cdn2.focus.bg/mobile/photosorg/570/2/big/21647687287424570_iV.jpg",
+            "//cdn2.focus.bg/mobile/photosorg/570/2/big/21647687287424570_LQ.jpg",
+            "//cdn2.focus.bg/mobile/photosorg/570/2/big/21647687287424570_rU.jpg",
             "//cdn2.focus.bg/mobile/photosorg/570/2/big/21647687287424570_9C.jpg",
         },
     };
@@ -74,15 +74,15 @@ public static class DesktopAutoBgNormalizedAdverts
         Site = SiteNames.AutoBg,
         ImageUrls = new[]
         {
-            "//mobistatic2.focus.bg/mobile/photosorg/877/1/med/11647548823966877_Hu.jpg",
-            "//mobistatic2.focus.bg/mobile/photosorg/877/1/med/11647548823966877_xD.jpg",
-            "//mobistatic2.focus.bg/mobile/photosorg/877/1/med/11647548823966877_mk.jpg",
-            "//mobistatic2.focus.bg/mobile/photosorg/877/1/med/11647548823966877_9o.jpg",
-            "//mobistatic2.focus.bg/mobile/photosorg/877/1/med/11647548823966877_Fe.jpg",
-            "//mobistatic2.focus.bg/mobile/photosorg/877/1/med/11647548823966877_h5.jpg",
-            "//mobistatic2.focus.bg/mobile/photosorg/877/1/med/11647548823966877_p4.jpg",
-            "//mobistatic2.focus.bg/mobile/photosorg/877/1/med/11647548823966877_67.jpg",
-            "//mobistatic2.focus.bg/mobile/photosorg/877/1/med/11647548823966877_gx.jpg",
+            "//mobistatic2.focus.bg/mobile/photosorg/877/1/big/11647548823966877_Hu.jpg",
+            "//mobistatic2.focus.bg/mobile/photosorg/877/1/big/11647548823966877_xD.jpg",
+            "//mobistatic2.focus.bg/mobile/photosorg/877/1/big/11647548823966877_mk.jpg",
+            "//mobistatic2.focus.bg/mobile/photosorg/877/1/big/11647548823966877_9o.jpg",
+            "//mobistatic2.focus.bg/mobile/photosorg/877/1/big/11647548823966877_Fe.jpg",
+            "//mobistatic2.focus.bg/mobile/photosorg/877/1/big/11647548823966877_h5.jpg",
+            "//mobistatic2.focus.bg/mobile/photosorg/877/1/big/11647548823966877_p4.jpg",
+            "//mobistatic2.focus.bg/mobile/photosorg/877/1/big/11647548823966877_67.jpg",
+            "//mobistatic2.focus.bg/mobile/photosorg/877/1/big/11647548823966877_gx.jpg",
             "//mobistatic2.focus.bg/mobile/photosorg/877/1/big/11647548823966877_9F.jpg",
         }
     };
@@ -123,15 +123,15 @@ public static class DesktopAutoBgNormalizedAdverts
         Site = SiteNames.AutoBg,
         ImageUrls = new[]
         {
-            "//mobistatic4.focus.bg/mobile/photosorg/459/2/med/21643890746724459_oO.jpg",
-            "//mobistatic4.focus.bg/mobile/photosorg/459/2/med/21643890746724459_94.jpg",
-            "//mobistatic4.focus.bg/mobile/photosorg/459/2/med/21643890746724459_Dx.jpg",
-            "//mobistatic4.focus.bg/mobile/photosorg/459/2/med/21643890746724459_G4.jpg",
-            "//mobistatic4.focus.bg/mobile/photosorg/459/2/med/21643890746724459_1C.jpg",
-            "//mobistatic4.focus.bg/mobile/photosorg/459/2/med/21643890746724459_8C.jpg",
-            "//mobistatic4.focus.bg/mobile/photosorg/459/2/med/21643890746724459_Fr.jpg",
-            "//mobistatic4.focus.bg/mobile/photosorg/459/2/med/21643890746724459_dN.jpg",
-            "//mobistatic4.focus.bg/mobile/photosorg/459/2/med/21643890746724459_E2.jpg",
+            "//mobistatic4.focus.bg/mobile/photosorg/459/2/big/21643890746724459_oO.jpg",
+            "//mobistatic4.focus.bg/mobile/photosorg/459/2/big/21643890746724459_94.jpg",
+            "//mobistatic4.focus.bg/mobile/photosorg/459/2/big/21643890746724459_Dx.jpg",
+            "//mobistatic4.focus.bg/mobile/photosorg/459/2/big/21643890746724459_G4.jpg",
+            "//mobistatic4.focus.bg/mobile/photosorg/459/2/big/21643890746724459_1C.jpg",
+            "//mobistatic4.focus.bg/mobile/photosorg/459/2/big/21643890746724459_8C.jpg",
+            "//mobistatic4.focus.bg/mobile/photosorg/459/2/big/21643890746724459_Fr.jpg",
+            "//mobistatic4.focus.bg/mobile/photosorg/459/2/big/21643890746724459_dN.jpg",
+            "//mobistatic4.focus.bg/mobile/photosorg/459/2/big/21643890746724459_E2.jpg",
             "//mobistatic4.focus.bg/mobile/photosorg/459/2/big/21643890746724459_xW.jpg",
         }
     };
@@ -160,15 +160,15 @@ public static class DesktopAutoBgNormalizedAdverts
         Site = SiteNames.AutoBg,
         ImageUrls = new[]
         {
-            "//mobistatic1.focus.bg/mobile/photosorg/937/1/med/11647691017352937_4s.jpg",
-            "//mobistatic1.focus.bg/mobile/photosorg/937/1/med/11647691017352937_uj.jpg",
-            "//mobistatic1.focus.bg/mobile/photosorg/937/1/med/11647691017352937_PL.jpg",
-            "//mobistatic1.focus.bg/mobile/photosorg/937/1/med/11647691017352937_3O.jpg",
-            "//mobistatic1.focus.bg/mobile/photosorg/937/1/med/11647691017352937_DX.jpg",
-            "//mobistatic1.focus.bg/mobile/photosorg/937/1/med/11647691017352937_PE.jpg",
-            "//mobistatic1.focus.bg/mobile/photosorg/937/1/med/11647691017352937_Wl.jpg",
-            "//mobistatic1.focus.bg/mobile/photosorg/937/1/med/11647691017352937_Oe.jpg",
-            "//mobistatic1.focus.bg/mobile/photosorg/937/1/med/11647691017352937_96.jpg",
+            "//mobistatic1.focus.bg/mobile/photosorg/937/1/big/11647691017352937_4s.jpg",
+            "//mobistatic1.focus.bg/mobile/photosorg/937/1/big/11647691017352937_uj.jpg",
+            "//mobistatic1.focus.bg/mobile/photosorg/937/1/big/11647691017352937_PL.jpg",
+            "//mobistatic1.focus.bg/mobile/photosorg/937/1/big/11647691017352937_3O.jpg",
+            "//mobistatic1.focus.bg/mobile/photosorg/937/1/big/11647691017352937_DX.jpg",
+            "//mobistatic1.focus.bg/mobile/photosorg/937/1/big/11647691017352937_PE.jpg",
+            "//mobistatic1.focus.bg/mobile/photosorg/937/1/big/11647691017352937_Wl.jpg",
+            "//mobistatic1.focus.bg/mobile/photosorg/937/1/big/11647691017352937_Oe.jpg",
+            "//mobistatic1.focus.bg/mobile/photosorg/937/1/big/11647691017352937_96.jpg",
             "//mobistatic1.focus.bg/mobile/photosorg/937/1/big/11647691017352937_kE.jpg",
         },
     };
@@ -201,15 +201,15 @@ public static class DesktopAutoBgNormalizedAdverts
         Site = SiteNames.AutoBg,
         ImageUrls = new[]
         {
-            "//mobistatic1.focus.bg/mobile/photosorg/101/1/med/11647703904840101_hX.jpg",
-            "//mobistatic1.focus.bg/mobile/photosorg/101/1/med/11647703904840101_Fq.jpg",
-            "//mobistatic1.focus.bg/mobile/photosorg/101/1/med/11647703904840101_Ss.jpg",
-            "//mobistatic1.focus.bg/mobile/photosorg/101/1/med/11647703904840101_Q6.jpg",
-            "//mobistatic1.focus.bg/mobile/photosorg/101/1/med/11647703904840101_UH.jpg",
-            "//mobistatic1.focus.bg/mobile/photosorg/101/1/med/11647703904840101_m4.jpg",
-            "//mobistatic1.focus.bg/mobile/photosorg/101/1/med/11647703904840101_Fl.jpg",
-            "//mobistatic1.focus.bg/mobile/photosorg/101/1/med/11647703904840101_NZ.jpg",
-            "//mobistatic1.focus.bg/mobile/photosorg/101/1/med/11647703904840101_GJ.jpg",
+            "//mobistatic1.focus.bg/mobile/photosorg/101/1/big/11647703904840101_hX.jpg",
+            "//mobistatic1.focus.bg/mobile/photosorg/101/1/big/11647703904840101_Fq.jpg",
+            "//mobistatic1.focus.bg/mobile/photosorg/101/1/big/11647703904840101_Ss.jpg",
+            "//mobistatic1.focus.bg/mobile/photosorg/101/1/big/11647703904840101_Q6.jpg",
+            "//mobistatic1.focus.bg/mobile/photosorg/101/1/big/11647703904840101_UH.jpg",
+            "//mobistatic1.focus.bg/mobile/photosorg/101/1/big/11647703904840101_m4.jpg",
+            "//mobistatic1.focus.bg/mobile/photosorg/101/1/big/11647703904840101_Fl.jpg",
+            "//mobistatic1.focus.bg/mobile/photosorg/101/1/big/11647703904840101_NZ.jpg",
+            "//mobistatic1.focus.bg/mobile/photosorg/101/1/big/11647703904840101_GJ.jpg",
             "//mobistatic1.focus.bg/mobile/photosorg/101/1/big/11647703904840101_a.jpg",
         }
     };
@@ -238,9 +238,9 @@ public static class DesktopAutoBgNormalizedAdverts
         Site = SiteNames.AutoBg,
         ImageUrls = new[]
         {
-            "//cdn2.focus.bg/mobile/photosorg/850/2/med/21647695485012850_Cw.jpg",
-            "//cdn2.focus.bg/mobile/photosorg/850/2/med/21647695485012850_1g.jpg",
-            "//cdn2.focus.bg/mobile/photosorg/850/2/med/21647695485012850_S0.jpg",
+            "//cdn2.focus.bg/mobile/photosorg/850/2/big/21647695485012850_Cw.jpg",
+            "//cdn2.focus.bg/mobile/photosorg/850/2/big/21647695485012850_1g.jpg",
+            "//cdn2.focus.bg/mobile/photosorg/850/2/big/21647695485012850_S0.jpg",
             "//cdn2.focus.bg/mobile/photosorg/850/2/big/21647695485012850_xQ.jpg",
         }
     };
@@ -269,9 +269,9 @@ public static class DesktopAutoBgNormalizedAdverts
         Site = SiteNames.AutoBg,
         ImageUrls = new[]
         {
-            "//mobistatic1.focus.bg/mobile/photosorg/077/1/med/11625296974013077_Yu.jpg",
-            "//mobistatic1.focus.bg/mobile/photosorg/077/1/med/11625296974013077_fZ.jpg",
-            "//mobistatic1.focus.bg/mobile/photosorg/077/1/med/11625296974013077_q4.jpg",
+            "//mobistatic1.focus.bg/mobile/photosorg/077/1/big/11625296974013077_Yu.jpg",
+            "//mobistatic1.focus.bg/mobile/photosorg/077/1/big/11625296974013077_fZ.jpg",
+            "//mobistatic1.focus.bg/mobile/photosorg/077/1/big/11625296974013077_q4.jpg",
             "//mobistatic1.focus.bg/mobile/photosorg/077/1/big/11625296974013077_1U.jpg",
         }
     };
@@ -313,15 +313,15 @@ public static class DesktopAutoBgNormalizedAdverts
         Site = SiteNames.AutoBg,
         ImageUrls = new[]
         {
-            "//mobistatic2.focus.bg/mobile/photosorg/036/1/med/11606854971240036_R4.png",
-            "//mobistatic2.focus.bg/mobile/photosorg/036/1/med/11606854971240036_ny.jpg",
-            "//mobistatic2.focus.bg/mobile/photosorg/036/1/med/11606854971240036_P6.jpg",
-            "//mobistatic2.focus.bg/mobile/photosorg/036/1/med/11606854971240036_R8.jpg",
-            "//mobistatic2.focus.bg/mobile/photosorg/036/1/med/11606854971240036_iA.jpg",
-            "//mobistatic2.focus.bg/mobile/photosorg/036/1/med/11606854971240036_PT.jpg",
-            "//mobistatic2.focus.bg/mobile/photosorg/036/1/med/11606854971240036_Wx.jpg",
-            "//mobistatic2.focus.bg/mobile/photosorg/036/1/med/11606854971240036_Si.jpg",
-            "//mobistatic2.focus.bg/mobile/photosorg/036/1/med/11606854971240036_5M.jpg",
+            "//mobistatic2.focus.bg/mobile/photosorg/036/1/big/11606854971240036_R4.png",
+            "//mobistatic2.focus.bg/mobile/photosorg/036/1/big/11606854971240036_ny.jpg",
+            "//mobistatic2.focus.bg/mobile/photosorg/036/1/big/11606854971240036_P6.jpg",
+            "//mobistatic2.focus.bg/mobile/photosorg/036/1/big/11606854971240036_R8.jpg",
+            "//mobistatic2.focus.bg/mobile/photosorg/036/1/big/11606854971240036_iA.jpg",
+            "//mobistatic2.focus.bg/mobile/photosorg/036/1/big/11606854971240036_PT.jpg",
+            "//mobistatic2.focus.bg/mobile/photosorg/036/1/big/11606854971240036_Wx.jpg",
+            "//mobistatic2.focus.bg/mobile/photosorg/036/1/big/11606854971240036_Si.jpg",
+            "//mobistatic2.focus.bg/mobile/photosorg/036/1/big/11606854971240036_5M.jpg",
             "//mobistatic2.focus.bg/mobile/photosorg/036/1/big/11606854971240036_qP.jpg",
         }
     };
@@ -357,15 +357,15 @@ public static class DesktopAutoBgNormalizedAdverts
         Site = SiteNames.AutoBg,
         ImageUrls = new[]
         {
-            "//mobistatic1.focus.bg/mobile/photosorg/976/2/med/21647438561242976_Z2.jpg",
-            "//mobistatic1.focus.bg/mobile/photosorg/976/2/med/21647438561242976_cG.jpg",
-            "//mobistatic1.focus.bg/mobile/photosorg/976/2/med/21647438561242976_ua.jpg",
-            "//mobistatic1.focus.bg/mobile/photosorg/976/2/med/21647438561242976_rO.jpg",
-            "//mobistatic1.focus.bg/mobile/photosorg/976/2/med/21647438561242976_v0.jpg",
-            "//mobistatic1.focus.bg/mobile/photosorg/976/2/med/21647438561242976_DI.jpg",
-            "//mobistatic1.focus.bg/mobile/photosorg/976/2/med/21647438561242976_JC.jpg",
-            "//mobistatic1.focus.bg/mobile/photosorg/976/2/med/21647438561242976_8M.jpg",
-            "//mobistatic1.focus.bg/mobile/photosorg/976/2/med/21647438561242976_rC.jpg",
+            "//mobistatic1.focus.bg/mobile/photosorg/976/2/big/21647438561242976_Z2.jpg",
+            "//mobistatic1.focus.bg/mobile/photosorg/976/2/big/21647438561242976_cG.jpg",
+            "//mobistatic1.focus.bg/mobile/photosorg/976/2/big/21647438561242976_ua.jpg",
+            "//mobistatic1.focus.bg/mobile/photosorg/976/2/big/21647438561242976_rO.jpg",
+            "//mobistatic1.focus.bg/mobile/photosorg/976/2/big/21647438561242976_v0.jpg",
+            "//mobistatic1.focus.bg/mobile/photosorg/976/2/big/21647438561242976_DI.jpg",
+            "//mobistatic1.focus.bg/mobile/photosorg/976/2/big/21647438561242976_JC.jpg",
+            "//mobistatic1.focus.bg/mobile/photosorg/976/2/big/21647438561242976_8M.jpg",
+            "//mobistatic1.focus.bg/mobile/photosorg/976/2/big/21647438561242976_rC.jpg",
             "//mobistatic1.focus.bg/mobile/photosorg/976/2/big/21647438561242976_vB.jpg",
         }
     };
@@ -396,15 +396,15 @@ public static class DesktopAutoBgNormalizedAdverts
         Site = SiteNames.AutoBg,
         ImageUrls = new[]
         {
-            "//mobistatic2.focus.bg/mobile/photosorg/282/1/med/11647188804139282_fc.jpg",
-            "//mobistatic2.focus.bg/mobile/photosorg/282/1/med/11647188804139282_Wu.jpg",
-            "//mobistatic2.focus.bg/mobile/photosorg/282/1/med/11647188804139282_Oa.jpg",
-            "//mobistatic2.focus.bg/mobile/photosorg/282/1/med/11647188804139282_3T.jpg",
-            "//mobistatic2.focus.bg/mobile/photosorg/282/1/med/11647188804139282_Lg.jpg",
-            "//mobistatic2.focus.bg/mobile/photosorg/282/1/med/11647188804139282_HV.jpg",
-            "//mobistatic2.focus.bg/mobile/photosorg/282/1/med/11647188804139282_PY.jpg",
-            "//mobistatic2.focus.bg/mobile/photosorg/282/1/med/11647188804139282_4y.jpg",
-            "//mobistatic2.focus.bg/mobile/photosorg/282/1/med/11647188804139282_Gn.jpg",
+            "//mobistatic2.focus.bg/mobile/photosorg/282/1/big/11647188804139282_fc.jpg",
+            "//mobistatic2.focus.bg/mobile/photosorg/282/1/big/11647188804139282_Wu.jpg",
+            "//mobistatic2.focus.bg/mobile/photosorg/282/1/big/11647188804139282_Oa.jpg",
+            "//mobistatic2.focus.bg/mobile/photosorg/282/1/big/11647188804139282_3T.jpg",
+            "//mobistatic2.focus.bg/mobile/photosorg/282/1/big/11647188804139282_Lg.jpg",
+            "//mobistatic2.focus.bg/mobile/photosorg/282/1/big/11647188804139282_HV.jpg",
+            "//mobistatic2.focus.bg/mobile/photosorg/282/1/big/11647188804139282_PY.jpg",
+            "//mobistatic2.focus.bg/mobile/photosorg/282/1/big/11647188804139282_4y.jpg",
+            "//mobistatic2.focus.bg/mobile/photosorg/282/1/big/11647188804139282_Gn.jpg",
             "//mobistatic2.focus.bg/mobile/photosorg/282/1/big/11647188804139282_TL.jpg",
         }
     };

@@ -1,0 +1,89 @@
+
+<div class="d-flex justify-content-center mt-5 col-md-12 bg-light">
+  <div class="row col-md-8 col-12">
+  <div class="col-12 mb-3 badge-dark rounded" style="height: 300px;">
+    <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+      <div *ngFor="let imageUrl of imageUrls; let first = first; let i = index" class="carousel-item" [ngClass]="{'active': first}">
+        <img src="{{imageUrl}}"  class="d-block col-9 col-md-6 rounded" style="height: 340px; object-fit: cover;" alt="...">
+        <div class="text-center mt-2">
+          Снимка {{i + 1}}/{{imageUrls.length}}
+        </div>
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+      <!--<img src="{{imageUrls[0]}}" class="mx-auto img-fluid center-block d-block d-inline" style="height: 300px;">-->
+    </div>
+  </div>
+  </div>
+  <div class="row d-flex justify-content-center">
+    <div class="col-12 my-4 p-3">
+      <span style="font-size: 1.5rem;">{{title}}</span>
+      <span class="float-end text-success adv-property-label" style="font-size: 1.5rem;">{{price}}</span>
+    </div>
+    <div class="col-12 col-md-6">
+      <div *ngFor="let feature of features | slice:0:features.length / 2; let i = index; let first = first; let last = last">
+        <div
+          [ngClass]="{
+            'bg-light-gray': i % 2 == 0,
+            'bg-white': i % 2 != 0,
+            'rounded-top': first,
+            'rounded-bottom': last
+          }"
+          class="text-dark p-2 px-3 shadow">
+          <span class="adv-property-label">{{feature.name}}</span>
+          <span class="float-end">{{feature.value}}</span>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-md-6 mt-3 mt-lg-0">
+      <div *ngFor="let feature of features | slice:features.length/2:features.length; let i = index; let first = first; let last = last">
+        <div
+          [ngClass]="{
+            'bg-light-gray': i % 2 == 0,
+            'bg-white': i % 2 != 0,
+            'rounded-top': first,
+            'rounded-bottom': last}"
+          class="text-dark p-2 px-3 shadow">
+          <span class="adv-property-label">{{feature.name}}</span>
+          <span class="float-end">{{feature.value}}</span>
+        </div>
+      </div>
+    </div>
+  <div class="col-12 col-md-6">
+  <div class="bg-white text-dark p-3 px-3 mt-3 shadow rounded" style="max-height: 300px;">
+    <h4>Екстри</h4>
+    <ol>
+      <li>Климатик</li>
+      <li>Адаптивни предни светлини</li>
+      <li>GPS система за проследяване</li>
+      <li>Автоматичен контрол на стабилността</li>
+      <li>Антиблокираща система</li>
+      <li>Въздушни възглавници - Предни</li>
+    </ol>
+    <div class="text-center">
+      <button class="btn btn-danger col-6 mt-2">Покажи още</button>
+    </div>
+  </div>
+</div>
+<div class="col-12 col-md-6 mb-5">
+  <div class="bg-white text-dark p-3 px-3 mt-3 shadow rounded" style="max-height: 300px;">
+    <h4>Описание</h4>
+    <p>
+    {{helpers.reduceStringLength(description, 410)}}
+  </p>
+    <div class="text-center">
+      <button class="btn btn-danger col-6 mt-2">Покажи още</button>
+    </div>
+  </div>
+</div>
+  </div>
+
+</div>
+

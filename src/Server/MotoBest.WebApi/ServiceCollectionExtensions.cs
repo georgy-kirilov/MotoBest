@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
+
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 using MotoBest.Data;
 using MotoBest.Data.Models.Identity;
 using MotoBest.Data.Seeding;
+
 using MotoBest.Services.Common.Units;
 using MotoBest.Services.Mapping;
 
@@ -24,7 +26,11 @@ public static class ServiceCollectionExtensions
         serviceCollection
             .AddSingleton(provider => new MapperConfiguration(cfg =>
             {
-                cfg.AddProfile(new AdvertProfile(provider.GetRequiredService<IUnitsManager>()));
+                cfg.AddProfiles(new Profile[]
+                {
+                    new FeatureProfile(),
+                    new AdvertProfile(provider.GetRequiredService<IUnitManager>())
+                });
             })
             .CreateMapper());
 

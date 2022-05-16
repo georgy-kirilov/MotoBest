@@ -5,9 +5,11 @@ using MotoBest.Data.Repositories;
 
 using MotoBest.Services.Common;
 using MotoBest.Services.Common.Units;
+
 using MotoBest.Services.Data.Features;
 using MotoBest.Services.Data.Adverts;
 using MotoBest.Services.Data.Adverts.Filtering;
+
 using MotoBest.Services.Mapping;
 using MotoBest.Services.Normalization;
 
@@ -37,13 +39,19 @@ builder.Services
     .AddTransient<IAdvertService, AdvertService>()
     .AddTransient<IEuroStandardService, EuroStandardService>()
     .AddTransient<IPopulatedPlaceService, PopulatedPlaceService>()
-    .AddTransient<ISearchFilterBuilder, SearchFilterOptionsBuilder>()
-    .AddTransient<IUnitsManager, UnitsManager>()
+    .AddTransient<IModelService, ModelService>()
+    .AddTransient<ISearchFilterFactory, SearchFilterOptionsBuilder>()
+    .AddTransient<IUnitManager, UnitManager>()
     .AddTransient<AdvertMapper>();
 
 builder.Services.AddHostedService<ScrapingBackgroundService>();
 
 builder.Services.AddControllers();
+
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(policy => policy.WithOrigins("https://localhost:4200", "http://localhost:4200"));
+});
 
 builder.Services
     .AddEndpointsApiExplorer()
@@ -60,6 +68,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors();
 
 app.UseAuthorization();
 

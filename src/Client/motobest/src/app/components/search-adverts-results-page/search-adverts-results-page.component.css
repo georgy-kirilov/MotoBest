@@ -1,0 +1,38 @@
+.advert-result-card {
+    cursor: pointer;
+}
+
+.advert-result-header{
+    white-space: nowrap;
+    overflow: hidden;
+    display: block;
+    text-overflow: ellipsis;
+}
+
+.advert-result-header {
+    font-weight: bold;
+}
+
+.advert-result-desc {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    line-clamp: 2; 
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+@media (min-width: 768px) and (max-width: 992px) and (orientation: landscape) {
+    .card-image-main {
+        height: 10px;
+    }
+
+}
+
+@media (min-width: 992px) and (orientation: landscape) {
+    .card-image-main {
+        height: 220px;
+    }
+
+}
+

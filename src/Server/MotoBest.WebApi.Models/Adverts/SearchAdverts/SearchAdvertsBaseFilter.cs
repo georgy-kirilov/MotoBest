@@ -2,21 +2,23 @@
 
 public abstract class SearchAdvertsBaseFilter
 {
-    public string? Brand { get; init; }
+    public int? BrandId { get; init; }
 
     public int? ModelId { get; init; }
 
-    public string? Engine { get; init; }
+    public int? EngineId { get; init; }
 
-    public string? BodyStyle { get; init; }
+    public int? BodyStyleId { get; init; }
 
-    public string? Transmission { get; init; }
+    public int? TransmissionId { get; init; }
 
-    public string? Color { get; init; }
+    public int? ColorId { get; init; }
 
-    public string? Condition { get; init; }
+    public int? EuroStandardId { get; init; }
 
-    public string? Region { get; init; }
+    public int? ConditionId { get; init; }
+
+    public int? RegionId { get; init; }
 
     public int? PopulatedPlaceId { get; init; }
 

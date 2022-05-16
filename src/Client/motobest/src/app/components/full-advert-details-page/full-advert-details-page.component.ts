@@ -52,6 +52,7 @@ export class FullAdvertDetailsPageComponent implements OnInit {
             { name: this.messageService.manufacturedOn, value: `${response.month} ${response.year}` },
             { name: this.messageService.power, value: `${response.power} ${response.powerUnit}` },
           );
+          this.features = this.features.filter(feat => feat != null);
         });
     });
   }

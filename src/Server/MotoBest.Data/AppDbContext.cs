@@ -39,6 +39,8 @@ public class AppDbContext : IdentityDbContext<User, Role, string>
 
     public DbSet<Transmission> Transmissions { get; init; } = default!;
 
+    public DbSet<ExtraType> ExtraTypes { get; init; } = default!;
+
     public DbSet<Extra> Extras { get; init; } = default!;
 
     protected override void OnModelCreating(ModelBuilder builder)
@@ -61,7 +63,9 @@ public class AppDbContext : IdentityDbContext<User, Role, string>
             typeof(EuroStandard),
             typeof(Region),
             typeof(Site),
-            typeof(Transmission));
+            typeof(Transmission),
+            typeof(Extra),
+            typeof(ExtraType));
 
         builder.Entity<Advert>()
             .HasMany(adv => adv.Images)
@@ -71,6 +75,11 @@ public class AppDbContext : IdentityDbContext<User, Role, string>
         builder.Entity<Extra>()
             .HasMany(ext => ext.Adverts)
             .WithMany(adv => adv.Extras);
+
+        builder.Entity<ExtraType>()
+            .HasMany(type => type.Extras)
+            .WithOne(ext => ext.Type)
+            .HasForeignKey(ext => ext.TypeId);
     }
 
     private static void ChangeDefaultIdentityColumnNames(ModelBuilder builder)

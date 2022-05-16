@@ -48,4 +48,4 @@ foreach (string brand in typeof(BrandNames).GetAllPublicConstantValues<string>()
 string filePath = $"./Output/models-by-brands-{Guid.NewGuid()}.json";
 
 new FileInfo(filePath)?.Directory?.Create();
-await File.WriteAllTextAsync(filePath, brandDtos.ToJson());
+await File.WriteAllTextAsync(filePath, brandDtos.ToJsonString());

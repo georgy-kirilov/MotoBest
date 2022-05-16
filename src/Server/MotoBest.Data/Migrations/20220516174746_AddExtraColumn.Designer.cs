@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MotoBest.Data;
 
@@ -11,9 +12,10 @@ using MotoBest.Data;
 namespace MotoBest.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220516174746_AddExtraColumn")]
+    partial class AddExtraColumn
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -374,41 +376,12 @@ namespace MotoBest.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("TypeId")
+                    b.Property<int>("Type")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("Name")
-                        .IsUnique();
-
-                    b.HasIndex("TypeId");
 
                     b.ToTable("Extras");
-                });
-
-            modelBuilder.Entity("MotoBest.Data.Models.ExtraType", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Name")
-                        .IsUnique();
-
-                    b.ToTable("ExtraTypes");
                 });
 
             modelBuilder.Entity("MotoBest.Data.Models.Identity.Role", b =>
@@ -771,17 +744,6 @@ namespace MotoBest.Data.Migrations
                     b.Navigation("Transmission");
                 });
 
-            modelBuilder.Entity("MotoBest.Data.Models.Extra", b =>
-                {
-                    b.HasOne("MotoBest.Data.Models.ExtraType", "Type")
-                        .WithMany("Extras")
-                        .HasForeignKey("TypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Type");
-                });
-
             modelBuilder.Entity("MotoBest.Data.Models.Image", b =>
                 {
                     b.HasOne("MotoBest.Data.Models.Advert", "Advert")
@@ -850,11 +812,6 @@ namespace MotoBest.Data.Migrations
             modelBuilder.Entity("MotoBest.Data.Models.EuroStandard", b =>
                 {
                     b.Navigation("Adverts");
-                });
-
-            modelBuilder.Entity("MotoBest.Data.Models.ExtraType", b =>
-                {
-                    b.Navigation("Extras");
                 });
 
             modelBuilder.Entity("MotoBest.Data.Models.Model", b =>

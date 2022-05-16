@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
 using MotoBest.Data.Models;
+using MotoBest.Data.Repositories;
 using MotoBest.Services.Data.Features;
 using MotoBest.WebApi.Models.Features;
 
@@ -18,6 +19,8 @@ public class FeaturesController : ApiController
     private readonly IFeatureService<EuroStandard> euroStandardService;
     private readonly IPopulatedPlaceService populatedPlaceService;
     private readonly IModelService modelService;
+    private readonly IRepository<ExtraType> extraTypeRepository;
+    private readonly IExtraService extraService;
 
     public FeaturesController(
         IFeatureService<Transmission> transmissionService,
@@ -29,7 +32,9 @@ public class FeaturesController : ApiController
         IFeatureService<Condition> conditionService,
         IFeatureService<EuroStandard> euroStandardService,
         IPopulatedPlaceService populatedPlaceService,
-        IModelService modelService)
+        IModelService modelService,
+        IRepository<ExtraType> extraTypeRepository,
+        IExtraService extraService)
     {
         this.transmissionService = transmissionService;
         this.engineService = engineService;
@@ -41,6 +46,8 @@ public class FeaturesController : ApiController
         this.euroStandardService = euroStandardService;
         this.populatedPlaceService = populatedPlaceService;
         this.modelService = modelService;
+        this.extraTypeRepository = extraTypeRepository;
+        this.extraService = extraService;
     }
 
     [HttpGet("transmissions")]
@@ -74,4 +81,18 @@ public class FeaturesController : ApiController
     [HttpGet("models/{brandId?}")]
     public async Task<IEnumerable<FeatureResultModel>> GetAllModelsByBrand(int? brandId)
         => await modelService.GetAllByBrand(brandId);
+
+    [HttpGet("extra-types")]
+    public IEnumerable<FeatureResultModel> GetAllExtraTypes()
+        => extraTypeRepository.All()
+        .Select(type => new FeatureResultModel
+        {
+            Id = type.Id,
+            Name = type.Name,
+        })
+        .ToList();
+
+    [HttpGet("extras/{typeId?}")]
+    public IEnumerable<FeatureResultModel> GetAllExtrasByType(int? typeId) 
+        => extraService.GetAllByType(typeId);
 }

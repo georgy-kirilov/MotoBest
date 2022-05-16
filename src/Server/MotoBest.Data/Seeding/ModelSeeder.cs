@@ -1,6 +1,4 @@
-﻿using System.Text.Json;
-using System.Text.Unicode;
-using System.Text.Encodings.Web;
+﻿using MotoBest.Common.Extensions;
 
 namespace MotoBest.Data.Seeding;
 
@@ -8,16 +6,10 @@ public class ModelSeeder : ISeeder
 {
     public async Task SeedAsync(AppDbContext dbContext, IServiceProvider serviceProvider)
     {
-        var options = new JsonSerializerOptions
-        {
-            Encoder = JavaScriptEncoder.Create(UnicodeRanges.Cyrillic, UnicodeRanges.BasicLatin),
-            WriteIndented = true
-        };
-
-        string path = "../../Server/MotoBest.Data/Seeding/Resources/models-by-brand.json";
+        string path = $"{GlobalConstants.SeedingResourcesPath}/models-by-brand.json";
         string json = await File.ReadAllTextAsync(path);
 
-        var brandSeedingModels = JsonSerializer.Deserialize<BrandSeedingModel[]>(json, options)!;
+        var brandSeedingModels = json.ParseJsonTo<BrandSeedingModel[]>()!;
 
         foreach (var brandSeedingModel in brandSeedingModels)
         {

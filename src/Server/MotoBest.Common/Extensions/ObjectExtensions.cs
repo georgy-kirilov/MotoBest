@@ -1,6 +1,4 @@
-﻿using System.Text.Encodings.Web;
-using System.Text.Json;
-using System.Text.Unicode;
+﻿using System.Text.Json;
 
 using Xunit;
 
@@ -8,12 +6,8 @@ namespace MotoBest.Common.Extensions;
 
 public static class ObjectExtensions
 {
-    public static string ToJson(this object obj)
-        => JsonSerializer.Serialize(obj, new JsonSerializerOptions
-        {
-            Encoder = JavaScriptEncoder.Create(UnicodeRanges.BasicLatin, UnicodeRanges.Cyrillic),
-            WriteIndented = true
-        });
+    public static string ToJsonString(this object obj)
+        => JsonSerializer.Serialize(obj, GlobalConstants.BasicJsonOptions);
 
     public static void AssertProperties<T>(this T expected, T actual)
     {

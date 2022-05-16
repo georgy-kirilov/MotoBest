@@ -1,10 +1,14 @@
 ﻿using System.Text;
+using System.Text.Json;
 using System.Text.RegularExpressions;
 
 namespace MotoBest.Common.Extensions;
 
 public static class StringExtensions
 {
+    public static T? ParseJsonTo<T>(this string jsonContent)
+        => JsonSerializer.Deserialize<T>(jsonContent, GlobalConstants.BasicJsonOptions);
+
     public static string RemoveRepeatingWhiteSpaces(this string text)
     {
         var stringBuilder = new StringBuilder();

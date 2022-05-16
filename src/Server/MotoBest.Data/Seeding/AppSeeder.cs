@@ -18,6 +18,7 @@ public class AppSeeder : ISeeder
             new EuroStandardSeeder(),
             new SiteSeeder(),
             new ModelSeeder(),
+            new ExtraSeeder(),
         };
 
         foreach (var seeder in seeders)

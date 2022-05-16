@@ -40,6 +40,7 @@ builder.Services
     .AddTransient<IEuroStandardService, EuroStandardService>()
     .AddTransient<IPopulatedPlaceService, PopulatedPlaceService>()
     .AddTransient<IModelService, ModelService>()
+    .AddTransient<IExtraService, ExtraService>()
     .AddTransient<ISearchFilterFactory, SearchFilterOptionsBuilder>()
     .AddTransient<IUnitManager, UnitManager>()
     .AddTransient<AdvertMapper>();

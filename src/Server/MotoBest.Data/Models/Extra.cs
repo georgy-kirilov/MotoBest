@@ -1,13 +1,8 @@
 ﻿namespace MotoBest.Data.Models;
 
-public class Extra : BaseModel<int>
+public class Extra : Feature
 {
-    public Extra()
-    {
-        Adverts = new HashSet<Advert>();
-    }
+    public int TypeId { get; set; }
 
-    public ExtraType Type { get; set; }
-
-    public virtual ICollection<Advert> Adverts { get; set; }
+    public virtual ExtraType Type { get; set; } = default!;
 }

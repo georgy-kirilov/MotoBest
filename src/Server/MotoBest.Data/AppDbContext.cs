@@ -39,6 +39,8 @@ public class AppDbContext : IdentityDbContext<User, Role, string>
 
     public DbSet<Transmission> Transmissions { get; init; } = default!;
 
+    public DbSet<Extra> Extras { get; init; } = default!;
+
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
@@ -65,6 +67,10 @@ public class AppDbContext : IdentityDbContext<User, Role, string>
             .HasMany(adv => adv.Images)
             .WithOne(img => img.Advert)
             .HasForeignKey(img => img.AdvertId);
+
+        builder.Entity<Extra>()
+            .HasMany(ext => ext.Adverts)
+            .WithMany(adv => adv.Extras);
     }
 
     private static void ChangeDefaultIdentityColumnNames(ModelBuilder builder)

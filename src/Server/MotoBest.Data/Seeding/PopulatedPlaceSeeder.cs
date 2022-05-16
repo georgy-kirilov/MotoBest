@@ -17,30 +17,30 @@ public class PopulatedPlaceSeeder : ISeeder
         string path = "../../Server/MotoBest.Data/Seeding/Resources/populated-places-by-region.json";
         string json = await File.ReadAllTextAsync(path);
 
-        var regionDtos = JsonSerializer.Deserialize<RegionDto[]>(json, options)!;
+        var regionSeedingModels = JsonSerializer.Deserialize<RegionSeedingModel[]>(json, options)!;
 
-        foreach (var regionDto in regionDtos)
+        foreach (var regionSeedingModel in regionSeedingModels)
         {
-            var region = dbContext.Regions.FirstOrDefault(r => r.Name == regionDto.Name);
+            var region = dbContext.Regions.FirstOrDefault(r => r.Name == regionSeedingModel.Name);
 
             if (region == null)
             {
-                region = new Region { Name = regionDto.Name };
+                region = new Region { Name = regionSeedingModel.Name };
                 await dbContext.Regions.AddAsync(region);
             }
 
-            await SeedPopulatedPlacesAsync(regionDto.PopulatedPlaces, dbContext, region.Id);
+            await SeedPopulatedPlacesAsync(regionSeedingModel.PopulatedPlaces, dbContext, region.Id);
             await dbContext.SaveChangesAsync();
         }
     }
 
     private static async Task SeedPopulatedPlacesAsync(
-        IEnumerable<PopulatedPlaceDto> populatedPlaceDtos, AppDbContext dbContext, int regionId)
+        IEnumerable<PopulatedPlaceSeedingModel> populatedPlaceSeedingModels, AppDbContext dbContext, int regionId)
     {
-        foreach (var populatedPlaceDto in populatedPlaceDtos)
+        foreach (var populatedPlaceSeedingModel in populatedPlaceSeedingModels)
         {
             bool doesPopulatedPlaceExist = dbContext.PopulatedPlaces.Any(
-                pp => pp.Name == populatedPlaceDto.Name && pp.RegionId == regionId);
+                pp => pp.Name == populatedPlaceSeedingModel.Name && pp.RegionId == regionId);
 
             if (doesPopulatedPlaceExist)
             {
@@ -49,8 +49,8 @@ public class PopulatedPlaceSeeder : ISeeder
 
             await dbContext.AddAsync(new PopulatedPlace
             {
-                Type = populatedPlaceDto.Type,
-                Name = populatedPlaceDto.Name,
+                Type = populatedPlaceSeedingModel.Type,
+                Name = populatedPlaceSeedingModel.Name,
                 RegionId = regionId,
             });
         }

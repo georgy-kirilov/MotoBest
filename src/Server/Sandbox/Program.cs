@@ -21,7 +21,7 @@ var siteScraper = new DesktopAutoBgSiteScraper(new DateTimeManager());
 
 var browsingContext = BrowsingContext.New(Configuration.Default.WithDefaultLoader());
 
-var brandDtos = new List<BrandDto>();
+var brandDtos = new List<BrandSeedingModel>();
 
 foreach (string brand in typeof(BrandNames).GetAllPublicConstantValues<string>())
 {
@@ -35,14 +35,14 @@ foreach (string brand in typeof(BrandNames).GetAllPublicConstantValues<string>()
         continue;
     }
 
-    var modelDtos = siteScraper.ScrapeAllModels(document).Select(m => new ModelDto(m));
+    var modelDtos = siteScraper.ScrapeAllModels(document).Select(m => new ModelSeedingModel(m));
 
     if (!modelDtos.Any())
     {
         continue;
     }
 
-    brandDtos.Add(new BrandDto(brand, modelDtos));
+    brandDtos.Add(new BrandSeedingModel(brand, modelDtos));
 }
 
 string filePath = $"./Output/models-by-brands-{Guid.NewGuid()}.json";

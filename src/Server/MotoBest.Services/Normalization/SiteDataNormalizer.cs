@@ -1,7 +1,7 @@
 ﻿using MotoBest.Common.Extensions;
 using MotoBest.Common.Units;
 
-using MotoBest.Data.Models;
+using MotoBest.Data.Models.Common;
 using MotoBest.Data.Seeding.Constants;
 
 using MotoBest.Services.Common.Units;

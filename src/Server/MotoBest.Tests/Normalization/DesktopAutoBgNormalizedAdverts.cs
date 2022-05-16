@@ -1,6 +1,4 @@
-﻿using System;
-
-using MotoBest.Data.Models;
+﻿using MotoBest.Data.Models.Common;
 using MotoBest.Data.Seeding.Constants;
 
 using MotoBest.Services.Normalization;

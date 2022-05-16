@@ -1,4 +1,4 @@
-﻿namespace MotoBest.Data.Models;
+﻿namespace MotoBest.Data.Models.Common;
 
 public enum PopulatedPlaceType
 {

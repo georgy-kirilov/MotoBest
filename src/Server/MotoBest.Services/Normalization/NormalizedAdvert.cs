@@ -1,4 +1,5 @@
 ﻿using MotoBest.Data.Models;
+using MotoBest.Data.Models.Common;
 
 namespace MotoBest.Services.Normalization;
 

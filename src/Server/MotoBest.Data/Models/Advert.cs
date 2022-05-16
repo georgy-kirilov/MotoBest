@@ -8,22 +8,23 @@ public class Advert : BaseModel<string>
     {
         Id = Guid.NewGuid().ToString();
         Images = new HashSet<Image>();
+        Extras = new HashSet<Extra>();
     }
 
     /// <summary>
-    /// Returns null if the advert belongs to MotoBest
+    /// Returns null if the advert originates from MotoBest
     /// </summary>
     public string? RemoteId { get; set; } = string.Empty;
 
     public string? RemoteSlug { get; set; }
 
     /// <summary>
-    /// Returns null if the advert belongs to MotoBest
+    /// Returns null if the advert originates from MotoBest
     /// </summary>
     public int? SiteId { get; set; }
 
     /// <summary>
-    /// Returns null if the advert belongs to MotoBest
+    /// Returns null if the advert originates from MotoBest
     /// </summary>
     public virtual Site? Site { get; set; }
 
@@ -88,4 +89,6 @@ public class Advert : BaseModel<string>
     public virtual EuroStandard? EuroStandard { get; set; }
 
     public virtual ICollection<Image> Images { get; set; }
+
+    public virtual ICollection<Extra> Extras { get; set; }
 }

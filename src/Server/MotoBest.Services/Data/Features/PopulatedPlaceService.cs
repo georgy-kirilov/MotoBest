@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 
 using MotoBest.Data.Models;
+using MotoBest.Data.Models.Common;
 using MotoBest.Data.Repositories;
 
 using MotoBest.WebApi.Models.Features;

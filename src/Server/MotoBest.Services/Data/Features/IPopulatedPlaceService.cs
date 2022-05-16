@@ -1,4 +1,5 @@
 ﻿using MotoBest.Data.Models;
+using MotoBest.Data.Models.Common;
 using MotoBest.WebApi.Models.Features;
 
 namespace MotoBest.Services.Data.Features;

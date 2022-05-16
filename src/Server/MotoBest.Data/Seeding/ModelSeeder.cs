@@ -14,33 +14,33 @@ public class ModelSeeder : ISeeder
             WriteIndented = true
         };
 
-        string path = "../../Server/MotoBest.Data/Seeding/Resources/models-by-brands.json";
+        string path = "../../Server/MotoBest.Data/Seeding/Resources/models-by-brand.json";
         string json = await File.ReadAllTextAsync(path);
 
-        var brandDtos = JsonSerializer.Deserialize<BrandDto[]>(json, options)!;
+        var brandSeedingModels = JsonSerializer.Deserialize<BrandSeedingModel[]>(json, options)!;
 
-        foreach (var brandDto in brandDtos)
+        foreach (var brandSeedingModel in brandSeedingModels)
         {
-            var brand = dbContext.Brands.FirstOrDefault(b => b.Name == brandDto.Name);
+            var brand = dbContext.Brands.FirstOrDefault(b => b.Name == brandSeedingModel.Name);
 
             if (brand == null)
             {
-                brand = new Brand { Name = brandDto.Name };
+                brand = new Brand { Name = brandSeedingModel.Name };
                 await dbContext.Brands.AddAsync(brand);
             }
 
-            await SeedPopulatedPlacesAsync(brandDto.Models, dbContext, brand.Id);
+            await SeedPopulatedPlacesAsync(brandSeedingModel.Models, dbContext, brand.Id);
             await dbContext.SaveChangesAsync();
         }
     }
 
     private static async Task SeedPopulatedPlacesAsync(
-        IEnumerable<ModelDto> modelDtos, AppDbContext dbContext, int brandId)
+        IEnumerable<ModelSeedingModel> modelSeedingModels, AppDbContext dbContext, int brandId)
     {
-        foreach (var modelDto in modelDtos)
+        foreach (var modelSeedingModel in modelSeedingModels)
         {
             bool doesModelExist = dbContext.Models.Any(
-                m => m.Name == modelDto.Name && m.BrandId == brandId);
+                m => m.Name == modelSeedingModel.Name && m.BrandId == brandId);
 
             if (doesModelExist)
             {
@@ -49,7 +49,7 @@ public class ModelSeeder : ISeeder
 
             await dbContext.AddAsync(new Model
             {
-                Name = modelDto.Name,
+                Name = modelSeedingModel.Name,
                 BrandId = brandId,
             });
         }

@@ -1,4 +1,9 @@
-Add constraint which does not allow PopulatedPlaces with duplicate names in the same region
-Models which does not exist should be added to the database
-Scraped PopulatedPlace property should also contain information about the type of the populated place
-Modify all current unit tests for the scraping logic and add new which cover more edge cases
+- Add logic for scraping advert extras from auto.bg
+- Modify scraping test methods
+- Add logic for normalization of advert extras
+- Modify normalization test methods
+- Review code
+- Merge branch
+- Create new -> search-filter-for-extras
+- Add logic for searching adverts based on extras
+- Add unit tests for the advert searching service logic
